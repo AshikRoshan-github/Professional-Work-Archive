@@ -229,7 +229,7 @@ CERTS = [
 ]
 
 RESUME_URL = "https://github.com/AshikRoshan-github/Professional-Work-Archive/raw/main/Resume_Center/Data%26AI_1360.docx"
-PAGES = ["Home","Skills","Experience","Projects","Awards","Education","Assistant"]
+PAGES = ["Home","Skills","Experience","Projects","Awards","Education"]
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  CSS
@@ -631,8 +631,8 @@ div[data-testid="stButton"] button:hover{background:var(--navy2)!important;trans
 """, unsafe_allow_html=True)
 
 # ── Session state ─────────────────────────────────────────────────────────────
-if "chat" not in st.session_state:
-    st.session_state.chat = []
+if "page_loaded" not in st.session_state:
+    st.session_state.page_loaded = True
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  BRAND BAR
@@ -825,9 +825,9 @@ elif page == "Education":
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  ASSISTANT — streaming, ChatGPT-style with st.chat_message + st.chat_input
+#  FOOTER (Assistant page removed)
 # ══════════════════════════════════════════════════════════════════════════════
-elif page == "Assistant":
+if False:
 
     # ── Scoped CSS for the chat page ─────────────────────────────────────────
     st.markdown("""
