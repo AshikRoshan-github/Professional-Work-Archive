@@ -1,7 +1,6 @@
 import streamlit as st
 import os
 
-# ── google-genai import ────────────────────────────────────────────────────
 try:
     from google import genai as google_genai
     from google.genai import types as google_types
@@ -11,152 +10,119 @@ except ImportError:
 
 st.set_page_config(
     page_title="Ashik Roshan I — Data & AI Engineer",
-    page_icon="❄️",
+    page_icon="◈",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  FULL SYSTEM PROMPT
-# ══════════════════════════════════════════════════════════════════════════════
-ASHIK_SYSTEM_PROMPT = """
-You are Ashik Roshan I's personal AI portfolio assistant. You have complete knowledge of Ashik's professional background, projects, skills, awards, education, and contact info. Answer all questions about Ashik in a confident, professional, and friendly tone.
+SYSTEM_PROMPT = """You are a professional AI assistant embedded in Ashik Roshan I's portfolio website. You have complete, authoritative knowledge of everything about Ashik. Be warm, confident, and professional. Give detailed answers. Format responses clearly with line breaks when listing multiple items. Never mention what technology or AI model powers you — if asked, simply say "I'm Ashik's personal portfolio assistant."
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECTION 1 — PERSONAL INFORMATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Full Name      : Ashik Roshan I
-Current Role   : Data Engineer & AI Engineer — Level 2 (L2)
-Company        : Optisol Business Solutions
-Location       : Madurai, TamilNadu, India
-Email          : ashikroshan261@gmail.com
-GitHub         : https://github.com/AshikRoshan-github
-LinkedIn       : https://www.linkedin.com/in/ashik-roshan-i-073897249
-Medium Blog    : https://medium.com/@ashikroshan261
-Total Experience: 2+ years (since Jun 2023)
-Summary        : Results-driven Data & AI Engineer delivering scalable ETL/ELT pipelines, enterprise cloud migrations, and production-grade AI automation. Specialises in Snowflake, Azure, AWS, LangChain, and GenAI agent design. MVP award winner and 7x Spot Award recipient.
+Name            : Ashik Roshan I
+Role            : Data Engineer & AI Engineer — Level 2 (L2)
+Company         : Optisol Business Solutions
+Location        : Madurai, TamilNadu, India
+Email           : ashikroshan261@gmail.com
+GitHub          : github.com/AshikRoshan-github
+LinkedIn        : linkedin.com/in/ashik-roshan-i-073897249
+Medium          : medium.com/@ashikroshan261
+Experience      : 2+ years (Jun 2023 – Present)
+Summary         : Results-driven Data & AI Engineer delivering scalable ETL/ELT pipelines, enterprise cloud migrations, and production-grade AI automation. Specialises in Snowflake, Azure, AWS, LangChain, and GenAI agent design. MVP award winner, 7x Spot Award recipient.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECTION 2 — PROFESSIONAL EXPERIENCE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2 — EXPERIENCE
+1. Data Engineer L2 | Optisol Business Solutions | Apr 2025 – Present
+   - Led cross-functional teams on enterprise cloud migrations
+   - Architected Snowflake DWH with dbt ELT pipelines
+   - Built GenAI agents with Azure OpenAI and LangChain
+   - Designed Neo4j knowledge graphs with RAG layers
+   - Mentored juniors; delivered college tech sessions
+   - CTO Spot Award: project excellence & leadership
 
-Role 1: Data Engineer — L2 | Optisol Business Solutions | Apr 2025 – Present
-  - Led cross-functional teams on enterprise cloud migrations
-  - Architected Snowflake Data Warehouse with dbt ELT pipelines
-  - Built production GenAI agents using Azure OpenAI and LangChain
-  - Designed knowledge graphs with Neo4j and RAG query layers
-  - Mentored junior engineers; conducted college tech sessions
-  - CTO-recognized Spot Award for project excellence
+2. Data Engineer L1 | Optisol Business Solutions | Aug 2024 – Mar 2025
+   - Python ETL pipelines for Azure SQL
+   - AI-powered data profiling platforms
+   - Self-healing AI Pandas code generation agent
+   - Ontology Mapping tool — 40–50% manual effort reduction
 
-Role 2: Data Engineer — L1 | Optisol Business Solutions | Aug 2024 – Mar 2025
-  - Python-based ETL pipelines for Azure SQL
-  - AI-powered data profiling platforms with Azure OpenAI
-  - Automated web scraping with LangChain and Apify
-  - Ontology Mapping tool — 40-50% manual effort reduction
-  - Self-healing AI Pandas code generation agent
+3. Data Engineer Intern L0 | Optisol Business Solutions | Mar 2024 – Jul 2024
+   - Web extraction automation: Selenium, PyAutoGUI
+   - AI scraping tools: LangChain, Apify
 
-Role 3: Data Engineer Intern — L0 | Optisol Business Solutions | Mar 2024 – Jul 2024
-  - Web data extraction automation (Selenium, PyAutoGUI)
-  - AI scraping tools with LangChain and Apify cloud Actors
-  - i18n HTML validation tools
+4. Trainee Software Engineer | Blue Cloud | Jun 2023 – Mar 2024
+   - Full-stack web application development
+   - Automation and integration projects
 
-Role 4: Trainee — Software Engineer | Blue Cloud | Jun 2023 – Mar 2024
-  - Full-stack web applications
-  - Automation and integration projects
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECTION 3 — TECHNICAL SKILLS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Languages          : Python, SQL, JavaScript, HTML, CSS
-Cloud — Azure      : Blob Storage, Data Lake, SQL Database, Azure OpenAI, Databricks, ADF, Azure VM
-Cloud — AWS        : S3, Lambda, Glue, Step Functions, EC2, CloudWatch, Textract, Bedrock
-Data Engineering   : PySpark, DBT, Informatica, Snowflake, Pandas, ADF
-Databases          : SSMS, pgAdmin, MySQL, Oracle, SQL Server, Snowflake
-BI & Analytics     : Power BI, ThoughtSpot, Plotly, Streamlit
-AI & GenAI         : Azure OpenAI, Amazon Bedrock, Gemini 2.5 Pro, LangChain, Neo4j, RAG, Prompt Engineering, Azure Doc Intelligence
-Automation & Web   : Selenium, Web Scraping, FastAPI, PyAutoGUI, Apify, Flask
-DevOps & Tools     : GitHub, Azure DevOps, CI/CD, PuTTY, ServiceNow, Rally
-Python Libraries   : asyncio, PyVis, PyPDF2, pyodbc, Snowflake Connector, xmltodict, smtplib
+Languages: Python, SQL, JavaScript, HTML, CSS
+Cloud Azure: Blob Storage, Data Lake, SQL Database, Azure OpenAI, Databricks, ADF, Azure VM
+Cloud AWS: S3, Lambda, Glue, Step Functions, EC2, CloudWatch, Textract, Bedrock
+Data Engineering: PySpark, dbt, Informatica, Snowflake, Pandas, ADF
+Databases: SSMS, pgAdmin, MySQL, Oracle, SQL Server, Snowflake
+BI & Analytics: Power BI, ThoughtSpot, Plotly, Streamlit
+AI & GenAI: Azure OpenAI, Amazon Bedrock, Gemini 2.5 Pro, LangChain, Neo4j, RAG, Prompt Engineering, Azure Document Intelligence
+Automation: Selenium, Web Scraping, FastAPI, PyAutoGUI, Apify, Flask
+DevOps: GitHub, Azure DevOps, CI/CD, PuTTY, ServiceNow, Rally
+Libraries: asyncio, PyVis, PyPDF2, pyodbc, Snowflake Connector, xmltodict, smtplib
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECTION 4 — DATA ENGINEERING PROJECTS (4 Projects)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+SECTION 4 — DATA ENGINEERING PROJECTS
 DE-1: Python-Based Data Migration — Google Sheets to Azure SQL
-  Client: Internal | Optisol | Tech: Python, Pandas, gspread, pyodbc, Azure SQL, Azure VM, Cron Jobs
-  Full ETL pipeline: Google Sheets extraction, incremental/full load logic, Pandas transform, Cron automation.
+  Client: Internal Optisol | Stack: Python, Pandas, gspread, pyodbc, Azure SQL, Azure VM, Cron
+  Full ETL with incremental/full load, Pandas transforms, Cron automation on Azure VM.
 
 DE-2: On-Premises to Snowflake Data Warehouse Migration
-  Client: Republic Services | Optisol | Tech: Snowflake, Informatica, dbt, Oracle, SQL Server, AWS Step Functions, CloudWatch
-  Migrated 6 on-prem sources to Snowflake DWH. dbt ELT via CI/CD, AWS Step Functions orchestration, CloudWatch monitoring.
+  Client: Republic Services | Stack: Snowflake, Informatica, dbt, Oracle, SQL Server, AWS Step Functions, CloudWatch
+  Migrated 6 on-prem sources. dbt ELT via CI/CD, Step Functions orchestration, CloudWatch monitoring.
 
 DE-3: Enterprise DB Migration — Oracle to SQL Server
-  Client: Republic Services | Optisol | Tech: Oracle, SQL Server, Autogen ETL, T-SQL, ServiceNow
-  Autogen ETL framework for 5-layer pipeline: RAW > Staging > Mirror > Test > Production. ServiceNow change management.
+  Client: Republic Services | Stack: Oracle, SQL Server, Autogen ETL, T-SQL, ServiceNow
+  5-layer pipeline: RAW > Staging > Mirror > Test > Production. ServiceNow change management.
 
 DE-4: API-Driven Migration — Podio to Azure SQL
-  Client: Jiffy Cultural Exchange | Optisol | Tech: Python, REST API, Pandas, ADF, Azure SQL, Azure Blob, AzCopy
-  Podio REST API extraction, ADF pipeline, pyodbc fast_executemany bulk load, AzCopy document migration.
+  Client: Jiffy Cultural Exchange | Stack: Python, REST API, Pandas, ADF, Azure SQL, Azure Blob, AzCopy
+  Podio REST API extraction, ADF pipeline, pyodbc fast_executemany bulk load, AzCopy migration.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECTION 5 — AI & AUTOMATION PROJECTS (10 Projects)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5 — AI & AUTOMATION PROJECTS
+AI-1: Automated Web Data Extraction & Reporting | IBEAM | Selenium, PyAutoGUI, smtplib
+  Fully unattended browser automation: extract, process, SMTP email reports.
 
-AI-1: Automated Web Data Extraction & Reporting Platform
-  Client: IBEAM | Optisol | Tech: Selenium, PyAutoGUI, smtplib, Azure DevOps
-  Fully unattended browser automation: login, extract, process, report, email via SMTP.
+AI-2: AI-Driven Web Scraping — LangChain & Apify | IBEAM | Python, LangChain, Apify
+  Apify cloud Actors + LangChain for scalable AI-powered crawling.
 
-AI-2: AI-Driven Web Scraping — LangChain & Apify
-  Client: IBEAM | Optisol | Tech: Python, LangChain, Apify, REST APIs
-  Apify cloud Actors + LangChain for AI-powered scalable crawling to LLM-ready documents.
+AI-3: AI-Powered Data Profiling Platform | IBEAM | Azure OpenAI, Snowflake, Streamlit
+  AI anomaly detection, data quality insights, interactive dashboards.
 
-AI-3: AI-Powered Automated Data Profiling Platform
-  Client: IBEAM | Optisol | Tech: Azure OpenAI, Snowflake, Streamlit, Prompt Engineering
-  Multi-source profiling: anomaly detection, data quality insights, interactive Streamlit dashboards.
+AI-4: AI Pandas Agent — Self-Healing Code Generation | IBEAM | Azure OpenAI, Pandas
+  NL to Pandas code with self-healing: error > LLM context > auto-corrected code.
 
-AI-4: AI Pandas Agent — Self-Healing Code Generation
-  Client: IBEAM | Optisol | Tech: Azure OpenAI, Pandas, Python
-  NL to Pandas code with self-healing loop: runtime error -> LLM context -> auto-regenerated corrected code.
+AI-5: Ontology Kit — Data Mapping Agent | IBEAM | Gemini 2.5 Pro, Streamlit, Pandas
+  Reduces ontology mapping effort 40–50%. Client praised during on-site demo.
 
-AI-5: Ontology Kit — Data Mapping Agent
-  Client: IBEAM | Optisol | Tech: Gemini 2.5 Pro, Streamlit, Pandas, PyODBC
-  AI ontology mapping reducing manual effort 40-50%. Client praised during on-site visit.
+AI-6: AI Document Processing & Extraction | RS Hackathon | AWS Textract, Bedrock, Flask
+  Scanned PDF to structured JSON: OCR, semantic structuring, Flask REST API.
 
-AI-6: AI Document Processing & Structured Data Extraction
-  Client: RS Hackathon | Optisol | Tech: AWS Textract, Amazon Bedrock, EC2, S3, Flask
-  Scanned PDF/image to structured JSON: Textract OCR, Bedrock semantic structuring, Flask REST API.
+AI-7: Internationalization HTML Validation | Optisol | Python, HTML Parsing, i18n
+  Detects hard-coded strings, missing keys, generates JSON audit reports.
 
-AI-7: Internationalization HTML Validation Tool
-  Client: Optisol Internal | Tech: Python, HTML Parsing, i18n, JSON
-  Detects hard-coded strings, missing translation keys, generates JSON audit reports.
+AI-8: Automated Internationalization Workflow | IBEAM | Python, i18n, CI/CD
+  i18n locale file management, key validation, CI/CD integrated.
 
-AI-8: Automated Internationalization Workflow
-  Client: IBEAM | Optisol | Tech: Python, i18n, Batch Processing, CI/CD
-  Manages i18n locale files, validates keys, syncs translations, CI/CD integrated.
+AI-9: Credit Risk Reporting Platform | Atradius | Gemini 2.5 Pro, asyncio, Plotly
+  40+ credit risk blocks, token-bucket async limiter, asyncio.gather parallel dispatch.
 
-AI-9: Credit Risk Reporting & JSON Intelligence Platform
-  Client: Atradius | Optisol | Tech: Gemini 2.5 Pro, asyncio, Plotly, JSON
-  40+ credit risk blocks, token-bucket async rate limiter, asyncio.gather parallel LLM dispatch, Plotly viz.
+AI-10: Knowledge Graph Builder with RAG | Internal | LangChain, Azure OpenAI, Neo4j, PyVis
+  PDF/DOCX/JSON/XML/SQL to knowledge graphs. Neo4j, RAG queries, PyVis visualization.
 
-AI-10: Knowledge Graph Builder (KGB) with RAG
-  Client: Internal | Optisol | Tech: LangChain, Azure OpenAI, Neo4j, PyVis, Streamlit, asyncio
-  PDF/DOCX/JSON/XML/SQL to knowledge graph: Neo4j persistence, RAG query layer, physics-simulated PyVis viz.
+SECTION 6 — AWARDS
+1. MVP Award 2024–25 — Highest org honor. Performance, leadership, business contribution.
+2. Spot Award Project Excellence & Leadership — Jan 2026 — CTO recognition.
+3. Spot Award RS ARP Project Go-Live — Nov 2025 — Beatty Go-Live & Delta Load.
+4. Spot Award AI Tool Innovation NotebookLLM — May 2025.
+5. Spot Award Community Mentorship — Mar 2025 — College student tech sessions.
+6. OKR Top Contributor Q4 — Oct–Dec 2024.
+7. Spot Award Client Excellence Ontology Mapping — Dec 2024.
+8. Spot Award Gen AI & Automation — Jul 2024.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECTION 6 — AWARDS (8 Awards)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. MVP Award 2024-25 — Highest org honor at Optisol. Performance excellence & leadership.
-2. Spot Award — Project Excellence & Leadership — Jan 2026 — CTO recognition.
-3. Spot Award — RS ARP Project Go-Live — Nov 2025 — Beatty Go-Live & Delta Load delivery.
-4. Spot Award — AI Tool Innovation (NotebookLLM) — May 2025 — Team adoption driver.
-5. Spot Award — Community Mentorship — Mar 2025 — College student tech sessions.
-6. OKR Top Contributor Q4 — Oct-Dec 2024 — Company-wide OKR achievement.
-7. Spot Award — Client Excellence (Ontology Mapping) — Dec 2024 — On-site client praise.
-8. Spot Award — Gen AI & Automation — Jul 2024 — GenAI inventory automation + DBT SME.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECTION 7 — CERTIFICATIONS (8)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 7 — CERTIFICATIONS
 1. SnowPro Core Certification — Snowflake
 2. Azure Data Fundamentals DP-900 — Microsoft
 3. Databricks Lakehouse Fundamentals — Databricks
@@ -166,690 +132,776 @@ SECTION 7 — CERTIFICATIONS (8)
 7. 100 Days of Code Python Pro Bootcamp — Udemy
 8. Snowflake Masterclass — Udemy
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECTION 8 — EDUCATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Degree: Bachelor of Engineering in Computer Science
-College: KLN College of Engineering
-Duration: 2019-2023 | Grade: A+
+College: KLN College of Engineering | 2019–2023 | Grade: A+
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECTION 9 — KEY STATS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- 2+ years experience | 14+ projects | 7 Spot Awards | 1 MVP Award | 8 certifications
-- Clients: Republic Services, Atradius, Jiffy Cultural Exchange, IBEAM
-- Youngest MVP at Optisol
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECTION 10 — CONTACT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Email: ashikroshan261@gmail.com
-GitHub: https://github.com/AshikRoshan-github
-LinkedIn: https://www.linkedin.com/in/ashik-roshan-i-073897249
-Medium: https://medium.com/@ashikroshan261
-
-INSTRUCTIONS: Answer accurately from the above. Be enthusiastic. Give full project details when asked. Never invent data. If unknown, suggest contacting via email.
+RULES: Answer only from above data. Never reveal your underlying technology. If asked what you are, say you are Ashik's portfolio assistant. For anything unknown, suggest emailing ashikroshan261@gmail.com.
 """
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  DATA
-# ══════════════════════════════════════════════════════════════════════════════
 SKILLS = [
     ("Languages",        ["Python", "SQL", "JavaScript", "HTML", "CSS"]),
     ("Cloud — Azure",    ["Blob Storage", "Data Lake", "SQL Database", "Azure OpenAI", "Databricks", "ADF", "Azure VM"]),
     ("Cloud — AWS",      ["S3", "Lambda", "Glue", "Step Functions", "EC2", "CloudWatch", "Textract", "Bedrock"]),
-    ("Data Engineering", ["PySpark", "DBT", "Informatica", "Snowflake", "Pandas", "ADF"]),
+    ("Data Engineering", ["PySpark", "dbt", "Informatica", "Snowflake", "Pandas", "ADF"]),
     ("Databases",        ["SSMS", "pgAdmin", "MySQL", "Oracle", "SQL Server", "Snowflake"]),
     ("BI & Analytics",   ["Power BI", "ThoughtSpot", "Plotly", "Streamlit"]),
     ("AI & GenAI",       ["Azure OpenAI", "Amazon Bedrock", "Gemini 2.5 Pro", "LangChain", "Neo4j", "RAG", "Prompt Engineering", "Azure Doc Intelligence"]),
-    ("Automation & Web", ["Selenium", "Web Scraping", "FastAPI", "PyAutoGUI", "Apify", "Flask"]),
+    ("Automation",       ["Selenium", "Web Scraping", "FastAPI", "PyAutoGUI", "Apify", "Flask"]),
     ("DevOps & Tools",   ["GitHub", "Azure DevOps", "CI/CD", "PuTTY", "ServiceNow", "Rally"]),
     ("Libraries",        ["asyncio", "PyVis", "PyPDF2", "pyodbc", "Snowflake Connector", "xmltodict", "smtplib"]),
 ]
+
 EXP = [
-    ("Data Engineer — L2",          "Optisol Business Solutions", "Apr 2025", "Present",
-     ["Led cross-functional teams on enterprise cloud migrations","Architected Snowflake DWH with dbt ELT pipelines","Built GenAI agents with Azure OpenAI & LangChain","Mentored junior engineers; conducted college sessions"]),
-    ("Data Engineer — L1",          "Optisol Business Solutions", "Aug 2024", "Mar 2025",
-     ["Python ETL pipelines for Azure SQL","AI-powered data profiling platforms","Knowledge graph system using Neo4j and RAG","Self-healing AI Pandas code agent"]),
-    ("Data Engineer Intern — L0",   "Optisol Business Solutions", "Mar 2024", "Jul 2024",
-     ["Automated web extraction with Selenium & PyAutoGUI","AI scraping tools with LangChain and Apify"]),
-    ("Trainee — Software Engineer", "Blue Cloud",                 "Jun 2023", "Mar 2024",
-     ["Full-stack web application development","Automation and integration projects"]),
+    ("Data Engineer — L2", "Optisol Business Solutions", "Apr 2025", "Present",
+     ["Led cross-functional teams on enterprise cloud migrations",
+      "Architected Snowflake Data Warehouse with dbt ELT pipelines",
+      "Built production GenAI agents with Azure OpenAI and LangChain",
+      "Designed knowledge graphs with Neo4j and RAG query layers",
+      "Mentored junior engineers and conducted college tech sessions"]),
+    ("Data Engineer — L1", "Optisol Business Solutions", "Aug 2024", "Mar 2025",
+     ["Developed Python ETL pipelines for Azure SQL",
+      "Implemented AI-powered data profiling platforms",
+      "Built self-healing AI Pandas code generation agent",
+      "Delivered Ontology Mapping tool — 40–50% effort reduction"]),
+    ("Data Engineer Intern — L0", "Optisol Business Solutions", "Mar 2024", "Jul 2024",
+     ["Automated web extraction with Selenium and PyAutoGUI",
+      "Built AI scraping tools with LangChain and Apify"]),
+    ("Trainee — Software Engineer", "Blue Cloud", "Jun 2023", "Mar 2024",
+     ["Full-stack web application development",
+      "Automation and integration projects"]),
 ]
+
 DE_PROJ = [
-    ("#1","Python-Based Data Migration: Google Sheets → Azure SQL","Data Engineer","Internal | Optisol",
-     ["Python","Pandas","gspread","pyodbc","Azure SQL","Azure VM","Cron Jobs"],
-     "Cost-effective ETL: Google Sheets extraction, full & incremental load, Pandas transforms, Cron-scheduled automation on Azure VM."),
-    ("#2","On-Premises → Snowflake Data Warehouse Migration","Data Engineer","Republic Services | Optisol",
-     ["Snowflake","Informatica","dbt","Oracle","SQL Server","AWS Step Functions","CloudWatch"],
-     "Migrated 6 on-prem sources to Snowflake DWH. dbt ELT via GitHub CI/CD, Step Functions orchestration, CloudWatch monitoring."),
-    ("#3","Enterprise DB Migration: Oracle → SQL Server","Data Engineer","Republic Services | Optisol",
-     ["Oracle","SQL Server","Autogen ETL","T-SQL","ServiceNow"],
-     "Autogen ETL framework for 5-layer pipeline: RAW → Staging → Mirror → Test → Production with ServiceNow change management."),
-    ("#4","API-Driven Migration: Podio → Azure SQL","Data Engineer","Jiffy Cultural Exchange | Optisol",
-     ["Python","REST API","Pandas","ADF","Azure SQL","Azure Blob","AzCopy"],
-     "Podio REST API extraction → ADF transform → Azure SQL bulk load via pyodbc fast_executemany. AzCopy for document migration."),
+    ("01","Python-Based Data Migration","Google Sheets to Azure SQL — full and incremental load ETL with Pandas transforms, gspread API integration, pyodbc connectivity, and Cron-scheduled automation on Azure VM.",
+     "Data Engineer","Internal — Optisol",["Python","Pandas","gspread","pyodbc","Azure SQL","Azure VM","Cron"]),
+    ("02","On-Premises to Snowflake Data Warehouse","Migrated 6 on-prem source systems to Snowflake DWH. dbt ELT via GitHub CI/CD, Informatica extraction, AWS Step Functions orchestration, CloudWatch monitoring.",
+     "Data Engineer","Republic Services — Optisol",["Snowflake","Informatica","dbt","Oracle","SQL Server","AWS Step Functions","CloudWatch"]),
+    ("03","Enterprise DB Migration — Oracle to SQL Server","Autogen ETL framework automating schema conversion across a 5-layer pipeline: RAW to Staging to Mirror to Test to Production with ServiceNow change management.",
+     "Data Engineer","Republic Services — Optisol",["Oracle","SQL Server","Autogen ETL","T-SQL","ServiceNow"]),
+    ("04","API-Driven Migration — Podio to Azure SQL","Podio REST API extraction, ADF pipeline transformation, high-performance bulk load into Azure SQL using pyodbc fast_executemany, AzCopy for document migration.",
+     "Data Engineer","Jiffy Cultural Exchange — Optisol",["Python","REST API","Pandas","ADF","Azure SQL","Azure Blob","AzCopy"]),
 ]
+
 AI_PROJ = [
-    ("#1","Automated Web Data Extraction & Reporting","Automation Eng.","IBEAM | Optisol",
-     ["Selenium","PyAutoGUI","smtplib","Azure DevOps"],
-     "Fully unattended browser automation: login, extract, process reports, SMTP email distribution on schedule."),
-    ("#2","AI-Driven Web Scraping — LangChain & Apify","Automation Eng.","IBEAM | Optisol",
-     ["Python","LangChain","Apify","REST APIs"],
-     "Apify cloud Actors + LangChain for scalable AI-powered crawling. Converts web content to LLM-ready structured docs."),
-    ("#3","AI-Powered Automated Data Profiling Platform","Data & AI Eng.","IBEAM | Optisol",
-     ["Azure OpenAI","Snowflake","Streamlit","Prompt Engineering"],
-     "Multi-source profiling platform: AI-driven anomaly detection, quality insights, interactive Streamlit dashboards."),
-    ("#4","AI Pandas Agent — Self-Healing Code Generation","Data & AI Eng.","IBEAM | Optisol",
-     ["Azure OpenAI","Pandas","Python"],
-     "NL → Pandas code with self-healing loop: runtime error → LLM context → auto-regenerated corrected code."),
-    ("#5","Ontology Kit — Data Mapping Agent","Data & AI Eng.","IBEAM | Optisol",
-     ["Gemini 2.5 Pro","Streamlit","Pandas","PyODBC"],
-     "AI ontology mapping reducing manual effort 40–50%. Protocol-based domain understanding, praised by client on-site."),
-    ("#6","AI Document Processing & Structured Extraction","AI Engineer","RS Hackathon | Optisol",
-     ["AWS Textract","Amazon Bedrock","EC2","S3","Flask"],
-     "Scanned PDFs → structured JSON: Textract OCR, Bedrock semantic structuring, Flask REST API on EC2."),
-    ("#7","Internationalization HTML Validation Tool","AI/Data Eng.","Optisol",
-     ["Python","HTML Parsing","i18n","JSON"],
-     "Detects hard-coded strings, flags missing translation keys, generates JSON audit reports for i18n readiness."),
-    ("#8","Automated Internationalization Workflow","Automation Eng.","IBEAM | Optisol",
-     ["Python","i18n","Batch Processing","CI/CD"],
-     "Manages i18n locale files across languages, validates keys, syncs translations, fully CI/CD integrated."),
-    ("#9","Credit Risk Reporting & JSON Intelligence Platform","Data & AI Eng.","Atradius | Optisol",
-     ["Gemini 2.5 Pro","asyncio","Plotly","JSON"],
-     "40+ credit risk blocks, token-bucket async limiter, asyncio.gather parallel LLM dispatch, Plotly visualizations."),
-    ("#10","Knowledge Graph Builder (KGB) with RAG","Data & AI Eng.","Internal | Optisol",
-     ["LangChain","Azure OpenAI","Neo4j","PyVis","Streamlit","asyncio"],
-     "PDF/DOCX/JSON/XML/SQL → knowledge graphs. Neo4j persistence, RAG query layer, physics-simulated PyVis visualization."),
+    ("01","Automated Web Data Extraction & Reporting","Fully unattended browser automation: scheduled login, data extraction, file processing, structured report generation, and SMTP email distribution.",
+     "Automation Engineer","IBEAM — Optisol",["Selenium","PyAutoGUI","smtplib","Azure DevOps"]),
+    ("02","AI-Driven Web Scraping — LangChain & Apify","Apify cloud Actors integrated with LangChain for scalable AI-powered crawling. Transforms scraped content into LLM-ready structured documents for downstream pipelines.",
+     "Automation Engineer","IBEAM — Optisol",["Python","LangChain","Apify","REST APIs"]),
+    ("03","AI-Powered Automated Data Profiling","Multi-source profiling generating AI-driven anomaly detection reports, data quality insights, and distribution analysis via interactive dashboards.",
+     "Data & AI Engineer","IBEAM — Optisol",["Azure OpenAI","Snowflake","Streamlit","Prompt Engineering"]),
+    ("04","AI Pandas Agent — Self-Healing Code","Natural language to Pandas code with a self-healing loop. On runtime error, exception context is sent to the AI model which auto-generates corrected transformation code.",
+     "Data & AI Engineer","IBEAM — Optisol",["Azure OpenAI","Pandas","Python"]),
+    ("05","Ontology Kit — Data Mapping Agent","AI-driven ontology mapping reducing manual effort by 40–50%. Protocol-based domain understanding, auto-generated metadata, sample data integration. Praised by client on-site.",
+     "Data & AI Engineer","IBEAM — Optisol",["Gemini 2.5 Pro","Streamlit","Pandas","PyODBC"]),
+    ("06","AI Document Processing & Extraction","Scanned PDFs and images to structured JSON pipeline. OCR extraction, semantic structuring via AI, Flask REST API orchestrates the full pipeline with S3 document storage.",
+     "AI Engineer","RS Hackathon — Optisol",["AWS Textract","Amazon Bedrock","EC2","S3","Flask"]),
+    ("07","Internationalization HTML Validation","Analyzes HTML for i18n readiness: detects hard-coded strings, flags missing translation keys, validates i18n attributes, generates structured JSON audit reports.",
+     "AI / Data Engineer","Optisol Internal",["Python","HTML Parsing","i18n","JSON"]),
+    ("08","Automated Internationalization Workflow","Framework managing i18n locale files across multiple languages. Validates keys, syncs translations, detects missing entries, integrated into CI/CD pipelines.",
+     "Automation Engineer","IBEAM — Optisol",["Python","i18n","Batch Processing","CI/CD"]),
+    ("09","Credit Risk Reporting & JSON Intelligence","Automated pipeline for 40+ credit risk data blocks. Token-bucket async rate limiter, parallel AI dispatch, section-based prompting, interactive Plotly visualizations.",
+     "Data & AI Engineer","Atradius — Optisol",["Gemini 2.5 Pro","asyncio","Plotly","JSON"]),
+    ("10","Knowledge Graph Builder with RAG","Transforms PDF, DOCX, JSON, XML, and SQL into interactive knowledge graphs. Persistent graph storage, RAG query layer for natural language querying, physics-simulated visualization.",
+     "Data & AI Engineer","Internal — Optisol",["LangChain","Azure OpenAI","Neo4j","PyVis","Streamlit","asyncio"]),
 ]
+
 AWARDS = [
-    ("🏆","Most Valuable Person (MVP) Award","2024–25","Highest organizational honor. Performance excellence, cross-functional leadership, long-term business contribution. One of the youngest recipients at Optisol."),
-    ("🥇","Spot Award — Project Excellence & Leadership","Jan 2026","Awarded by the CTO for mature project handling and fostering a culture of peer recognition."),
-    ("🥇","Spot Award — RS ARP Project Go-Live","Nov 2025","Exceptional contribution to Beatty Go-Live rollout and Delta Load delivery under tight enterprise timelines."),
-    ("🥇","Spot Award — AI Tool Innovation (NotebookLLM)","May 2025","Evaluated, demonstrated, and drove team-wide adoption of NotebookLLM."),
-    ("🥇","Spot Award — Community Mentorship","Mar 2025","Technical sessions for college students on interview prep and emerging Data & AI technologies."),
-    ("🥇","OKR Top Contributor (Q4)","Oct–Dec 2024","Pivotal role in achieving company-wide Q4 Objectives and Key Results."),
-    ("🥇","Spot Award — Client Excellence (Ontology Mapping)","Dec 2024","High praise from client during on-site Ontology Mapping platform demo."),
-    ("🥇","Spot Award — Gen AI & Automation","Jul 2024","GenAI data inventory automation and SME for resolving critical DBT blockers."),
+    ("Most Valuable Person — MVP Award","2024–25","Highest organizational honor at Optisol for performance excellence, cross-functional leadership, and long-term business contribution. One of the youngest recipients."),
+    ("Spot Award — Project Excellence & Leadership","Jan 2026","Awarded by the CTO for mature project handling, strong ownership, and fostering a culture of peer recognition within the team."),
+    ("Spot Award — RS ARP Project Go-Live","Nov 2025","Exceptional contribution to the Beatty Go-Live rollout and complex Delta Load feature delivery under tight enterprise timelines."),
+    ("Spot Award — AI Tool Innovation","May 2025","Evaluated, demonstrated, and drove team-wide adoption of NotebookLLM to enhance project documentation and knowledge sharing."),
+    ("Spot Award — Community Mentorship","Mar 2025","Conducted technical sessions for college students on interview preparation, career guidance, and emerging Data & AI technologies."),
+    ("OKR Top Contributor — Q4","Oct–Dec 2024","Pivotal role in achieving company-wide Objectives and Key Results for Q4 2024."),
+    ("Spot Award — Client Excellence","Dec 2024","Received direct high praise from the client during an on-site visit for the Ontology Mapping platform presentation and live demo."),
+    ("Spot Award — Gen AI & Automation","Jul 2024","Recognized for GenAI-based data inventory automation and serving as Subject Matter Expert to resolve critical dbt pipeline blockers."),
 ]
+
 CERTS = [
-    ("❄️","SnowPro Core Certification","Snowflake"),
-    ("☁️","Azure Data Fundamentals (DP-900)","Microsoft"),
-    ("🧱","Databricks Lakehouse Fundamentals","Databricks"),
-    ("🤖","Generative AI Fundamentals","Databricks"),
-    ("🔧","dbt Learn Fundamentals","dbt Labs"),
-    ("💾","SQL (Basic) Certificate","HackerRank"),
-    ("🐍","100 Days of Code: Python Pro Bootcamp","Udemy"),
-    ("❄️","Snowflake Masterclass","Udemy"),
+    ("SnowPro Core Certification","Snowflake"),
+    ("Azure Data Fundamentals — DP-900","Microsoft"),
+    ("Databricks Lakehouse Fundamentals","Databricks"),
+    ("Generative AI Fundamentals","Databricks"),
+    ("dbt Learn Fundamentals","dbt Labs"),
+    ("SQL Basic Certificate","HackerRank"),
+    ("100 Days of Code: Python Pro Bootcamp","Udemy"),
+    ("Snowflake Masterclass","Udemy"),
 ]
+
 RESUME_URL = "https://github.com/AshikRoshan-github/Professional-Work-Archive/raw/main/Resume_Center/Data%26AI_1360.docx"
-PAGES = ["🏠  Home", "⚡  Skills", "💼  Experience", "🚀  Projects", "🏆  Awards & Certs", "🎓  Education", "🤖  Chat with AI"]
+PAGES = ["Home","Skills","Experience","Projects","Awards","Education","Assistant"]
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  CSS — Snowflake White/Blue Theme
+#  CSS
 # ══════════════════════════════════════════════════════════════════════════════
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@300;400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap');
 
-*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 #MainMenu,footer,header,.stDeployButton,
 [data-testid="stToolbar"],[data-testid="stDecoration"],
-[data-testid="stStatusWidget"]{ display:none !important; }
-.block-container { padding:0 !important; max-width:100% !important; }
-section[data-testid="stSidebar"] { display:none !important; }
+[data-testid="stStatusWidget"]{display:none!important}
+.block-container{padding:0!important;max-width:100%!important}
+section[data-testid="stSidebar"]{display:none!important}
 
 :root{
-  --snow:    #FFFFFF;
-  --ice:     #F0F6FF;
-  --frost:   #E1EEFF;
-  --mist:    #C8DCFF;
-  --blue:    #0B66FF;
-  --blue2:   #0052D4;
-  --blue3:   #003EA6;
-  --sky:     #EBF4FF;
-  --ink:     #0A1628;
-  --ink2:    #1E3A5F;
-  --ink3:    #3D6091;
-  --muted:   #7B9EC4;
-  --border:  #D0E3FF;
-  --border2: #B0CCFF;
+  --navy:#0D1B2E;
+  --navy2:#152642;
+  --navy3:#1E3A5F;
+  --blue:#1A56DB;
+  --blue2:#1347C0;
+  --blue-lt:#EBF2FF;
+  --blue-md:#DBEAFE;
+  --white:#FFFFFF;
+  --off:#F7F9FC;
+  --off2:#EFF3F8;
+  --silver:#D4DCE8;
+  --silver2:#B8C6D8;
+  --slate:#546E8A;
+  --body:#1E3248;
+  --dark:#0A1520;
 }
 
-.stApp { background:var(--snow); font-family:'Inter',sans-serif; color:var(--ink); }
+.stApp{background:var(--white);font-family:'Manrope',system-ui,sans-serif;color:var(--body)}
 
-@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
-.fade { animation:fadeUp 0.5s ease both; }
-.d1{animation-delay:.05s} .d2{animation-delay:.12s} .d3{animation-delay:.2s} .d4{animation-delay:.3s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.rise{animation:rise .55s cubic-bezier(.22,.68,0,1.1) both}
+.r1{animation-delay:.05s}.r2{animation-delay:.13s}.r3{animation-delay:.22s}.r4{animation-delay:.32s}.r5{animation-delay:.44s}
 
-/* ══ NAV BAR ══ */
-.topnav {
-  background:var(--snow);
-  border-bottom: 2px solid var(--blue);
-  display:flex; align-items:center; justify-content:space-between;
-  padding:0 48px; height:62px;
-  position:sticky; top:0; z-index:500;
-  box-shadow: 0 2px 20px rgba(11,102,255,0.08);
+/* BRAND BAR */
+.brand-bar{
+  background:var(--navy);
+  height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 64px;
+  position:sticky;top:0;z-index:600;
+  box-shadow:0 1px 0 rgba(255,255,255,0.06);
 }
-.nav-brand {
-  display:flex; align-items:center; gap:10px;
-  font-family:'Sora',sans-serif; font-size:16px; font-weight:700; color:var(--ink);
+.brand-name{
+  font-family:'Libre Baskerville',Georgia,serif;
+  font-size:21px;font-weight:700;color:white;letter-spacing:-.3px;
 }
-.nav-logo {
-  width:32px; height:32px; background:var(--blue);
-  border-radius:6px; display:flex; align-items:center; justify-content:center;
-  font-size:18px;
+.brand-name em{font-style:italic;font-weight:400;color:#7EABD6}
+.brand-links{display:flex;align-items:center;gap:6px}
+.brand-link{
+  font-family:'Manrope',sans-serif;
+  font-size:13px;font-weight:600;color:rgba(255,255,255,0.6);
+  text-decoration:none;padding:6px 14px;border-radius:4px;
+  transition:color .15s,background .15s;
 }
-.nav-tagline { font-size:11px; font-weight:400; color:var(--muted); margin-left:4px; letter-spacing:.5px; }
+.brand-link:hover{color:white;background:rgba(255,255,255,0.08)}
+.brand-divider{color:rgba(255,255,255,0.18);font-size:11px;margin:0 2px}
+.brand-resume{
+  font-family:'Manrope',sans-serif;
+  font-size:12px;font-weight:700;color:var(--navy);
+  background:white;padding:7px 18px;border-radius:4px;
+  text-decoration:none;letter-spacing:.4px;text-transform:uppercase;
+  transition:background .15s;margin-left:8px;
+}
+.brand-resume:hover{background:#E8F0FF}
 
-/* ══ HERO ══ */
-.hero-outer {
-  background: linear-gradient(135deg, var(--ink) 0%, var(--ink2) 60%, var(--blue3) 100%);
-  padding:72px 56px 64px; position:relative; overflow:hidden;
+/* NAV — st.radio */
+div[data-testid="stRadio"]{
+  background:var(--white);
+  border-bottom:2px solid var(--silver);
+  position:sticky;top:60px;z-index:500;
+  box-shadow:0 2px 16px rgba(13,27,46,0.05);
 }
-.hero-outer::before {
-  content:'';
-  position:absolute; inset:0;
-  background-image:
-    radial-gradient(circle at 20% 80%, rgba(11,102,255,0.25) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(11,102,255,0.2) 0%, transparent 50%);
+div[data-testid="stRadio"]>label{display:none!important}
+div[data-testid="stRadio"]>div{
+  display:flex!important;flex-direction:row!important;
+  gap:0!important;padding:0 64px!important;
+  background:transparent!important;flex-wrap:nowrap!important;
+  overflow-x:auto!important;
 }
-.hero-grid { display:grid; grid-template-columns:1fr 340px; gap:64px; align-items:start; max-width:1200px; margin:0 auto; position:relative; z-index:2; }
-.hero-eyebrow {
-  font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase;
-  color:var(--blue); background:rgba(11,102,255,0.15); border:1px solid rgba(11,102,255,0.3);
-  display:inline-flex; align-items:center; gap:8px;
-  padding:5px 14px; border-radius:100px; margin-bottom:24px;
+div[data-testid="stRadio"]>div>label{
+  background:transparent!important;border:none!important;
+  border-bottom:3px solid transparent!important;border-radius:0!important;
+  padding:17px 22px 14px!important;
+  font-family:'Manrope',sans-serif!important;
+  font-size:14px!important;font-weight:500!important;
+  color:var(--slate)!important;cursor:pointer!important;
+  transition:color .15s,border-color .15s!important;white-space:nowrap!important;
 }
-.hero-name {
-  font-family:'Sora',sans-serif;
-  font-size:clamp(44px,6vw,80px); font-weight:800;
-  line-height:1; letter-spacing:-2.5px; color:white; margin-bottom:8px;
+div[data-testid="stRadio"]>div>label:hover{color:var(--navy)!important;background:var(--off)!important}
+div[data-testid="stRadio"]>div>label:has(input:checked){
+  color:var(--navy)!important;border-bottom:3px solid var(--blue)!important;
+  font-weight:700!important;background:transparent!important;
 }
-.hero-name-sub {
-  font-family:'Sora',sans-serif;
-  font-size:clamp(16px,2.5vw,24px); font-weight:300;
-  color:rgba(255,255,255,0.55); letter-spacing:-0.5px; margin-bottom:28px;
+div[data-testid="stRadio"] div[data-testid="stMarkdownContainer"] p{
+  font-size:14px!important;font-family:'Manrope',sans-serif!important;
 }
-.hero-rule { width:48px; height:3px; background:var(--blue); border-radius:2px; margin-bottom:24px; }
-.hero-bio { font-size:15px; line-height:1.85; color:rgba(255,255,255,0.75); font-weight:300; max-width:520px; }
-.hero-bio strong { color:white; font-weight:600; }
+div[data-testid="stRadio"] [data-baseweb="radio"]>div:first-child{display:none!important}
 
-/* Stats strip */
-.hero-stats { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:32px; }
-.hstat {
-  background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
-  border-radius:8px; padding:16px 18px; backdrop-filter:blur(4px);
+/* HERO */
+.hero{
+  background:var(--navy);
+  padding:96px 64px 88px;
+  position:relative;overflow:hidden;
 }
-.hstat-n { font-family:'Sora',sans-serif; font-size:28px; font-weight:700; color:white; letter-spacing:-1px; line-height:1; }
-.hstat-n em { color:var(--blue); font-style:normal; }
-.hstat-l { font-size:10px; font-weight:500; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-top:3px; }
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 90% at 75% 40%,rgba(26,86,219,0.16) 0%,transparent 65%),
+             radial-gradient(ellipse 40% 50% at 10% 90%,rgba(26,86,219,0.07) 0%,transparent 60%);
+}
+.hero-grid{
+  display:grid;grid-template-columns:1fr 400px;gap:80px;
+  align-items:start;max-width:1280px;margin:0 auto;position:relative;z-index:2;
+}
+.hero-kicker{
+  font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  color:rgba(126,171,214,0.85);margin-bottom:22px;
+}
+.hero-name{
+  font-family:'Libre Baskerville',Georgia,serif;
+  font-size:clamp(56px,7vw,96px);font-weight:700;
+  color:white;line-height:.93;letter-spacing:-3px;margin-bottom:8px;
+}
+.hero-name em{font-style:italic;font-weight:400;color:#7EABD6}
+.hero-subtitle{
+  font-family:'Manrope',sans-serif;font-size:17px;font-weight:400;
+  color:rgba(255,255,255,0.45);letter-spacing:.3px;margin-bottom:40px;
+}
+.hero-rule{width:48px;height:2px;background:var(--blue);border-radius:1px;margin-bottom:28px}
+.hero-bio{
+  font-family:'Manrope',sans-serif;font-size:18px;line-height:1.85;
+  color:rgba(255,255,255,0.7);font-weight:300;max-width:580px;
+}
+.hero-bio strong{color:white;font-weight:700}
+.hero-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.07);
+  border-radius:8px;overflow:hidden;margin-top:44px;
+}
+.hstat{background:rgba(255,255,255,0.03);padding:24px 20px;transition:background .2s}
+.hstat:hover{background:rgba(255,255,255,0.07)}
+.hstat-n{
+  font-family:'Libre Baskerville',Georgia,serif;
+  font-size:40px;font-weight:700;color:white;
+  letter-spacing:-1.5px;line-height:1;
+}
+.hstat-n em{color:#6B9FDB;font-style:normal}
+.hstat-l{
+  font-family:'Manrope',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(255,255,255,0.35);margin-top:6px;
+}
 
 /* Contact card */
-.contact-card {
-  background:white; border-radius:12px; padding:28px 24px;
-  box-shadow:0 8px 40px rgba(0,0,0,0.25);
-  position:sticky; top:80px;
+.ccard{background:white;border-radius:10px;overflow:hidden;box-shadow:0 28px 72px rgba(0,0,0,0.32)}
+.ccard-head{background:var(--blue);padding:24px 30px}
+.ccard-ht{font-family:'Libre Baskerville',serif;font-size:18px;font-style:italic;color:white}
+.ccard-hs{font-family:'Manrope',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-top:3px}
+.ccard-body{padding:24px 30px}
+.clink{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px 0;border-bottom:1px solid var(--off2);text-decoration:none;
 }
-.cc-title { font-family:'Sora',sans-serif; font-size:14px; font-weight:700; color:var(--ink); margin-bottom:20px; padding-bottom:14px; border-bottom:2px solid var(--frost); display:flex; align-items:center; gap:8px; }
-.cc-title::before { content:''; width:4px; height:16px; background:var(--blue); border-radius:2px; }
-.cc-row { display:flex; align-items:center; gap:11px; margin-bottom:12px; text-decoration:none; padding:8px 10px; border-radius:6px; transition:background .15s; }
-.cc-row:hover { background:var(--ice); }
-.cc-icon { width:28px; height:28px; background:var(--frost); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; color:var(--blue2); }
-.cc-lbl { font-size:9px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--muted); }
-.cc-val { font-size:12px; color:var(--ink2); font-weight:500; }
-.cc-resume {
-  display:block; text-align:center; background:var(--blue); color:white;
-  font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase;
-  padding:12px 16px; border-radius:8px; text-decoration:none; margin-top:16px;
-  transition:background .15s, transform .15s; box-shadow:0 4px 14px rgba(11,102,255,0.35);
+.clink:last-of-type{border-bottom:none}
+.clink-l{display:flex;flex-direction:column;gap:2px}
+.clink-pl{
+  font-family:'Manrope',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--slate);
 }
-.cc-resume:hover { background:var(--blue2); transform:translateY(-1px); }
+.clink-nm{
+  font-family:'Manrope',sans-serif;font-size:15px;font-weight:600;
+  color:var(--navy);transition:color .12s;
+}
+.clink:hover .clink-nm{color:var(--blue)}
+.clink-ar{font-size:15px;color:var(--silver2);transition:color .12s,transform .15s}
+.clink:hover .clink-ar{color:var(--blue);transform:translateX(4px)}
+.ccard-dl{
+  display:block;text-align:center;background:var(--navy);color:white;
+  font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:14px 20px;margin-top:18px;border-radius:6px;text-decoration:none;
+  transition:background .15s,transform .15s;
+}
+.ccard-dl:hover{background:var(--navy2);transform:translateY(-1px)}
 
-/* ══ SECTION WRAPPER ══ */
-.sec { padding:56px 56px 64px; max-width:1200px; margin:0 auto; }
-.sec-label {
-  font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
-  color:var(--blue); margin-bottom:8px;
-  display:flex; align-items:center; gap:10px;
+/* PAGE SHELL */
+.pg{padding:80px 64px 88px;max-width:1280px;margin:0 auto}
+.pg-kicker{
+  font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;color:var(--blue);
+  margin-bottom:12px;display:flex;align-items:center;gap:14px;
 }
-.sec-label::before { content:''; width:24px; height:2px; background:var(--blue); border-radius:1px; }
-.sec-title { font-family:'Sora',sans-serif; font-size:clamp(28px,4vw,46px); font-weight:700; color:var(--ink); letter-spacing:-1.5px; margin-bottom:36px; line-height:1.1; }
-.sec-title em { font-style:normal; color:var(--blue); }
+.pg-kicker::before{content:'';width:32px;height:2px;background:var(--blue);flex-shrink:0}
+.pg-title{
+  font-family:'Libre Baskerville',Georgia,serif;
+  font-size:clamp(38px,4.5vw,60px);font-weight:700;
+  color:var(--navy);letter-spacing:-2px;line-height:1.05;margin-bottom:52px;
+}
+.pg-title em{font-style:italic;font-weight:400;color:var(--blue)}
 
-/* ══ SKILLS ══ */
-.skill-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
-.skill-row { background:var(--snow); padding:14px 20px; display:flex; gap:16px; align-items:flex-start; transition:background .15s; }
-.skill-row:hover { background:var(--ice); }
-.skill-cat { font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--blue); min-width:106px; padding-top:4px; flex-shrink:0; }
-.skill-tags { display:flex; flex-wrap:wrap; gap:5px; }
-.stag { font-size:11.5px; color:var(--ink2); background:var(--sky); padding:3px 9px; border-radius:4px; border:1px solid var(--border); font-weight:500; transition:all .15s; cursor:default; }
-.stag:hover { background:var(--blue); color:white; border-color:var(--blue); }
+/* SKILLS */
+.skill-wrap{border:1px solid var(--silver);border-radius:8px;overflow:hidden}
+.skill-row{
+  display:grid;grid-template-columns:190px 1fr;
+  border-bottom:1px solid var(--silver);transition:background .15s;
+}
+.skill-row:last-child{border-bottom:none}
+.skill-row:hover{background:var(--blue-lt)}
+.skill-cat{
+  padding:18px 24px;font-family:'Manrope',sans-serif;
+  font-size:12px;font-weight:700;letter-spacing:.5px;
+  color:var(--navy);text-transform:uppercase;
+  background:var(--off);border-right:1px solid var(--silver);
+  display:flex;align-items:center;
+}
+.skill-vals{padding:16px 20px;display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+.sv{
+  font-family:'Manrope',sans-serif;font-size:14px;font-weight:500;
+  color:var(--navy3);background:white;
+  border:1px solid var(--silver);padding:5px 13px;border-radius:4px;
+  transition:all .15s;cursor:default;
+}
+.sv:hover{background:var(--blue);color:white;border-color:var(--blue)}
 
-/* ══ TIMELINE ══ */
-.tl-item { display:grid; grid-template-columns:160px 3px 1fr; gap:0 28px; padding:28px 0; border-bottom:1px solid var(--frost); align-items:start; }
-.tl-item:last-child { border-bottom:none; }
-.tl-date { text-align:right; font-size:11px; color:var(--muted); line-height:1.7; padding-top:5px; font-weight:500; }
-.tl-line { background:var(--border); position:relative; align-self:stretch; }
-.tl-dot { position:absolute; top:5px; left:-5px; width:13px; height:13px; background:var(--blue); border-radius:50%; border:2px solid white; box-shadow:0 0 0 2px var(--blue); }
-.tl-body { padding-left:4px; }
-.tl-role { font-family:'Sora',sans-serif; font-size:18px; font-weight:700; color:var(--ink); margin-bottom:4px; }
-.tl-company { font-size:11.5px; color:var(--blue); font-weight:600; letter-spacing:.5px; margin-bottom:14px; }
-.tl-bullets { list-style:none; }
-.tl-bullets li { font-size:13.5px; color:var(--ink3); line-height:1.75; padding-left:16px; position:relative; margin-bottom:4px; }
-.tl-bullets li::before { content:'▸'; position:absolute; left:0; color:var(--blue); font-size:10px; top:3px; }
+/* EXPERIENCE */
+.exp-item{
+  display:grid;grid-template-columns:210px 2px 1fr;
+  gap:0 44px;padding:44px 0;border-bottom:1px solid var(--silver);align-items:start;
+}
+.exp-item:last-child{border-bottom:none}
+.exp-date{text-align:right;font-family:'Manrope',sans-serif;font-size:14px;font-weight:600;color:var(--slate);line-height:1.7;padding-top:4px}
+.exp-line{background:var(--silver);position:relative;align-self:stretch}
+.exp-dot{position:absolute;top:7px;left:-6px;width:13px;height:13px;background:var(--blue);border-radius:50%;border:3px solid white;box-shadow:0 0 0 2px var(--blue)}
+.exp-body{padding-left:0}
+.exp-role{
+  font-family:'Libre Baskerville',Georgia,serif;
+  font-size:24px;font-weight:700;color:var(--navy);margin-bottom:5px;line-height:1.2;
+}
+.exp-company{
+  font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;
+  color:var(--blue);letter-spacing:.5px;margin-bottom:20px;text-transform:uppercase;
+}
+.exp-list{list-style:none;padding:0}
+.exp-list li{
+  font-family:'Manrope',sans-serif;font-size:16px;line-height:1.75;
+  color:var(--body);padding-left:22px;position:relative;margin-bottom:7px;
+}
+.exp-list li::before{
+  content:'';position:absolute;left:0;top:12px;
+  width:6px;height:6px;background:var(--blue);border-radius:50%;
+}
 
-/* ══ PROJECT CARDS ══ */
-.proj-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:16px; }
-.pcard {
-  background:var(--snow); padding:22px 22px; display:flex; flex-direction:column; gap:11px;
-  border:1px solid var(--border); border-radius:10px;
-  transition:border-color .2s, box-shadow .2s, transform .2s;
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:22px}
+.pcard{
+  background:white;border:1px solid var(--silver);border-radius:10px;
+  padding:30px;display:flex;flex-direction:column;gap:16px;
+  transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden;
 }
-.pcard:hover { border-color:var(--blue); box-shadow:0 6px 24px rgba(11,102,255,0.12); transform:translateY(-2px); }
-.pcard-header { display:flex; align-items:flex-start; gap:10px; }
-.pcard-num { font-size:10px; font-weight:700; color:var(--blue); background:var(--frost); padding:2px 8px; border-radius:4px; flex-shrink:0; border:1px solid var(--border2); }
-.pcard-title { font-size:13.5px; font-weight:700; color:var(--ink); line-height:1.45; flex:1; }
-.pcard-meta { display:flex; gap:12px; flex-wrap:wrap; }
-.pmeta { font-size:10px; color:var(--muted); font-weight:500; }
-.pmeta span { color:var(--ink2); font-weight:600; }
-.pcard-desc { font-size:12.5px; line-height:1.75; color:var(--ink3); flex:1; }
-.pcard-tags { display:flex; flex-wrap:wrap; gap:4px; padding-top:8px; border-top:1px solid var(--frost); }
-.ptag { font-size:10px; color:var(--blue2); background:var(--sky); padding:2px 7px; border-radius:4px; font-weight:500; }
+.pcard::before{
+  content:'';position:absolute;top:0;left:0;width:100%;height:3px;
+  background:var(--silver);transition:background .2s;
+}
+.pcard:hover{border-color:var(--blue);box-shadow:0 10px 36px rgba(26,86,219,0.11);transform:translateY(-3px)}
+.pcard:hover::before{background:var(--blue)}
+.pcard-num{font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--slate)}
+.pcard-title{font-family:'Libre Baskerville',Georgia,serif;font-size:19px;font-weight:700;color:var(--navy);line-height:1.3}
+.pcard-desc{font-family:'Manrope',sans-serif;font-size:15px;line-height:1.75;color:var(--body);font-weight:400;flex:1}
+.pcard-meta{display:flex;gap:24px;flex-wrap:wrap}
+.pm-item{display:flex;flex-direction:column;gap:2px}
+.pm-label{font-family:'Manrope',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--slate)}
+.pm-val{font-family:'Manrope',sans-serif;font-size:14px;font-weight:600;color:var(--navy3)}
+.pcard-tags{display:flex;flex-wrap:wrap;gap:6px;padding-top:12px;border-top:1px solid var(--off2)}
+.ptag{font-family:'Manrope',sans-serif;font-size:12px;font-weight:600;color:var(--blue);background:var(--blue-md);padding:4px 10px;border-radius:4px}
 
-/* ══ AWARDS ══ */
-.award-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:14px; }
-.acard {
-  background:var(--snow); border:1px solid var(--border); border-radius:10px;
-  padding:20px 22px; display:flex; flex-direction:column; gap:8px;
-  transition:all .2s; position:relative; overflow:hidden;
+/* AWARDS */
+.award-tbl{border:1px solid var(--silver);border-radius:8px;overflow:hidden}
+.award-row{
+  display:grid;grid-template-columns:1fr 120px;gap:0;
+  padding:26px 30px;border-bottom:1px solid var(--silver);
+  transition:background .15s;align-items:start;
 }
-.acard::after { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:var(--border2); transition:background .2s; }
-.acard:hover { border-color:var(--blue); box-shadow:0 4px 20px rgba(11,102,255,0.1); }
-.acard:hover::after { background:var(--blue); }
-.acard-top { display:flex; align-items:center; justify-content:space-between; }
-.acard-icon { font-size:18px; }
-.acard-year { font-size:9.5px; font-weight:600; letter-spacing:1px; color:var(--blue); background:var(--sky); padding:3px 9px; border-radius:100px; border:1px solid var(--border2); }
-.acard-title { font-size:13px; font-weight:700; color:var(--ink); line-height:1.4; }
-.acard-desc { font-size:12px; color:var(--muted); line-height:1.65; }
+.award-row:last-child{border-bottom:none}
+.award-row:hover{background:var(--blue-lt)}
+.award-title{font-family:'Libre Baskerville',Georgia,serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:7px;line-height:1.3}
+.award-desc{font-family:'Manrope',sans-serif;font-size:15px;line-height:1.7;color:var(--body);font-weight:400}
+.award-yr{font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;color:var(--blue);text-align:right;padding-top:3px}
 
-/* ══ CERTS ══ */
-.cert-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:10px; }
-.ccard {
-  background:var(--snow); border:1px solid var(--border); border-radius:8px;
-  padding:13px 16px; display:flex; align-items:center; gap:12px; transition:all .2s;
+/* CERTS */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.cert-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:white;border:1px solid var(--silver);border-radius:6px;
+  padding:17px 22px;transition:border-color .15s,background .15s;
 }
-.ccard:hover { border-color:var(--blue); background:var(--ice); }
-.ccard-icon { width:36px; height:36px; background:var(--sky); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; border:1px solid var(--border2); }
-.ccard-name { font-size:12.5px; font-weight:700; color:var(--ink); margin-bottom:2px; line-height:1.35; }
-.ccard-by { font-size:10.5px; color:var(--blue); font-weight:600; }
+.cert-row:hover{border-color:var(--blue);background:var(--blue-lt)}
+.cert-name{font-family:'Manrope',sans-serif;font-size:15px;font-weight:600;color:var(--navy);margin-bottom:2px}
+.cert-by{font-family:'Manrope',sans-serif;font-size:13px;font-weight:500;color:var(--slate)}
+.cert-badge{
+  font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;
+  color:var(--blue);background:var(--blue-md);padding:4px 11px;border-radius:3px;
+  letter-spacing:.3px;white-space:nowrap;flex-shrink:0;margin-left:12px;
+}
 
-/* ══ EDU ══ */
-.edu-card {
-  background:linear-gradient(135deg,var(--ink) 0%,var(--blue3) 100%);
-  border-radius:12px; padding:36px 40px; max-width:580px;
-  box-shadow:0 12px 40px rgba(11,102,255,0.3);
-}
-.edu-year { font-size:64px; font-weight:800; color:rgba(255,255,255,0.06); line-height:1; font-family:'Sora',sans-serif; margin-bottom:4px; letter-spacing:-3px; }
-.edu-degree { font-family:'Sora',sans-serif; font-size:22px; font-weight:700; color:white; line-height:1.25; margin-bottom:8px; }
-.edu-school { font-size:12px; color:rgba(255,255,255,0.55); font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:20px; }
-.edu-pills { display:flex; gap:8px; flex-wrap:wrap; }
-.edu-pill { font-size:11px; font-weight:600; color:white; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); padding:4px 12px; border-radius:4px; }
+/* EDUCATION */
+.edu-block{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--silver);border-radius:10px;overflow:hidden;max-width:820px}
+.edu-left{background:var(--navy);padding:52px 48px}
+.edu-yr{font-family:'Libre Baskerville',serif;font-size:88px;font-weight:700;color:rgba(255,255,255,0.06);line-height:1;letter-spacing:-5px}
+.edu-deg{font-family:'Libre Baskerville',serif;font-size:27px;font-weight:700;color:white;line-height:1.2;margin-top:-22px;margin-bottom:12px;position:relative;z-index:1}
+.edu-school{font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.45);letter-spacing:1px;text-transform:uppercase}
+.edu-right{background:var(--off);padding:52px 48px;display:flex;flex-direction:column;justify-content:center;gap:28px}
+.edu-item{display:flex;flex-direction:column;gap:4px}
+.edu-lbl{font-family:'Manrope',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--slate)}
+.edu-val{font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--navy)}
 
-/* ══ CHAT ══ */
-.chat-wrap { padding:56px 56px 64px; max-width:820px; margin:0 auto; }
-.chat-info { font-size:14px; color:var(--muted); font-weight:400; margin-top:8px; margin-bottom:28px; }
-.chat-box {
-  background:var(--ice); border:1px solid var(--border2); border-radius:12px;
-  padding:24px; min-height:340px; max-height:500px; overflow-y:auto;
-  margin-bottom:14px; display:flex; flex-direction:column; gap:14px;
+/* CHAT */
+.chat-pg{padding:80px 64px 88px;max-width:900px;margin:0 auto}
+.chat-title{
+  font-family:'Libre Baskerville',Georgia,serif;
+  font-size:clamp(36px,4.5vw,56px);font-weight:700;
+  color:var(--navy);letter-spacing:-2px;line-height:1.05;margin-bottom:10px;
 }
-.msg-user { display:flex; justify-content:flex-end; }
-.msg-ai { display:flex; justify-content:flex-start; align-items:flex-start; gap:10px; }
-.ai-avatar { width:30px; height:30px; background:var(--blue); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
-.bubble { max-width:80%; padding:12px 16px; border-radius:10px; font-size:13.5px; line-height:1.7; }
-.bubble-user { background:var(--blue); color:white; border-bottom-right-radius:3px; }
-.bubble-ai { background:white; color:var(--ink); border:1px solid var(--border); border-bottom-left-radius:3px; box-shadow:0 2px 8px rgba(11,102,255,0.06); }
-.chat-welcome { text-align:center; padding:36px 20px; color:var(--muted); font-size:13px; }
-.chat-welcome .wi { font-size:40px; margin-bottom:12px; }
-.chat-welcome strong { display:block; font-size:16px; color:var(--ink); margin-bottom:8px; font-family:'Sora',sans-serif; font-weight:700; }
-
-/* ══ FOOTER ══ */
-.footer {
-  background:var(--ink);
-  padding:36px 56px; display:flex; align-items:center; justify-content:space-between;
+.chat-title em{font-style:italic;font-weight:400;color:var(--blue)}
+.chat-sub{font-family:'Manrope',sans-serif;font-size:17px;color:var(--slate);font-weight:400;margin-bottom:36px;line-height:1.6}
+.chat-window{
+  background:var(--off);border:1.5px solid var(--silver);border-radius:14px;
+  padding:30px;min-height:380px;max-height:540px;overflow-y:auto;
+  margin-bottom:16px;display:flex;flex-direction:column;gap:22px;scroll-behavior:smooth;
 }
-.footer-name { font-family:'Sora',sans-serif; font-size:18px; font-weight:700; color:white; }
-.footer-sub { font-size:11px; color:rgba(255,255,255,0.35); margin-top:3px; letter-spacing:.5px; }
-.footer-copy { font-size:11px; color:rgba(255,255,255,0.3); text-align:right; line-height:1.9; }
-
-/* ══ STREAMLIT NAV RADIO OVERRIDE ══ */
-div[data-testid="stHorizontalBlock"] { display:none !important; }
-
-/* Style st.radio as nav pills */
-div[data-testid="stRadio"] > div {
-  display:flex !important; flex-direction:row !important;
-  gap:4px !important; flex-wrap:wrap !important;
-  background:var(--snow) !important;
-  border-bottom:2px solid var(--blue) !important;
-  padding:10px 48px !important;
-  position:sticky !important; top:62px !important;
-  z-index:400 !important;
-  box-shadow:0 2px 12px rgba(11,102,255,0.06) !important;
+.chat-empty{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:48px 24px;gap:14px;
 }
-div[data-testid="stRadio"] > div > label {
-  background:transparent !important;
-  border:none !important;
-  border-radius:6px !important;
-  padding:7px 14px !important;
-  font-size:12px !important;
-  font-weight:500 !important;
-  color:var(--ink3) !important;
-  cursor:pointer !important;
-  transition:all .15s !important;
-  white-space:nowrap !important;
+.chat-empty-mark{
+  font-family:'Libre Baskerville',serif;font-size:52px;
+  font-style:italic;color:var(--silver2);font-weight:700;
 }
-div[data-testid="stRadio"] > div > label:hover {
-  background:var(--sky) !important; color:var(--blue) !important;
+.chat-empty-title{
+  font-family:'Libre Baskerville',serif;font-size:24px;
+  font-weight:700;color:var(--navy);letter-spacing:-.5px;
 }
-div[data-testid="stRadio"] > div > label[data-baseweb="radio"] input:checked ~ div,
-div[data-testid="stRadio"] > div > label:has(input:checked) {
-  background:var(--blue) !important; color:white !important;
-  border-radius:6px !important;
+.chat-empty-sub{
+  font-family:'Manrope',sans-serif;font-size:15px;color:var(--slate);
+  max-width:380px;line-height:1.65;
 }
-div[data-testid="stRadio"] > label { display:none !important; }
-div[data-testid="stRadio"] p { font-size:12px !important; }
-div[data-testid="stRadio"] [data-testid="stMarkdownContainer"] p { font-size:12px !important; }
+.chat-pills{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:10px}
+.chat-pill{
+  font-family:'Manrope',sans-serif;font-size:14px;font-weight:600;
+  color:var(--blue);background:var(--blue-md);border:1px solid rgba(26,86,219,0.25);
+  padding:8px 16px;border-radius:100px;cursor:default;
+}
+.msg-user{display:flex;justify-content:flex-end}
+.msg-ai{display:flex;justify-content:flex-start;align-items:flex-end;gap:12px}
+.ai-avatar{
+  width:34px;height:34px;background:var(--navy);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-family:'Libre Baskerville',serif;font-size:14px;font-style:italic;
+  color:white;font-weight:700;margin-bottom:2px;
+}
+.bubble{max-width:78%;padding:15px 20px;border-radius:18px;font-family:'Manrope',sans-serif;font-size:16px;line-height:1.7;font-weight:400}
+.bubble-user{background:var(--blue);color:white;border-bottom-right-radius:4px}
+.bubble-ai{background:white;color:var(--navy);border:1.5px solid var(--silver);border-bottom-left-radius:4px;box-shadow:0 3px 12px rgba(13,27,46,0.06)}
 
 /* Input overrides */
-div[data-testid="stTextInput"] input {
-  background:var(--snow) !important; border:1.5px solid var(--border2) !important;
-  border-radius:8px !important; color:var(--ink) !important;
-  font-family:'Inter',sans-serif !important; font-size:14px !important; padding:11px 14px !important;
+div[data-testid="stTextInput"] input{
+  background:white!important;border:2px solid var(--silver)!important;
+  border-radius:12px!important;color:var(--navy)!important;
+  font-family:'Manrope',sans-serif!important;font-size:16px!important;
+  font-weight:400!important;padding:15px 20px!important;height:54px!important;
 }
-div[data-testid="stTextInput"] input:focus { border-color:var(--blue) !important; box-shadow:0 0 0 3px rgba(11,102,255,0.1) !important; }
-div[data-testid="stButton"] button {
-  background:var(--blue) !important; color:white !important; border:none !important;
-  border-radius:8px !important; font-family:'Inter',sans-serif !important;
-  font-size:12px !important; font-weight:600 !important; letter-spacing:.5px !important;
-  padding:11px 20px !important; box-shadow:0 4px 12px rgba(11,102,255,0.3) !important;
+div[data-testid="stTextInput"] input:focus{
+  border-color:var(--blue)!important;
+  box-shadow:0 0 0 3px rgba(26,86,219,0.12)!important;outline:none!important;
 }
-div[data-testid="stButton"] button:hover { background:var(--blue2) !important; }
+div[data-testid="stTextInput"] input::placeholder{color:var(--silver2)!important;font-weight:400!important}
+div[data-testid="stButton"] button{
+  background:var(--navy)!important;color:white!important;border:none!important;
+  border-radius:12px!important;font-family:'Manrope',sans-serif!important;
+  font-size:15px!important;font-weight:700!important;
+  padding:15px 28px!important;height:54px!important;
+  transition:background .15s,transform .15s!important;letter-spacing:.3px!important;
+}
+div[data-testid="stButton"] button:hover{background:var(--navy2)!important;transform:translateY(-1px)!important}
+
+/* FOOTER */
+.footer{background:var(--navy);padding:52px 64px;display:flex;align-items:center;justify-content:space-between}
+.footer-name{font-family:'Libre Baskerville',serif;font-size:24px;font-weight:700;color:white;letter-spacing:-.3px}
+.footer-name em{font-style:italic;font-weight:400;color:#7EABD6}
+.footer-sub{font-family:'Manrope',sans-serif;font-size:12px;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:1px;text-transform:uppercase;margin-top:5px}
+.footer-copy{font-family:'Manrope',sans-serif;font-size:13px;color:rgba(255,255,255,0.28);text-align:right;line-height:2}
 </style>
 """, unsafe_allow_html=True)
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  SESSION STATE
-# ══════════════════════════════════════════════════════════════════════════════
-if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
+# ── Session state ─────────────────────────────────────────────────────────────
+if "chat" not in st.session_state:
+    st.session_state.chat = []
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  TOP BRAND BAR
+#  BRAND BAR
 # ══════════════════════════════════════════════════════════════════════════════
-st.markdown("""
-<div class="topnav">
-  <div class="nav-brand">
-    <div class="nav-logo">❄️</div>
-    Ashik Roshan I
-    <span class="nav-tagline">DATA &amp; AI ENGINEER</span>
+st.markdown(f"""
+<div class="brand-bar">
+  <div class="brand-name">Ashik <em>Roshan I</em></div>
+  <div class="brand-links">
+    <a class="brand-link" href="https://github.com/AshikRoshan-github" target="_blank">GitHub</a>
+    <span class="brand-divider">·</span>
+    <a class="brand-link" href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank">LinkedIn</a>
+    <span class="brand-divider">·</span>
+    <a class="brand-link" href="https://medium.com/@ashikroshan261" target="_blank">Medium</a>
+    <span class="brand-divider">·</span>
+    <a class="brand-link" href="mailto:ashikroshan261@gmail.com">Email</a>
+    <a class="brand-resume" href="{RESUME_URL}" target="_blank">Resume</a>
   </div>
-  <div style="font-size:11px;color:#7B9EC4;font-weight:500;letter-spacing:.5px;">Madurai, TamilNadu, India · Optisol Business Solutions</div>
 </div>
 """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  NAVIGATION — using st.radio (THIS ACTUALLY WORKS in Streamlit)
+#  NAVIGATION — st.radio (WORKING)
 # ══════════════════════════════════════════════════════════════════════════════
-page = st.radio(
-    "nav",
-    PAGES,
-    horizontal=True,
-    label_visibility="collapsed",
-    key="main_nav"
-)
+page = st.radio("", PAGES, horizontal=True, label_visibility="collapsed", key="nav")
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  PAGES
+#  HOME
 # ══════════════════════════════════════════════════════════════════════════════
-
-# ── HOME ─────────────────────────────────────────────────────────────────────
-if page == PAGES[0]:
-    st.markdown("""
-    <div class="hero-outer">
+if page == "Home":
+    st.markdown(f"""
+    <div class="hero">
       <div class="hero-grid">
         <div>
-          <div class="hero-eyebrow fade d1">❄️ Data Engineer & AI Engineer — L2</div>
-          <h1 class="hero-name fade d2">Ashik<br>Roshan I</h1>
-          <p class="hero-name-sub fade d2">Building data pipelines & intelligent systems</p>
-          <div class="hero-rule fade d3"></div>
-          <p class="hero-bio fade d3">
+          <p class="hero-kicker rise r1">Data Engineer &amp; AI Engineer — Level 2</p>
+          <h1 class="hero-name rise r2">Ashik<br><em>Roshan I</em></h1>
+          <p class="hero-subtitle rise r2">Optisol Business Solutions &nbsp;·&nbsp; Madurai, TamilNadu, India</p>
+          <div class="hero-rule rise r3"></div>
+          <p class="hero-bio rise r3">
             Results-driven engineer with <strong>2+ years</strong> delivering scalable ETL/ELT pipelines,
-            enterprise cloud migrations, and production-grade AI automation at
-            <strong>Optisol Business Solutions</strong>. Specialising in
-            <strong>Snowflake, Azure, AWS, LangChain,</strong> and GenAI agent design.
+            enterprise cloud migrations, and production-grade AI automation. Specialising in
+            <strong>Snowflake, Azure, AWS, LangChain,</strong> and GenAI agent design — from data warehouse
+            migrations to self-healing AI agents and RAG-powered knowledge graphs.
           </p>
-          <div class="hero-stats fade d4">
+          <div class="hero-stats rise r4">
             <div class="hstat"><div class="hstat-n">2<em>+</em></div><div class="hstat-l">Years Experience</div></div>
             <div class="hstat"><div class="hstat-n">14<em>+</em></div><div class="hstat-l">Projects Delivered</div></div>
             <div class="hstat"><div class="hstat-n">7</div><div class="hstat-l">Spot Awards</div></div>
             <div class="hstat"><div class="hstat-n"><em>MVP</em></div><div class="hstat-l">Award 2024–25</div></div>
           </div>
         </div>
-        <div class="fade d3">
-          <div class="contact-card">
-            <div class="cc-title">Get in Touch</div>
-            <a class="cc-row" href="mailto:ashikroshan261@gmail.com">
-              <div class="cc-icon">✉</div>
-              <div><div class="cc-lbl">Email</div><div class="cc-val">ashikroshan261@gmail.com</div></div>
-            </a>
-            <a class="cc-row" href="https://github.com/AshikRoshan-github" target="_blank">
-              <div class="cc-icon">⌥</div>
-              <div><div class="cc-lbl">GitHub</div><div class="cc-val">AshikRoshan-github</div></div>
-            </a>
-            <a class="cc-row" href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank">
-              <div class="cc-icon">in</div>
-              <div><div class="cc-lbl">LinkedIn</div><div class="cc-val">ashik-roshan-i</div></div>
-            </a>
-            <a class="cc-row" href="https://medium.com/@ashikroshan261" target="_blank">
-              <div class="cc-icon">✍</div>
-              <div><div class="cc-lbl">Medium</div><div class="cc-val">@ashikroshan261</div></div>
-            </a>
-            <a class="cc-resume" href="https://github.com/AshikRoshan-github/Professional-Work-Archive/raw/main/Resume_Center/Data%26AI_1360.docx" target="_blank">
-              ⬇ Download Resume
-            </a>
+        <div class="rise r4">
+          <div class="ccard">
+            <div class="ccard-head">
+              <div class="ccard-ht">Get in Touch</div>
+              <div class="ccard-hs">Open to opportunities</div>
+            </div>
+            <div class="ccard-body">
+              <a class="clink" href="mailto:ashikroshan261@gmail.com">
+                <div class="clink-l"><span class="clink-pl">Email</span><span class="clink-nm">ashikroshan261@gmail.com</span></div>
+                <span class="clink-ar">→</span>
+              </a>
+              <a class="clink" href="https://github.com/AshikRoshan-github" target="_blank">
+                <div class="clink-l"><span class="clink-pl">GitHub</span><span class="clink-nm">AshikRoshan-github</span></div>
+                <span class="clink-ar">→</span>
+              </a>
+              <a class="clink" href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank">
+                <div class="clink-l"><span class="clink-pl">LinkedIn</span><span class="clink-nm">ashik-roshan-i</span></div>
+                <span class="clink-ar">→</span>
+              </a>
+              <a class="clink" href="https://medium.com/@ashikroshan261" target="_blank">
+                <div class="clink-l"><span class="clink-pl">Medium</span><span class="clink-nm">@ashikroshan261</span></div>
+                <span class="clink-ar">→</span>
+              </a>
+              <a class="ccard-dl" href="{RESUME_URL}" target="_blank">Download Resume</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
     """, unsafe_allow_html=True)
 
-# ── SKILLS ───────────────────────────────────────────────────────────────────
-elif page == PAGES[1]:
-    st.markdown('<div class="sec fade">', unsafe_allow_html=True)
-    st.markdown('<div class="sec-label">Arsenal</div><h2 class="sec-title">Technical <em>Skills</em></h2>', unsafe_allow_html=True)
-    rows = ""
+# ══════════════════════════════════════════════════════════════════════════════
+#  SKILLS
+# ══════════════════════════════════════════════════════════════════════════════
+elif page == "Skills":
+    st.markdown('<div class="pg rise">', unsafe_allow_html=True)
+    st.markdown('<div class="pg-kicker">Arsenal</div><h2 class="pg-title">Technical <em>Skills</em></h2>', unsafe_allow_html=True)
+    h = '<div class="skill-wrap">'
     for cat, tags in SKILLS:
-        tag_html = "".join(f'<span class="stag">{t}</span>' for t in tags)
-        rows += f'<div class="skill-row"><div class="skill-cat">{cat}</div><div class="skill-tags">{tag_html}</div></div>'
-    st.markdown(f'<div class="skill-grid">{rows}</div>', unsafe_allow_html=True)
+        th = "".join(f'<span class="sv">{t}</span>' for t in tags)
+        h += f'<div class="skill-row"><div class="skill-cat">{cat}</div><div class="skill-vals">{th}</div></div>'
+    st.markdown(h + '</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ── EXPERIENCE ───────────────────────────────────────────────────────────────
-elif page == PAGES[2]:
-    st.markdown('<div class="sec fade">', unsafe_allow_html=True)
-    st.markdown('<div class="sec-label">Career</div><h2 class="sec-title">Professional <em>Experience</em></h2>', unsafe_allow_html=True)
-    tl = ""
+# ══════════════════════════════════════════════════════════════════════════════
+#  EXPERIENCE
+# ══════════════════════════════════════════════════════════════════════════════
+elif page == "Experience":
+    st.markdown('<div class="pg rise">', unsafe_allow_html=True)
+    st.markdown('<div class="pg-kicker">Career</div><h2 class="pg-title">Professional <em>Experience</em></h2>', unsafe_allow_html=True)
+    h = ""
     for role, company, start, end, bullets in EXP:
         bl = "".join(f"<li>{b}</li>" for b in bullets)
-        tl += f"""<div class="tl-item">
-          <div class="tl-date">{start}<br>—<br>{end}</div>
-          <div class="tl-line"><div class="tl-dot"></div></div>
-          <div class="tl-body">
-            <div class="tl-role">{role}</div>
-            <div class="tl-company">{company}</div>
-            <ul class="tl-bullets">{bl}</ul>
+        h += f"""<div class="exp-item">
+          <div class="exp-date">{start}<br>— {end}</div>
+          <div class="exp-line"><div class="exp-dot"></div></div>
+          <div class="exp-body">
+            <div class="exp-role">{role}</div>
+            <div class="exp-company">{company}</div>
+            <ul class="exp-list">{bl}</ul>
           </div>
         </div>"""
-    st.markdown(f'<div>{tl}</div>', unsafe_allow_html=True)
+    st.markdown(h, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ── PROJECTS ─────────────────────────────────────────────────────────────────
-elif page == PAGES[3]:
-    def make_grid(projects):
-        html = '<div class="proj-grid">'
-        for num, title, role, client, tech, desc in projects:
-            tags = "".join(f'<span class="ptag">{t}</span>' for t in tech)
-            html += f"""<div class="pcard">
-              <div class="pcard-header"><div class="pcard-num">{num}</div><div class="pcard-title">{title}</div></div>
-              <div class="pcard-meta"><div class="pmeta">ROLE <span>{role}</span></div><div class="pmeta">CLIENT <span>{client}</span></div></div>
+# ══════════════════════════════════════════════════════════════════════════════
+#  PROJECTS
+# ══════════════════════════════════════════════════════════════════════════════
+elif page == "Projects":
+    def proj_grid(projs):
+        g = '<div class="proj-grid">'
+        for num, title, desc, role, client, tags in projs:
+            th = "".join(f'<span class="ptag">{t}</span>' for t in tags)
+            g += f"""<div class="pcard">
+              <div class="pcard-num">Project {num}</div>
+              <div class="pcard-title">{title}</div>
               <div class="pcard-desc">{desc}</div>
-              <div class="pcard-tags">{tags}</div>
+              <div class="pcard-meta">
+                <div class="pm-item"><span class="pm-label">Role</span><span class="pm-val">{role}</span></div>
+                <div class="pm-item"><span class="pm-label">Client</span><span class="pm-val">{client}</span></div>
+              </div>
+              <div class="pcard-tags">{th}</div>
             </div>"""
-        return html + "</div>"
+        return g + '</div>'
 
-    st.markdown('<div class="sec fade">', unsafe_allow_html=True)
-    st.markdown('<div class="sec-label">Data Engineering</div><h2 class="sec-title">Data Engineering <em>Projects</em></h2>', unsafe_allow_html=True)
-    st.markdown(make_grid(DE_PROJ), unsafe_allow_html=True)
-    st.markdown('<div style="height:52px;"></div>', unsafe_allow_html=True)
-    st.markdown('<div class="sec-label">AI & Automation</div><h2 class="sec-title">AI & Automation <em>Projects</em></h2>', unsafe_allow_html=True)
-    st.markdown(make_grid(AI_PROJ), unsafe_allow_html=True)
+    st.markdown('<div class="pg rise">', unsafe_allow_html=True)
+    st.markdown('<div class="pg-kicker">Data Engineering</div><h2 class="pg-title">Data Engineering <em>Projects</em></h2>', unsafe_allow_html=True)
+    st.markdown(proj_grid(DE_PROJ), unsafe_allow_html=True)
+    st.markdown('<div style="height:68px;"></div>', unsafe_allow_html=True)
+    st.markdown('<div class="pg-kicker">AI &amp; Automation</div><h2 class="pg-title">AI &amp; Automation <em>Projects</em></h2>', unsafe_allow_html=True)
+    st.markdown(proj_grid(AI_PROJ), unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ── AWARDS & CERTS ───────────────────────────────────────────────────────────
-elif page == PAGES[4]:
-    st.markdown('<div class="sec fade">', unsafe_allow_html=True)
-    st.markdown('<div class="sec-label">Recognition</div><h2 class="sec-title">Awards & <em>Achievements</em></h2>', unsafe_allow_html=True)
-    aw = "".join(f"""<div class="acard">
-      <div class="acard-top"><span class="acard-icon">{icon}</span><span class="acard-year">{year}</span></div>
-      <div class="acard-title">{title}</div>
-      <div class="acard-desc">{desc}</div>
-    </div>""" for icon, title, year, desc in AWARDS)
-    st.markdown(f'<div class="award-grid">{aw}</div>', unsafe_allow_html=True)
-    st.markdown('<div style="height:52px;"></div>', unsafe_allow_html=True)
-    st.markdown('<div class="sec-label">Credentials</div><h2 class="sec-title"><em>Certifications</em></h2>', unsafe_allow_html=True)
-    ce = "".join(f"""<div class="ccard">
-      <div class="ccard-icon">{icon}</div>
-      <div><div class="ccard-name">{name}</div><div class="ccard-by">{issuer}</div></div>
-    </div>""" for icon, name, issuer in CERTS)
-    st.markdown(f'<div class="cert-grid">{ce}</div>', unsafe_allow_html=True)
+# ══════════════════════════════════════════════════════════════════════════════
+#  AWARDS
+# ══════════════════════════════════════════════════════════════════════════════
+elif page == "Awards":
+    st.markdown('<div class="pg rise">', unsafe_allow_html=True)
+    st.markdown('<div class="pg-kicker">Recognition</div><h2 class="pg-title">Awards &amp; <em>Achievements</em></h2>', unsafe_allow_html=True)
+    h = '<div class="award-tbl">'
+    for title, year, desc in AWARDS:
+        h += f"""<div class="award-row">
+          <div><div class="award-title">{title}</div><div class="award-desc">{desc}</div></div>
+          <div class="award-yr">{year}</div>
+        </div>"""
+    st.markdown(h + '</div>', unsafe_allow_html=True)
+
+    st.markdown('<div style="height:68px;"></div>', unsafe_allow_html=True)
+    st.markdown('<div class="pg-kicker">Credentials</div><h2 class="pg-title"><em>Certifications</em></h2>', unsafe_allow_html=True)
+    h = '<div class="cert-grid">'
+    for name, issuer in CERTS:
+        h += f"""<div class="cert-row">
+          <div><div class="cert-name">{name}</div><div class="cert-by">{issuer}</div></div>
+          <span class="cert-badge">{issuer}</span>
+        </div>"""
+    st.markdown(h + '</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ── EDUCATION ────────────────────────────────────────────────────────────────
-elif page == PAGES[5]:
-    st.markdown('<div class="sec fade">', unsafe_allow_html=True)
-    st.markdown('<div class="sec-label">Academic</div><h2 class="sec-title"><em>Education</em></h2>', unsafe_allow_html=True)
+# ══════════════════════════════════════════════════════════════════════════════
+#  EDUCATION
+# ══════════════════════════════════════════════════════════════════════════════
+elif page == "Education":
+    st.markdown('<div class="pg rise">', unsafe_allow_html=True)
+    st.markdown('<div class="pg-kicker">Academic Background</div><h2 class="pg-title"><em>Education</em></h2>', unsafe_allow_html=True)
     st.markdown("""
-    <div class="edu-card">
-      <div class="edu-year">2023</div>
-      <div class="edu-degree">Bachelor of Engineering<br>in Computer Science</div>
-      <div class="edu-school">KLN College of Engineering</div>
-      <div class="edu-pills">
-        <span class="edu-pill">2019 – 2023</span>
-        <span class="edu-pill">Grade: A+</span>
-        <span class="edu-pill">Computer Science & Engineering</span>
+    <div class="edu-block">
+      <div class="edu-left">
+        <div class="edu-yr">2023</div>
+        <div class="edu-deg">Bachelor of Engineering in Computer Science</div>
+        <div class="edu-school">KLN College of Engineering</div>
+      </div>
+      <div class="edu-right">
+        <div class="edu-item"><span class="edu-lbl">Duration</span><span class="edu-val">2019 – 2023</span></div>
+        <div class="edu-item"><span class="edu-lbl">Grade</span><span class="edu-val">A+ — Distinction</span></div>
+        <div class="edu-item"><span class="edu-lbl">Specialisation</span><span class="edu-val">Computer Science &amp; Engineering</span></div>
+        <div class="edu-item"><span class="edu-lbl">Location</span><span class="edu-val">Tamil Nadu, India</span></div>
       </div>
     </div>
     """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ── CHAT ─────────────────────────────────────────────────────────────────────
-elif page == PAGES[6]:
-    st.markdown('<div class="chat-wrap fade">', unsafe_allow_html=True)
+# ══════════════════════════════════════════════════════════════════════════════
+#  ASSISTANT (ChatGPT-style)
+# ══════════════════════════════════════════════════════════════════════════════
+elif page == "Assistant":
+    st.markdown('<div class="chat-pg rise">', unsafe_allow_html=True)
     st.markdown("""
-    <div class="sec-label">AI Assistant</div>
-    <h2 class="sec-title">Ask <em>Ashik's AI</em></h2>
-    <p class="chat-info">❄️ Powered by Gemini 2.5 Pro · Knows everything about Ashik's projects, skills & background</p>
+    <div class="pg-kicker">Portfolio Assistant</div>
+    <h2 class="chat-title">Ask me <em>anything</em></h2>
+    <p class="chat-sub">I know everything about Ashik — his projects, skills, experience, awards, and more. Try asking a question below.</p>
     """, unsafe_allow_html=True)
 
-    # Render messages
-    if not st.session_state.chat_history:
+    # Chat window
+    if not st.session_state.chat:
         st.markdown("""
-        <div class="chat-box">
-          <div class="chat-welcome">
-            <div class="wi">❄️</div>
-            <strong>Hi! I'm Ashik's AI Assistant</strong>
-            Ask me about his projects, skills, experience, awards, certifications, or how to contact him.
+        <div class="chat-window">
+          <div class="chat-empty">
+            <div class="chat-empty-mark">A</div>
+            <div class="chat-empty-title">Portfolio Assistant</div>
+            <div class="chat-empty-sub">Ask me about Ashik's data engineering projects, AI work, skills, certifications, awards, or how to contact him.</div>
+            <div class="chat-pills">
+              <span class="chat-pill">What projects has Ashik built?</span>
+              <span class="chat-pill">What are his top skills?</span>
+              <span class="chat-pill">Tell me about the MVP award</span>
+              <span class="chat-pill">How can I contact Ashik?</span>
+            </div>
           </div>
         </div>
         """, unsafe_allow_html=True)
     else:
         bubbles = ""
-        for msg in st.session_state.chat_history:
-            if msg["role"] == "user":
-                bubbles += f'<div class="msg-user"><div class="bubble bubble-user">{msg["content"]}</div></div>'
+        for m in st.session_state.chat:
+            if m["role"] == "user":
+                bubbles += f'<div class="msg-user"><div class="bubble bubble-user">{m["content"]}</div></div>'
             else:
-                content = msg["content"].replace("\n", "<br>")
-                bubbles += f'<div class="msg-ai"><div class="ai-avatar">❄️</div><div class="bubble bubble-ai">{content}</div></div>'
-        st.markdown(f'<div class="chat-box">{bubbles}</div>', unsafe_allow_html=True)
+                content = m["content"].replace("\n", "<br>")
+                bubbles += f'<div class="msg-ai"><div class="ai-avatar">A</div><div class="bubble bubble-ai">{content}</div></div>'
+        st.markdown(f'<div class="chat-window">{bubbles}</div>', unsafe_allow_html=True)
 
     # Input row
-    col_in, col_send = st.columns([5, 1])
-    with col_in:
-        user_input = st.text_input(
-            "", placeholder="Ask about Ashik's projects, skills, awards...",
-            label_visibility="collapsed", key="chat_input"
-        )
-    with col_send:
-        send_clicked = st.button("Send ❄️", key="send_btn", use_container_width=True)
-
-    col_clr, _ = st.columns([1, 6])
-    with col_clr:
-        if st.button("🗑 Clear", key="clear_btn"):
-            st.session_state.chat_history = []
+    c1, c2, c3 = st.columns([7, 1, 1])
+    with c1:
+        user_input = st.text_input("", key="ci", placeholder="Ask about projects, skills, experience, awards…", label_visibility="collapsed")
+    with c2:
+        send = st.button("Send", key="send", use_container_width=True)
+    with c3:
+        if st.button("Clear", key="clr", use_container_width=True):
+            st.session_state.chat = []
             st.rerun()
 
-    # Missing package warning
-    if not GENAI_AVAILABLE:
-        st.error("⚠️ **google-genai not installed.** Add `google-genai` to requirements.txt and redeploy.")
-
-    elif send_clicked and user_input.strip():
-        # Read key: st.secrets["GOOGLE"]["Gemini_api_key"]
-        gemini_key = None
-        try:
-            gemini_key = st.secrets["GOOGLE"]["Gemini_api_key"]
-        except Exception:
-            pass
-        if not gemini_key:
-            gemini_key = os.environ.get("GEMINI_API_KEY", "")
-
-        if not gemini_key:
-            st.error("""⚠️ API key not found. In Streamlit Cloud Secrets add:
-```toml
-[GOOGLE]
-Gemini_api_key = "your-key-here"
-```""")
+    if send and user_input.strip():
+        if not GENAI_AVAILABLE:
+            st.error("Package `google-genai` is missing. Add it to requirements.txt.")
         else:
-            st.session_state.chat_history.append({"role": "user", "content": user_input})
-            with st.spinner("❄️ Thinking..."):
-                try:
-                    client = google_genai.Client(api_key=gemini_key)
-                    contents = []
-                    for msg in st.session_state.chat_history:
-                        role = "user" if msg["role"] == "user" else "model"
-                        contents.append(google_types.Content(
-                            role=role,
-                            parts=[google_types.Part.from_text(text=msg["content"])]
-                        ))
-                    config = google_types.GenerateContentConfig(
-                        system_instruction=ASHIK_SYSTEM_PROMPT,
-                        max_output_tokens=1024,
-                    )
-                    response = client.models.generate_content(
-                        model="gemini-2.5-pro",
-                        contents=contents,
-                        config=config,
-                    )
-                    st.session_state.chat_history.append({
-                        "role": "assistant", "content": response.text
-                    })
-                    st.rerun()
-                except Exception as e:
-                    st.session_state.chat_history.append({
-                        "role": "assistant",
-                        "content": f"⚠️ Gemini API error: {str(e)}"
-                    })
-                    st.rerun()
+            key = None
+            try:
+                key = st.secrets["GOOGLE"]["Gemini_api_key"]
+            except Exception:
+                pass
+            if not key:
+                key = os.environ.get("GEMINI_API_KEY", "")
+            if not key:
+                st.error("API key not configured. Add `[GOOGLE] Gemini_api_key` to Streamlit Secrets.")
+            else:
+                st.session_state.chat.append({"role": "user", "content": user_input})
+                with st.spinner(""):
+                    try:
+                        client = google_genai.Client(api_key=key)
+                        contents = []
+                        for m in st.session_state.chat:
+                            r = "user" if m["role"] == "user" else "model"
+                            contents.append(google_types.Content(role=r, parts=[google_types.Part.from_text(text=m["content"])]))
+                        cfg = google_types.GenerateContentConfig(system_instruction=SYSTEM_PROMPT, max_output_tokens=1200)
+                        resp = client.models.generate_content(model="gemini-2.5-pro", contents=contents, config=cfg)
+                        st.session_state.chat.append({"role": "assistant", "content": resp.text})
+                        st.rerun()
+                    except Exception as e:
+                        st.session_state.chat.append({"role": "assistant", "content": f"I'm having trouble connecting right now. Please try again in a moment."})
+                        st.rerun()
 
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -859,12 +911,9 @@ Gemini_api_key = "your-key-here"
 st.markdown("""
 <div class="footer">
   <div>
-    <div class="footer-name">Ashik Roshan I</div>
-    <div class="footer-sub">DATA ENGINEER · AI ENGINEER · L2 · OPTISOL</div>
+    <div class="footer-name">Ashik <em>Roshan I</em></div>
+    <div class="footer-sub">Data Engineer · AI Engineer · L2</div>
   </div>
-  <div class="footer-copy">
-    Built with Streamlit · Powered by Gemini 2.5 Pro<br>
-    © 2025 Ashik Roshan I · All rights reserved
-  </div>
+  <div class="footer-copy">© 2025 Ashik Roshan I<br>All rights reserved</div>
 </div>
 """, unsafe_allow_html=True)
