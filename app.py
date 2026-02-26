@@ -825,85 +825,225 @@ elif page == "Education":
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  ASSISTANT (ChatGPT-style)
+#  ASSISTANT — streaming, ChatGPT-style with st.chat_message + st.chat_input
 # ══════════════════════════════════════════════════════════════════════════════
 elif page == "Assistant":
-    st.markdown('<div class="chat-pg rise">', unsafe_allow_html=True)
+
+    # ── Scoped CSS for the chat page ─────────────────────────────────────────
     st.markdown("""
-    <div class="pg-kicker">Portfolio Assistant</div>
-    <h2 class="chat-title">Ask me <em>anything</em></h2>
-    <p class="chat-sub">I know everything about Ashik — his projects, skills, experience, awards, and more. Try asking a question below.</p>
+    <style>
+    /* Page wrapper */
+    .chat-pg-wrap {
+        padding: 56px 64px 0;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .chat-pg-kicker {
+        font-family: 'Manrope', sans-serif;
+        font-size: 11px; font-weight: 700; letter-spacing: 3px;
+        text-transform: uppercase; color: #1A56DB;
+        display: flex; align-items: center; gap: 14px;
+        margin-bottom: 12px;
+    }
+    .chat-pg-kicker::before {
+        content: ''; width: 32px; height: 2px;
+        background: #1A56DB; flex-shrink: 0;
+    }
+    .chat-pg-title {
+        font-family: 'Libre Baskerville', Georgia, serif;
+        font-size: clamp(36px, 4.5vw, 56px);
+        font-weight: 700; color: #0D1B2E;
+        letter-spacing: -2px; line-height: 1.05;
+        margin-bottom: 8px;
+    }
+    .chat-pg-title em { font-style: italic; font-weight: 400; color: #1A56DB; }
+    .chat-pg-sub {
+        font-family: 'Manrope', sans-serif;
+        font-size: 17px; color: #546E8A; margin-bottom: 32px; line-height: 1.6;
+    }
+    /* Suggestion pills */
+    .suggest-row {
+        display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px;
+    }
+    .suggest-pill {
+        font-family: 'Manrope', sans-serif;
+        font-size: 14px; font-weight: 500;
+        color: #1A56DB; background: #DBEAFE;
+        border: 1px solid rgba(26,86,219,0.25);
+        padding: 8px 18px; border-radius: 100px;
+        cursor: default;
+    }
+    /* Override Streamlit chat_message avatar */
+    [data-testid="stChatMessage"] {
+        background: transparent !important;
+        padding: 6px 0 !important;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    [data-testid="stChatMessageContent"] p {
+        font-family: 'Manrope', sans-serif !important;
+        font-size: 16px !important;
+        line-height: 1.75 !important;
+        color: #0D1B2E !important;
+    }
+    /* User bubble */
+    [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
+        flex-direction: row-reverse !important;
+    }
+    [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) [data-testid="stChatMessageContent"] {
+        background: #1A56DB !important;
+        border-radius: 18px 18px 4px 18px !important;
+        padding: 14px 20px !important;
+        margin-left: auto !important;
+        max-width: 75% !important;
+    }
+    [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) [data-testid="stChatMessageContent"] p {
+        color: white !important;
+    }
+    /* AI bubble */
+    [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) [data-testid="stChatMessageContent"] {
+        background: #F7F9FC !important;
+        border: 1.5px solid #D4DCE8 !important;
+        border-radius: 18px 18px 18px 4px !important;
+        padding: 14px 20px !important;
+        max-width: 85% !important;
+    }
+    /* Chat input bar */
+    [data-testid="stChatInput"] {
+        border: 2px solid #D4DCE8 !important;
+        border-radius: 14px !important;
+        background: white !important;
+        padding: 4px 8px !important;
+        box-shadow: 0 2px 16px rgba(13,27,46,0.06) !important;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    [data-testid="stChatInput"]:focus-within {
+        border-color: #1A56DB !important;
+        box-shadow: 0 0 0 3px rgba(26,86,219,0.12) !important;
+    }
+    [data-testid="stChatInput"] textarea {
+        font-family: 'Manrope', sans-serif !important;
+        font-size: 16px !important;
+        color: #0D1B2E !important;
+        font-weight: 400 !important;
+    }
+    [data-testid="stChatInput"] textarea::placeholder {
+        color: #B8C6D8 !important;
+    }
+    /* Clear button strip */
+    .clear-strip {
+        max-width: 900px; margin: 12px auto 0;
+        display: flex; justify-content: flex-end;
+    }
+    </style>
     """, unsafe_allow_html=True)
 
-    # Chat window
+    # ── Header ────────────────────────────────────────────────────────────────
+    st.markdown("""
+    <div class="chat-pg-wrap">
+      <div class="chat-pg-kicker">Portfolio Assistant</div>
+      <h2 class="chat-pg-title">Ask me <em>anything</em></h2>
+      <p class="chat-pg-sub">I know everything about Ashik — projects, skills, experience, awards, and more.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ── Suggestion pills (only when empty) ───────────────────────────────────
     if not st.session_state.chat:
         st.markdown("""
-        <div class="chat-window">
-          <div class="chat-empty">
-            <div class="chat-empty-mark">A</div>
-            <div class="chat-empty-title">Portfolio Assistant</div>
-            <div class="chat-empty-sub">Ask me about Ashik's data engineering projects, AI work, skills, certifications, awards, or how to contact him.</div>
-            <div class="chat-pills">
-              <span class="chat-pill">What projects has Ashik built?</span>
-              <span class="chat-pill">What are his top skills?</span>
-              <span class="chat-pill">Tell me about the MVP award</span>
-              <span class="chat-pill">How can I contact Ashik?</span>
-            </div>
+        <div style="padding: 0 64px; max-width: 900px; margin: 0 auto;">
+          <div class="suggest-row">
+            <span class="suggest-pill">What projects has Ashik built?</span>
+            <span class="suggest-pill">What are his top skills?</span>
+            <span class="suggest-pill">Tell me about the MVP award</span>
+            <span class="suggest-pill">How can I contact Ashik?</span>
           </div>
         </div>
         """, unsafe_allow_html=True)
-    else:
-        bubbles = ""
-        for m in st.session_state.chat:
-            if m["role"] == "user":
-                bubbles += f'<div class="msg-user"><div class="bubble bubble-user">{m["content"]}</div></div>'
-            else:
-                content = m["content"].replace("\n", "<br>")
-                bubbles += f'<div class="msg-ai"><div class="ai-avatar">A</div><div class="bubble bubble-ai">{content}</div></div>'
-        st.markdown(f'<div class="chat-window">{bubbles}</div>', unsafe_allow_html=True)
 
-    # Input row
-    c1, c2, c3 = st.columns([7, 1, 1])
-    with c1:
-        user_input = st.text_input("Your message", key="ci", placeholder="Ask about projects, skills, experience, awards…", label_visibility="hidden")
-    with c2:
-        send = st.button("Send", key="send", use_container_width=True)
-    with c3:
-        if st.button("Clear", key="clr", use_container_width=True):
-            st.session_state.chat = []
-            st.rerun()
+    # ── Render history with st.chat_message ──────────────────────────────────
+    for m in st.session_state.chat:
+        role = "user" if m["role"] == "user" else "assistant"
+        with st.chat_message(role, avatar="👤" if role == "user" else "◈"):
+            st.markdown(m["content"])
 
-    if send and user_input.strip():
+    # ── Chat input (always visible at bottom) ────────────────────────────────
+    user_input = st.chat_input("Ask about projects, skills, experience, awards…", key="chat_input")
+
+    # ── Clear button ─────────────────────────────────────────────────────────
+    st.markdown('<div class="clear-strip">', unsafe_allow_html=True)
+    if st.button("Clear conversation", key="clr"):
+        st.session_state.chat = []
+        st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # ── Handle new message ────────────────────────────────────────────────────
+    if user_input and user_input.strip():
         if not GENAI_AVAILABLE:
             st.error("Package `google-genai` is missing. Add it to requirements.txt.")
         else:
-            key = None
+            # Get API key
+            api_key = None
             try:
-                key = st.secrets["GOOGLE"]["Gemini_api_key"]
+                api_key = st.secrets["GOOGLE"]["Gemini_api_key"]
             except Exception:
                 pass
-            if not key:
-                key = os.environ.get("GEMINI_API_KEY", "")
-            if not key:
+            if not api_key:
+                api_key = os.environ.get("GEMINI_API_KEY", "")
+
+            if not api_key:
                 st.error("API key not configured. Add `[GOOGLE] Gemini_api_key` to Streamlit Secrets.")
             else:
+                # Add user message to history and display it
                 st.session_state.chat.append({"role": "user", "content": user_input})
-                with st.spinner(""):
-                    try:
-                        client = google_genai.Client(api_key=key)
-                        contents = []
-                        for m in st.session_state.chat:
-                            r = "user" if m["role"] == "user" else "model"
-                            contents.append(google_types.Content(role=r, parts=[google_types.Part.from_text(text=m["content"])]))
-                        cfg = google_types.GenerateContentConfig(system_instruction=SYSTEM_PROMPT, max_output_tokens=1200)
-                        resp = client.models.generate_content(model="gemini-2.5-pro", contents=contents, config=cfg)
-                        st.session_state.chat.append({"role": "assistant", "content": resp.text})
-                        st.rerun()
-                    except Exception as e:
-                        st.session_state.chat.append({"role": "assistant", "content": f"I'm having trouble connecting right now. Please try again in a moment."})
-                        st.rerun()
+                with st.chat_message("user", avatar="👤"):
+                    st.markdown(user_input)
 
-    st.markdown('</div>', unsafe_allow_html=True)
+                # Stream the AI response
+                with st.chat_message("assistant", avatar="◈"):
+                    response_placeholder = st.empty()
+                    full_response = ""
+
+                    try:
+                        client = google_genai.Client(api_key=api_key)
+
+                        # Build contents from full history (excluding the just-added user msg
+                        # since we pass it directly as the prompt with system context)
+                        prompt = f"{SYSTEM_PROMPT}\n\nConversation so far:\n"
+                        for m in st.session_state.chat[:-1]:
+                            role_label = "User" if m["role"] == "user" else "Assistant"
+                            prompt += f"{role_label}: {m['content']}\n"
+                        prompt += f"\nUser: {user_input}\nAssistant:"
+
+                        contents = [
+                            google_types.Content(
+                                role="user",
+                                parts=[google_types.Part.from_text(text=prompt)],
+                            )
+                        ]
+
+                        generate_content_config = google_types.GenerateContentConfig(
+                            temperature=0,
+                        )
+
+                        # Streaming response
+                        for chunk in client.models.generate_content_stream(
+                            model="gemini-2.5-pro",
+                            contents=contents,
+                            config=generate_content_config,
+                        ):
+                            if chunk.text:
+                                full_response += chunk.text
+                                response_placeholder.markdown(full_response + "▌")
+
+                        # Final render without cursor
+                        response_placeholder.markdown(full_response)
+                        st.session_state.chat.append({"role": "assistant", "content": full_response})
+
+                    except Exception as e:
+                        error_msg = "I'm having trouble connecting right now. Please try again in a moment."
+                        response_placeholder.markdown(error_msg)
+                        st.session_state.chat.append({"role": "assistant", "content": error_msg})
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  FOOTER
