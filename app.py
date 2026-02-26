@@ -491,10 +491,7 @@ st.markdown(f"""
         </div>
       </div>
       <div class="hero-meta fade fade-4">
-        <div class="hero-meta-item"><span class="hero-dot">✉</span><a href="mailto:ashikroshan261@gmail.com">ashikroshan261@gmail.com</a></div>
-        <div class="hero-meta-item"><span class="hero-dot">⌥</span><a href="https://github.com/AshikRoshan-github" target="_blank">github.com/AshikRoshan-github</a></div>
-        <div class="hero-meta-item"><span class="hero-dot">in</span><a href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank">linkedin.com/in/ashik-roshan-i</a></div>
-        <div class="hero-meta-item"><span class="hero-dot">✍</span><a href="https://medium.com/@ashikroshan261" target="_blank">medium.com/@ashikroshan261</a></div>
+       
       </div>
     </div>
   </div>
