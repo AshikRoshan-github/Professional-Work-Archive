@@ -7,24 +7,18 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  GLOBAL STYLES  — Dark Luxury Editorial
-# ══════════════════════════════════════════════════════════════════════════════
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
-/* ── RESET ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── STREAMLIT CHROME REMOVAL ── */
 #MainMenu, footer, header, .stDeployButton,
 [data-testid="stToolbar"], [data-testid="stDecoration"],
 [data-testid="stStatusWidget"] { display: none !important; }
 .block-container { padding: 0 !important; max-width: 100% !important; }
 section[data-testid="stSidebar"] { display: none !important; }
 
-/* ── ROOT TOKENS ── */
 :root {
   --bg:         #0E0E0E;
   --bg1:        #141414;
@@ -41,14 +35,12 @@ section[data-testid="stSidebar"] { display: none !important; }
   --orange-glow:rgba(255,92,0,0.06);
 }
 
-/* ── BASE ── */
 .stApp {
   background: var(--bg);
   font-family: 'Outfit', sans-serif;
   color: var(--white);
 }
 
-/* ── PAGE FADE-IN ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -59,7 +51,7 @@ section[data-testid="stSidebar"] { display: none !important; }
 .fade-3 { animation-delay: 0.25s; }
 .fade-4 { animation-delay: 0.35s; }
 
-/* ══════════════════════════ NAV ══════════════════════════════════════ */
+/* ══ NAV ══ */
 .nav {
   background: var(--bg);
   border-bottom: 1px solid var(--border);
@@ -108,8 +100,15 @@ section[data-testid="stSidebar"] { display: none !important; }
   transition: color 0.15s, background 0.15s;
 }
 .nav-right a:hover { color: var(--orange); background: var(--orange-glow); }
+.nav-resume {
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  color: var(--orange) !important;
+  gap: 5px;
+}
+.nav-resume:hover { background: var(--orange-dim) !important; }
 
-/* ══════════════════════════ HERO ══════════════════════════════════════ */
+/* ══ HERO ══ */
 .hero {
   background: var(--bg1);
   padding: 96px 72px 80px;
@@ -117,7 +116,6 @@ section[data-testid="stSidebar"] { display: none !important; }
   position: relative;
   overflow: hidden;
 }
-/* Geometric accent — top-right corner */
 .hero::after {
   content: '';
   position: absolute;
@@ -126,7 +124,6 @@ section[data-testid="stSidebar"] { display: none !important; }
   background: conic-gradient(from 200deg at 100% 0%, var(--orange-dim) 0deg, transparent 80deg);
   pointer-events: none;
 }
-/* Subtle dot grid */
 .hero::before {
   content: '';
   position: absolute;
@@ -137,7 +134,6 @@ section[data-testid="stSidebar"] { display: none !important; }
   pointer-events: none;
 }
 .hero-inner { position: relative; z-index: 2; max-width: 1160px; }
-
 .hero-label {
   display: inline-flex;
   align-items: center;
@@ -150,13 +146,7 @@ section[data-testid="stSidebar"] { display: none !important; }
   color: var(--orange);
   margin-bottom: 32px;
 }
-.hero-label::before {
-  content: '';
-  width: 32px; height: 1px;
-  background: var(--orange);
-  display: inline-block;
-}
-
+.hero-label::before { content: ''; width: 32px; height: 1px; background: var(--orange); display: inline-block; }
 .hero-name {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(64px, 8vw, 112px);
@@ -166,10 +156,7 @@ section[data-testid="stSidebar"] { display: none !important; }
   color: var(--white);
   margin-bottom: 6px;
 }
-.hero-name-last {
-  font-style: italic;
-  color: var(--orange);
-}
+.hero-name-last { font-style: italic; color: var(--orange); }
 .hero-name-sub {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(20px, 3vw, 34px);
@@ -179,29 +166,15 @@ section[data-testid="stSidebar"] { display: none !important; }
   letter-spacing: -0.5px;
   margin-bottom: 36px;
 }
-
 .hero-divider {
   width: 100%;
   height: 1px;
   background: linear-gradient(90deg, var(--orange) 0%, var(--border) 40%, transparent 100%);
   margin-bottom: 36px;
 }
-
-.hero-bottom {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 48px;
-  align-items: end;
-}
-.hero-bio {
-  font-size: 16px;
-  line-height: 1.85;
-  color: var(--white2);
-  font-weight: 300;
-  max-width: 600px;
-}
+.hero-bottom { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: end; }
+.hero-bio { font-size: 16px; line-height: 1.85; color: var(--white2); font-weight: 300; max-width: 600px; }
 .hero-bio strong { color: var(--white); font-weight: 600; }
-
 .hero-meta { text-align: right; }
 .hero-meta-item {
   font-family: 'IBM Plex Mono', monospace;
@@ -214,483 +187,137 @@ section[data-testid="stSidebar"] { display: none !important; }
   gap: 8px;
   justify-content: flex-end;
 }
-.hero-meta-item a {
-  color: var(--white2);
-  text-decoration: none;
-  transition: color 0.15s;
-}
+.hero-meta-item a { color: var(--white2); text-decoration: none; transition: color 0.15s; }
 .hero-meta-item a:hover { color: var(--orange); }
 .hero-dot { color: var(--orange); }
-
-/* Stats strip */
-.stats-strip {
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-}
-.stat-cell {
-  padding: 24px 28px;
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.stat-cell:last-child { border-right: none; }
-.stat-val {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 42px;
-  font-weight: 600;
-  color: var(--white);
-  line-height: 1;
-  letter-spacing: -1px;
-}
-.stat-val em { color: var(--orange); font-style: normal; }
-.stat-key {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--muted);
-}
 
 /* Buttons */
 .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
 .btn-a {
-  background: var(--orange);
-  color: white;
-  font-family: 'Outfit', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 11px 26px;
-  border-radius: 3px;
-  text-decoration: none;
-  letter-spacing: 0.3px;
-  transition: background 0.15s, transform 0.15s;
-  display: inline-block;
+  background: var(--orange); color: white;
+  font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600;
+  padding: 11px 26px; border-radius: 3px; text-decoration: none; letter-spacing: 0.3px;
+  transition: background 0.15s, transform 0.15s; display: inline-block;
 }
 .btn-a:hover { background: #E04D00; transform: translateY(-1px); }
 .btn-b {
-  background: transparent;
-  color: var(--white2);
-  font-family: 'Outfit', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 10px 22px;
-  border-radius: 3px;
-  text-decoration: none;
-  border: 1px solid var(--border2);
-  transition: border-color 0.15s, color 0.15s;
-  display: inline-block;
+  background: transparent; color: var(--white2);
+  font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500;
+  padding: 10px 22px; border-radius: 3px; text-decoration: none;
+  border: 1px solid var(--border2); transition: border-color 0.15s, color 0.15s; display: inline-block;
 }
 .btn-b:hover { border-color: var(--orange); color: var(--orange); }
+.btn-resume {
+  background: var(--orange-dim); color: var(--orange);
+  font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600;
+  padding: 10px 22px; border-radius: 3px; text-decoration: none;
+  border: 1px solid rgba(255,92,0,0.3);
+  transition: background 0.15s, transform 0.15s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-resume:hover { background: rgba(255,92,0,0.2); transform: translateY(-1px); }
 
-/* ══════════════════════════ SECTIONS ══════════════════════════════════ */
+/* Stats strip */
+.stats-strip {
+  background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(5, 1fr);
+}
+.stat-cell { padding: 24px 28px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
+.stat-cell:last-child { border-right: none; }
+.stat-val { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 600; color: var(--white); line-height: 1; letter-spacing: -1px; }
+.stat-val em { color: var(--orange); font-style: normal; }
+.stat-key { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+
+/* Sections */
 .section { padding: 80px 72px; max-width: 1300px; margin: 0 auto; }
 .section-dark { background: var(--bg1); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .section-dark .section { margin: 0 auto; }
-
-.s-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--orange);
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+.s-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
 .s-label::after { content: ''; flex: 0 0 24px; height: 1px; background: var(--orange); }
-
-.s-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(32px, 4vw, 52px);
-  font-weight: 300;
-  color: var(--white);
-  letter-spacing: -1.5px;
-  margin-bottom: 48px;
-  line-height: 1.1;
-}
+.s-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 52px); font-weight: 300; color: var(--white); letter-spacing: -1.5px; margin-bottom: 48px; line-height: 1.1; }
 .s-title em { font-style: italic; color: var(--orange); }
 
-/* ══════════════════════════ SKILLS ═══════════════════════════════════ */
-.skill-table {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
-}
-.skill-row {
-  display: contents;
-}
-.skill-cell {
-  padding: 18px 24px;
-  border-bottom: 1px solid var(--border);
-  border-right: 1px solid var(--border);
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  transition: background 0.2s;
-}
+/* Skills */
+.skill-table { display: grid; grid-template-columns: repeat(2, 1fr); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.skill-cell { padding: 18px 24px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); display: flex; gap: 14px; align-items: flex-start; transition: background 0.2s; }
 .skill-cell:hover { background: var(--orange-glow); }
 .skill-cell:nth-child(even) { border-right: none; }
 .skill-cell:nth-last-child(-n+2) { border-bottom: none; }
-.skill-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--orange);
-  min-width: 110px;
-  padding-top: 4px;
-  flex-shrink: 0;
-}
-.skill-vals {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-.sv {
-  background: var(--bg3);
-  color: var(--white2);
-  font-size: 12px;
-  font-weight: 400;
-  padding: 3px 9px;
-  border-radius: 3px;
-  font-family: 'IBM Plex Mono', monospace;
-  border: 1px solid var(--border2);
-  transition: border-color 0.15s, color 0.15s;
-}
+.skill-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); min-width: 110px; padding-top: 4px; flex-shrink: 0; }
+.skill-vals { display: flex; flex-wrap: wrap; gap: 5px; }
+.sv { background: var(--bg3); color: var(--white2); font-size: 12px; font-weight: 400; padding: 3px 9px; border-radius: 3px; font-family: 'IBM Plex Mono', monospace; border: 1px solid var(--border2); transition: border-color 0.15s, color 0.15s; }
 .sv:hover { border-color: var(--orange); color: var(--white); }
 
-/* ══════════════════════════ EXPERIENCE ════════════════════════════════ */
+/* Experience */
 .exp-list { display: flex; flex-direction: column; }
-.exp-item {
-  display: grid;
-  grid-template-columns: 200px 1px 1fr;
-  gap: 0 32px;
-  padding: 32px 0;
-  border-bottom: 1px solid var(--border);
-  align-items: start;
-}
+.exp-item { display: grid; grid-template-columns: 200px 1px 1fr; gap: 0 32px; padding: 32px 0; border-bottom: 1px solid var(--border); align-items: start; }
 .exp-item:last-child { border-bottom: none; }
-.exp-date-col {
-  text-align: right;
-  padding-top: 4px;
-}
-.exp-date {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-.exp-line {
-  background: var(--border2);
-  width: 1px;
-  align-self: stretch;
-  position: relative;
-}
-.exp-line::before {
-  content: '';
-  position: absolute;
-  top: 6px; left: -4px;
-  width: 9px; height: 9px;
-  background: var(--orange);
-  border-radius: 50%;
-}
+.exp-date-col { text-align: right; padding-top: 4px; }
+.exp-date { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); line-height: 1.6; }
+.exp-line { background: var(--border2); width: 1px; align-self: stretch; position: relative; }
+.exp-line::before { content: ''; position: absolute; top: 6px; left: -4px; width: 9px; height: 9px; background: var(--orange); border-radius: 50%; }
 .exp-body { padding-left: 8px; }
-.exp-role {
-  font-size: 19px;
-  font-weight: 600;
-  color: var(--white);
-  margin-bottom: 4px;
-  line-height: 1.3;
-}
-.exp-company {
-  font-size: 13px;
-  color: var(--orange);
-  font-weight: 500;
-  font-family: 'IBM Plex Mono', monospace;
-}
+.exp-role { font-size: 19px; font-weight: 600; color: var(--white); margin-bottom: 4px; line-height: 1.3; }
+.exp-company { font-size: 13px; color: var(--orange); font-weight: 500; font-family: 'IBM Plex Mono', monospace; }
 
-/* ══════════════════════════ PROJECT CARDS ═════════════════════════════ */
-.proj-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  gap: 1px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
-  background: var(--border);
-}
-.pcard {
-  background: var(--bg1);
-  padding: 28px 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: background 0.2s;
-  cursor: default;
-}
+/* Project cards */
+.proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 1px; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: var(--border); }
+.pcard { background: var(--bg1); padding: 28px 30px; display: flex; flex-direction: column; gap: 14px; transition: background 0.2s; cursor: default; }
 .pcard:hover { background: var(--bg2); }
-.pcard-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-}
-.pcard-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--orange);
-  background: var(--orange-dim);
-  padding: 3px 8px;
-  border-radius: 3px;
-  border: 1px solid rgba(255,92,0,0.25);
-  flex-shrink: 0;
-  font-style: italic;
-}
-.pcard-title {
-  font-size: 14.5px;
-  font-weight: 600;
-  color: var(--white);
-  line-height: 1.45;
-  flex: 1;
-}
-.pcard-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-.pcard-meta-item {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10.5px;
-  color: var(--muted);
-  display: flex;
-  gap: 5px;
-}
+.pcard-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.pcard-num { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 600; color: var(--orange); background: var(--orange-dim); padding: 3px 8px; border-radius: 3px; border: 1px solid rgba(255,92,0,0.25); flex-shrink: 0; font-style: italic; }
+.pcard-title { font-size: 14.5px; font-weight: 600; color: var(--white); line-height: 1.45; flex: 1; }
+.pcard-meta { display: flex; flex-wrap: wrap; gap: 14px; }
+.pcard-meta-item { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--muted); display: flex; gap: 5px; }
 .pcard-meta-item span { color: var(--white2); }
-.pcard-desc {
-  font-size: 13px;
-  line-height: 1.75;
-  color: var(--white2);
-  font-weight: 300;
-  flex: 1;
-}
-.pcard-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  padding-top: 6px;
-  border-top: 1px solid var(--border);
-}
-.ptag {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10.5px;
-  color: var(--muted);
-  background: var(--bg3);
-  padding: 3px 7px;
-  border-radius: 2px;
-}
+.pcard-desc { font-size: 13px; line-height: 1.75; color: var(--white2); font-weight: 300; flex: 1; }
+.pcard-tags { display: flex; flex-wrap: wrap; gap: 5px; padding-top: 6px; border-top: 1px solid var(--border); }
+.ptag { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--muted); background: var(--bg3); padding: 3px 7px; border-radius: 2px; }
 
-/* ══════════════════════════ AWARDS ════════════════════════════════════ */
-.award-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-}
-.acard {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 24px 26px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: border-color 0.2s, background 0.2s;
-  position: relative;
-  overflow: hidden;
-}
-.acard::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 3px; height: 100%;
-  background: var(--border2);
-  transition: background 0.2s;
-}
+/* Awards */
+.award-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.acard { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 24px 26px; display: flex; flex-direction: column; gap: 10px; transition: border-color 0.2s, background 0.2s; position: relative; overflow: hidden; }
+.acard::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--border2); transition: background 0.2s; }
 .acard:hover { border-color: var(--border2); background: var(--bg3); }
 .acard:hover::before { background: var(--orange); }
 .acard-top { display: flex; align-items: center; justify-content: space-between; }
 .acard-icon { font-size: 20px; line-height: 1; }
-.acard-year {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: var(--orange);
-  background: var(--orange-dim);
-  padding: 3px 8px;
-  border-radius: 100px;
-  border: 1px solid rgba(255,92,0,0.2);
-}
-.acard-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--white);
-  line-height: 1.4;
-}
-.acard-desc {
-  font-size: 12.5px;
-  color: var(--muted);
-  line-height: 1.65;
-  font-weight: 300;
-}
+.acard-year { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--orange); background: var(--orange-dim); padding: 3px 8px; border-radius: 100px; border: 1px solid rgba(255,92,0,0.2); }
+.acard-title { font-size: 14px; font-weight: 600; color: var(--white); line-height: 1.4; }
+.acard-desc { font-size: 12.5px; color: var(--muted); line-height: 1.65; font-weight: 300; }
 
-/* ══════════════════════════ CERTS ═════════════════════════════════════ */
-.cert-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 12px;
-}
-.ccard {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  transition: border-color 0.2s;
-}
+/* Certs */
+.cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.ccard { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; transition: border-color 0.2s; }
 .ccard:hover { border-color: var(--orange); }
-.ccard-icon {
-  width: 40px; height: 40px;
-  background: var(--bg3);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
-  border: 1px solid var(--border2);
-}
-.ccard-name {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--white);
-  margin-bottom: 3px;
-  line-height: 1.35;
-}
-.ccard-by {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10.5px;
-  color: var(--orange);
-}
+.ccard-icon { width: 40px; height: 40px; background: var(--bg3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; border: 1px solid var(--border2); }
+.ccard-name { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 3px; line-height: 1.35; }
+.ccard-by { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--orange); }
 
-/* ══════════════════════════ EDUCATION ═════════════════════════════════ */
-.edu-wrap {
-  display: flex;
-  gap: 48px;
-  align-items: stretch;
-  max-width: 700px;
-}
-.edu-year-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding-top: 6px;
-}
-.edu-year-label {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 52px;
-  font-weight: 300;
-  color: var(--border2);
-  line-height: 1;
-  letter-spacing: -2px;
-}
+/* Education */
+.edu-wrap { display: flex; gap: 48px; align-items: stretch; max-width: 700px; }
+.edu-year-col { display: flex; flex-direction: column; align-items: center; gap: 8px; padding-top: 6px; }
+.edu-year-label { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 300; color: var(--border2); line-height: 1; letter-spacing: -2px; }
 .edu-year-line { flex: 1; width: 1px; background: var(--border); }
-.edu-card-body {
-  flex: 1;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 28px 30px;
-}
-.edu-degree {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--white);
-  line-height: 1.25;
-  margin-bottom: 8px;
-}
-.edu-school {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 12px;
-  color: var(--orange);
-  margin-bottom: 18px;
-  letter-spacing: 0.5px;
-}
+.edu-card-body { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 28px 30px; }
+.edu-degree { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--white); line-height: 1.25; margin-bottom: 8px; }
+.edu-school { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--orange); margin-bottom: 18px; letter-spacing: 0.5px; }
 .edu-chips { display: flex; gap: 8px; }
-.edu-chip {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  color: var(--white2);
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  padding: 4px 10px;
-  border-radius: 3px;
-}
+.edu-chip { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--white2); background: var(--bg3); border: 1px solid var(--border2); padding: 4px 10px; border-radius: 3px; }
 
-/* ══════════════════════════ FOOTER ════════════════════════════════════ */
+/* Footer — simplified, no repeated social links */
 .footer {
   background: var(--bg1);
   border-top: 1px solid var(--border);
   padding: 48px 72px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 32px;
-  align-items: start;
-}
-.footer-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 28px;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--white);
-  margin-bottom: 6px;
-}
-.footer-sub {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-.footer-links { display: flex; flex-direction: column; gap: 10px; }
-.footer-link {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11.5px;
-  color: var(--muted);
-  text-decoration: none;
-  display: flex;
   align-items: center;
-  gap: 8px;
-  transition: color 0.15s;
 }
-.footer-link:hover { color: var(--orange); }
-.footer-link::before { content: '→'; color: var(--border2); font-size: 11px; }
-.footer-copy {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
-  line-height: 1.8;
-  text-align: right;
-}
+.footer-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; font-style: italic; color: var(--white); margin-bottom: 6px; }
+.footer-sub { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+.footer-copy { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); line-height: 1.8; text-align: right; }
 .footer-copy span { color: var(--orange); }
 </style>
 """, unsafe_allow_html=True)
@@ -810,12 +437,14 @@ CERTS = [
     ("❄️", "Snowflake Masterclass",                   "Udemy"),
 ]
 
+RESUME_URL = "https://github.com/AshikRoshan-github/Professional-Work-Archive/raw/main/Resume_Center/Data%26AI_1360.docx"
+
 # ══════════════════════════════════════════════════════════════════════════════
 #  RENDER
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ── NAV ─────────────────────────────────────────────────────────────────────
-st.markdown("""
+# ── NAV — resume download added, no social links here ─────────────────────
+st.markdown(f"""
 <div class="nav">
   <div class="nav-logo">
     <div class="nav-logo-mark">A</div>
@@ -828,12 +457,13 @@ st.markdown("""
     <a href="#awards">Awards</a>
     <a href="#certs">Certs</a>
     <a href="#education">Education</a>
+    <a href="{RESUME_URL}" target="_blank" class="nav-resume">⬇ Resume</a>
   </div>
 </div>
 """, unsafe_allow_html=True)
 
-# ── HERO ─────────────────────────────────────────────────────────────────────
-st.markdown("""
+# ── HERO — social links live HERE only ────────────────────────────────────
+st.markdown(f"""
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-label fade fade-1">Data Engineer &amp; AI Engineer — L2</div>
@@ -841,19 +471,20 @@ st.markdown("""
       Ashik<br>
       <span class="hero-name-last">Roshan I</span>
     </h1>
-    <p class="hero-name-sub fade fade-2">Building data pipelines & intelligent systems</p>
+    <p class="hero-name-sub fade fade-2">Building data pipelines &amp; intelligent systems</p>
     <div class="hero-divider"></div>
     <div class="hero-bottom fade fade-3">
       <div>
         <p class="hero-bio">
-          Results-driven engineer with <strong>2+ years</strong> delivering scalable ETL/ELT pipelines, 
-          enterprise cloud migrations, and production-grade AI automation at 
-          <strong>Optisol Business Solutions</strong>. Specialising in Snowflake, Azure, AWS, 
-          LangChain, and GenAI agent design — from data warehouse migrations to 
+          Results-driven engineer with <strong>2+ years</strong> delivering scalable ETL/ELT pipelines,
+          enterprise cloud migrations, and production-grade AI automation at
+          <strong>Optisol Business Solutions</strong>. Specialising in Snowflake, Azure, AWS,
+          LangChain, and GenAI agent design — from data warehouse migrations to
           self-healing AI code agents and RAG-powered knowledge graphs.
         </p>
         <div class="btn-row">
           <a href="mailto:ashikroshan261@gmail.com" class="btn-a">Get in Touch</a>
+          <a href="{RESUME_URL}" target="_blank" class="btn-resume">⬇ Download Resume</a>
           <a href="https://github.com/AshikRoshan-github" target="_blank" class="btn-b">GitHub ↗</a>
           <a href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank" class="btn-b">LinkedIn ↗</a>
           <a href="https://medium.com/@ashikroshan261" target="_blank" class="btn-b">Medium ↗</a>
@@ -873,41 +504,21 @@ st.markdown("""
 # ── STATS STRIP ──────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="stats-strip">
-  <div class="stat-cell">
-    <div class="stat-val">2<em>+</em></div>
-    <div class="stat-key">Years Experience</div>
-  </div>
-  <div class="stat-cell">
-    <div class="stat-val">14<em>+</em></div>
-    <div class="stat-key">Projects Delivered</div>
-  </div>
-  <div class="stat-cell">
-    <div class="stat-val">7</div>
-    <div class="stat-key">Spot Awards</div>
-  </div>
-  <div class="stat-cell">
-    <div class="stat-val"><em>MVP</em></div>
-    <div class="stat-key">Award 2024–25</div>
-  </div>
-  <div class="stat-cell">
-    <div class="stat-val">8</div>
-    <div class="stat-key">Certifications</div>
-  </div>
+  <div class="stat-cell"><div class="stat-val">2<em>+</em></div><div class="stat-key">Years Experience</div></div>
+  <div class="stat-cell"><div class="stat-val">14<em>+</em></div><div class="stat-key">Projects Delivered</div></div>
+  <div class="stat-cell"><div class="stat-val">7</div><div class="stat-key">Spot Awards</div></div>
+  <div class="stat-cell"><div class="stat-val"><em>MVP</em></div><div class="stat-key">Award 2024–25</div></div>
+  <div class="stat-cell"><div class="stat-val">8</div><div class="stat-key">Certifications</div></div>
 </div>
 """, unsafe_allow_html=True)
 
 # ── SKILLS ───────────────────────────────────────────────────────────────────
 st.markdown('<div id="skills" class="section-dark"><div class="section">', unsafe_allow_html=True)
 st.markdown('<div class="s-label">Arsenal</div><h2 class="s-title">Technical <em>Skills</em></h2>', unsafe_allow_html=True)
-
 skill_html = '<div class="skill-table">'
 for cat, tags in SKILLS:
     tag_str = "".join(f'<span class="sv">{t}</span>' for t in tags)
-    skill_html += f"""
-    <div class="skill-cell">
-      <div class="skill-label">{cat}</div>
-      <div class="skill-vals">{tag_str}</div>
-    </div>"""
+    skill_html += f'<div class="skill-cell"><div class="skill-label">{cat}</div><div class="skill-vals">{tag_str}</div></div>'
 skill_html += "</div>"
 st.markdown(skill_html, unsafe_allow_html=True)
 st.markdown('</div></div>', unsafe_allow_html=True)
@@ -915,7 +526,6 @@ st.markdown('</div></div>', unsafe_allow_html=True)
 # ── EXPERIENCE ───────────────────────────────────────────────────────────────
 st.markdown('<div id="experience" class="section">', unsafe_allow_html=True)
 st.markdown('<div class="s-label">Career</div><h2 class="s-title">Professional <em>Experience</em></h2>', unsafe_allow_html=True)
-
 exp_html = '<div class="exp-list">'
 for role, company, date in EXP:
     date_display = date.replace('\n', '<br>')
@@ -968,7 +578,6 @@ st.markdown('</div>', unsafe_allow_html=True)
 # ── AWARDS ───────────────────────────────────────────────────────────────────
 st.markdown('<div id="awards" class="section-dark"><div class="section">', unsafe_allow_html=True)
 st.markdown('<div class="s-label">Recognition</div><h2 class="s-title">Awards & <em>Achievements</em></h2>', unsafe_allow_html=True)
-
 award_html = '<div class="award-grid">'
 for icon, title, year, desc in AWARDS:
     award_html += f"""
@@ -987,7 +596,6 @@ st.markdown('</div></div>', unsafe_allow_html=True)
 # ── CERTIFICATIONS ───────────────────────────────────────────────────────────
 st.markdown('<div id="certs" class="section">', unsafe_allow_html=True)
 st.markdown('<div class="s-label">Credentials</div><h2 class="s-title"><em>Certifications</em></h2>', unsafe_allow_html=True)
-
 cert_html = '<div class="cert-grid">'
 for icon, name, issuer in CERTS:
     cert_html += f"""
@@ -1024,18 +632,12 @@ st.markdown("""
 """, unsafe_allow_html=True)
 st.markdown('</div></div>', unsafe_allow_html=True)
 
-# ── FOOTER ───────────────────────────────────────────────────────────────────
+# ── FOOTER — simplified, social links NOT repeated here ─────────────────────
 st.markdown("""
 <div class="footer">
   <div>
     <div class="footer-name">Ashik Roshan I</div>
     <div class="footer-sub">Data Engineer · AI Engineer · L2</div>
-  </div>
-  <div class="footer-links">
-    <a href="mailto:ashikroshan261@gmail.com" class="footer-link">ashikroshan261@gmail.com</a>
-    <a href="https://github.com/AshikRoshan-github" target="_blank" class="footer-link">github.com/AshikRoshan-github</a>
-    <a href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank" class="footer-link">linkedin.com/in/ashik-roshan-i</a>
-    <a href="https://medium.com/@ashikroshan261" target="_blank" class="footer-link">medium.com/@ashikroshan261</a>
   </div>
   <div class="footer-copy">
     Built with <span>Streamlit</span><br>
