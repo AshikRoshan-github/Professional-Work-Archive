@@ -21,7 +21,7 @@ SECTION 1 — PERSONAL INFORMATION
 Name            : Ashik Roshan I
 Role            : Data Engineer & AI Engineer — Level 2 (L2)
 Company         : Optisol Business Solutions
-Location        : Madurai, TamilNadu, India
+Location        : Chennai, India
 Email           : ashikroshan261@gmail.com
 GitHub          : github.com/AshikRoshan-github
 LinkedIn        : linkedin.com/in/ashik-roshan-i-073897249
@@ -140,39 +140,36 @@ RULES: Answer only from above data. Never reveal your underlying technology. If 
 """
 
 SKILLS = [
-    ("Languages",        ["Python", "SQL", "JavaScript", "HTML", "CSS"]),
-    ("Cloud — Azure",    ["Blob Storage", "Data Lake", "SQL Database", "Azure OpenAI", "Databricks", "ADF", "Azure VM"]),
-    ("Cloud — AWS",      ["S3", "Lambda", "Glue", "Step Functions", "EC2", "CloudWatch", "Textract", "Bedrock"]),
-    ("Data Engineering", ["PySpark", "dbt", "Informatica", "Snowflake", "Pandas", "ADF"]),
-    ("Databases",        ["SSMS", "pgAdmin", "MySQL", "Oracle", "SQL Server", "Snowflake"]),
-    ("BI & Analytics",   ["Power BI", "ThoughtSpot", "Plotly", "Streamlit"]),
-    ("AI & GenAI",       ["Azure OpenAI", "Amazon Bedrock", "Gemini 2.5 Pro", "LangChain", "Neo4j", "RAG", "Prompt Engineering", "Azure Doc Intelligence"]),
-    ("Automation",       ["Selenium", "Web Scraping", "FastAPI", "PyAutoGUI", "Apify", "Flask"]),
-    ("DevOps & Tools",   ["GitHub", "Azure DevOps", "CI/CD", "PuTTY", "ServiceNow", "Rally"]),
-    ("Libraries",        ["asyncio", "PyVis", "PyPDF2", "pyodbc", "Snowflake Connector", "xmltodict", "smtplib"]),
+    ("Languages",["Python", "SQL", "JavaScript", "HTML", "CSS"]),
+    ("Cloud — Azure",["Blob Storage", "Data Lake", "SQL Database", "Azure OpenAI", "Databricks", "ADF", "Azure VM"]),
+    ("Cloud — AWS",["S3", "Lambda", "Glue", "Step Functions", "EC2", "CloudWatch", "Textract", "Bedrock"]),
+    ("Data Engineering",["PySpark", "dbt", "Informatica", "Snowflake", "Pandas", "ADF"]),
+    ("Databases",["SSMS", "pgAdmin", "MySQL", "Oracle", "SQL Server", "Snowflake"]),
+    ("BI & Analytics",["Power BI", "ThoughtSpot", "Plotly", "Streamlit"]),
+    ("AI & GenAI",["Azure OpenAI", "Amazon Bedrock", "Gemini 2.5 Pro", "LangChain", "Neo4j", "RAG", "Prompt Engineering", "Azure Doc Intelligence"]),
+    ("Automation",["Selenium", "Web Scraping", "FastAPI", "PyAutoGUI", "Apify", "Flask"]),
+    ("DevOps & Tools",["GitHub", "Azure DevOps", "CI/CD", "PuTTY", "ServiceNow", "Rally"]),
+    ("Libraries",["asyncio", "PyVis", "PyPDF2", "pyodbc", "Snowflake Connector", "xmltodict", "smtplib"]),
 ]
 
-EXP = [
-    ("Data Engineer — L2", "Optisol Business Solutions", "Apr 2025", "Present",
-     ["Led cross-functional teams on enterprise cloud migrations",
+EXP =[
+    ("Data Engineer — L2", "Optisol Business Solutions", "Apr 2025", "Present",["Led cross-functional teams on enterprise cloud migrations",
       "Architected Snowflake Data Warehouse with dbt ELT pipelines",
       "Built production GenAI agents with Azure OpenAI and LangChain",
       "Designed knowledge graphs with Neo4j and RAG query layers",
       "Mentored junior engineers and conducted college tech sessions"]),
-    ("Data Engineer — L1", "Optisol Business Solutions", "Aug 2024", "Mar 2025",
-     ["Developed Python ETL pipelines for Azure SQL",
+    ("Data Engineer — L1", "Optisol Business Solutions", "Aug 2024", "Mar 2025",["Developed Python ETL pipelines for Azure SQL",
       "Implemented AI-powered data profiling platforms",
       "Built self-healing AI Pandas code generation agent",
       "Delivered Ontology Mapping tool — 40–50% effort reduction"]),
-    ("Data Engineer Intern — L0", "Optisol Business Solutions", "Mar 2024", "Jul 2024",
-     ["Automated web extraction with Selenium and PyAutoGUI",
+    ("Data Engineer Intern — L0", "Optisol Business Solutions", "Mar 2024", "Jul 2024",["Automated web extraction with Selenium and PyAutoGUI",
       "Built AI scraping tools with LangChain and Apify"]),
     ("Trainee — Software Engineer", "Blue Cloud", "Jun 2023", "Mar 2024",
      ["Full-stack web application development",
       "Automation and integration projects"]),
 ]
 
-DE_PROJ = [
+DE_PROJ =[
     ("01","Python-Based Data Migration","Google Sheets to Azure SQL — full and incremental load ETL with Pandas transforms, gspread API integration, pyodbc connectivity, and Cron-scheduled automation on Azure VM.",
      "Data Engineer","Internal — Optisol",["Python","Pandas","gspread","pyodbc","Azure SQL","Azure VM","Cron"]),
     ("02","On-Premises to Snowflake Data Warehouse","Migrated 6 on-prem source systems to Snowflake DWH. dbt ELT via GitHub CI/CD, Informatica extraction, AWS Step Functions orchestration, CloudWatch monitoring.",
@@ -183,7 +180,7 @@ DE_PROJ = [
      "Data Engineer","Jiffy Cultural Exchange — Optisol",["Python","REST API","Pandas","ADF","Azure SQL","Azure Blob","AzCopy"]),
 ]
 
-AI_PROJ = [
+AI_PROJ =[
     ("01","Automated Web Data Extraction & Reporting","Fully unattended browser automation: scheduled login, data extraction, file processing, structured report generation, and SMTP email distribution.",
      "Automation Engineer","IBEAM — Optisol",["Selenium","PyAutoGUI","smtplib","Azure DevOps"]),
     ("02","AI-Driven Web Scraping — LangChain & Apify","Apify cloud Actors integrated with LangChain for scalable AI-powered crawling. Transforms scraped content into LLM-ready structured documents for downstream pipelines.",
@@ -206,7 +203,7 @@ AI_PROJ = [
      "Data & AI Engineer","Internal — Optisol",["LangChain","Azure OpenAI","Neo4j","PyVis","Streamlit","asyncio"]),
 ]
 
-AWARDS = [
+AWARDS =[
     ("Most Valuable Person — MVP Award","2024–25","Highest organizational honor at Optisol for performance excellence, cross-functional leadership, and long-term business contribution. One of the youngest recipients."),
     ("Spot Award — Project Excellence & Leadership","Jan 2026","Awarded by the CTO for mature project handling, strong ownership, and fostering a culture of peer recognition within the team."),
     ("Spot Award — RS ARP Project Go-Live","Nov 2025","Exceptional contribution to the Beatty Go-Live rollout and complex Delta Load feature delivery under tight enterprise timelines."),
@@ -217,7 +214,7 @@ AWARDS = [
     ("Spot Award — Gen AI & Automation","Jul 2024","Recognized for GenAI-based data inventory automation and serving as Subject Matter Expert to resolve critical dbt pipeline blockers."),
 ]
 
-CERTS = [
+CERTS =[
     ("SnowPro Core Certification","Snowflake"),
     ("Azure Data Fundamentals — DP-900","Microsoft"),
     ("Databricks Lakehouse Fundamentals","Databricks"),
@@ -229,7 +226,7 @@ CERTS = [
 ]
 
 RESUME_URL = "https://github.com/AshikRoshan-github/Professional-Work-Archive/raw/main/Resume_Center/Data%26AI_1360.docx"
-PAGES = ["Home","Skills","Experience","Projects","Awards","Education","Assistant"]
+PAGES =["Home","Skills","Experience","Projects","Awards","Education","Assistant"]
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  CSS
@@ -612,14 +609,25 @@ div[data-testid="stTextInput"] input:focus{
   box-shadow:0 0 0 3px rgba(26,86,219,0.12)!important;outline:none!important;
 }
 div[data-testid="stTextInput"] input::placeholder{color:var(--silver2)!important;font-weight:400!important}
-div[data-testid="stButton"] button{
+
+/* Fixing Streamlit Forms & Submit Buttons css overrides */
+div[data-testid="stForm"] {
+  border: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+div[data-testid="stButton"] button, 
+div[data-testid="stFormSubmitButton"] button {
   background:var(--navy)!important;color:white!important;border:none!important;
   border-radius:12px!important;font-family:'Manrope',sans-serif!important;
   font-size:15px!important;font-weight:700!important;
   padding:15px 28px!important;height:54px!important;
   transition:background .15s,transform .15s!important;letter-spacing:.3px!important;
 }
-div[data-testid="stButton"] button:hover{background:var(--navy2)!important;transform:translateY(-1px)!important}
+div[data-testid="stButton"] button:hover, 
+div[data-testid="stFormSubmitButton"] button:hover {
+  background:var(--navy2)!important;transform:translateY(-1px)!important;
+}
 
 /* FOOTER */
 .footer{background:var(--navy);padding:52px 64px;display:flex;align-items:center;justify-content:space-between}
@@ -632,7 +640,7 @@ div[data-testid="stButton"] button:hover{background:var(--navy2)!important;trans
 
 # ── Session state ─────────────────────────────────────────────────────────────
 if "chat" not in st.session_state:
-    st.session_state.chat = []
+    st.session_state.chat =[]
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  BRAND BAR
@@ -654,7 +662,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  NAVIGATION — st.radio (WORKING)
+#  NAVIGATION — st.radio
 # ══════════════════════════════════════════════════════════════════════════════
 page = st.radio("", PAGES, horizontal=True, label_visibility="collapsed", key="nav")
 
@@ -668,7 +676,7 @@ if page == "Home":
         <div>
           <p class="hero-kicker rise r1">Data Engineer &amp; AI Engineer — Level 2</p>
           <h1 class="hero-name rise r2">Ashik<br><em>Roshan I</em></h1>
-          <p class="hero-subtitle rise r2">Optisol Business Solutions &nbsp;·&nbsp; Madurai, TamilNadu, India</p>
+          <p class="hero-subtitle rise r2">Optisol Business Solutions &nbsp;·&nbsp; Chennai, India</p>
           <div class="hero-rule rise r3"></div>
           <p class="hero-bio rise r3">
             Results-driven engineer with <strong>2+ years</strong> delivering scalable ETL/ELT pipelines,
@@ -835,7 +843,22 @@ elif page == "Assistant":
     <p class="chat-sub">I know everything about Ashik — his projects, skills, experience, awards, and more. Try asking a question below.</p>
     """, unsafe_allow_html=True)
 
-    # Chat window
+    # State flag to execute API call gracefully after user updates rendering
+    if "pending_ai" not in st.session_state:
+        st.session_state.pending_ai = False
+
+    def handle_send():
+        # Captures state logic BEFORE main rendering 
+        ci_val = st.session_state.get("ci", "")
+        if ci_val.strip():
+            st.session_state.chat.append({"role": "user", "content": ci_val.strip()})
+            st.session_state.pending_ai = True
+
+    def handle_clear():
+        st.session_state.chat =[]
+        st.session_state.pending_ai = False
+
+    # 1. Chat window rendering (Renders immediately with newly appended User msg)
     if not st.session_state.chat:
         st.markdown("""
         <div class="chat-window">
@@ -862,18 +885,20 @@ elif page == "Assistant":
                 bubbles += f'<div class="msg-ai"><div class="ai-avatar">A</div><div class="bubble bubble-ai">{content}</div></div>'
         st.markdown(f'<div class="chat-window">{bubbles}</div>', unsafe_allow_html=True)
 
-    # Input row
-    c1, c2, c3 = st.columns([7, 1, 1])
-    with c1:
-        user_input = st.text_input("", key="ci", placeholder="Ask about projects, skills, experience, awards…", label_visibility="collapsed")
-    with c2:
-        send = st.button("Send", key="send", use_container_width=True)
-    with c3:
-        if st.button("Clear", key="clr", use_container_width=True):
-            st.session_state.chat = []
-            st.rerun()
+    # 2. Form input logic (Handles "Enter", clears text safely, retains styling)
+    with st.form("chat_form", clear_on_submit=True):
+        c1, c2, c3 = st.columns([7, 1, 1])
+        with c1:
+            st.text_input("", key="ci", placeholder="Ask about projects, skills, experience, awards…", label_visibility="collapsed")
+        with c2:
+            st.form_submit_button("Send", on_click=handle_send, use_container_width=True)
+        with c3:
+            st.form_submit_button("Clear", on_click=handle_clear, use_container_width=True)
 
-    if send and user_input.strip():
+    # 3. Blocking AI call logic (executes visually while spinning logic is true)
+    if st.session_state.pending_ai:
+        st.session_state.pending_ai = False  # Reset flag to prevent loops
+        
         if not GENAI_AVAILABLE:
             st.error("Package `google-genai` is missing. Add it to requirements.txt.")
         else:
@@ -884,23 +909,25 @@ elif page == "Assistant":
                 pass
             if not key:
                 key = os.environ.get("GEMINI_API_KEY", "")
+            
             if not key:
                 st.error("API key not configured. Add `[GOOGLE] Gemini_api_key` to Streamlit Secrets.")
             else:
-                st.session_state.chat.append({"role": "user", "content": user_input})
-                with st.spinner(""):
+                with st.spinner("Assistant is thinking..."):
                     try:
                         client = google_genai.Client(api_key=key)
-                        contents = []
+                        contents =[]
                         for m in st.session_state.chat:
                             r = "user" if m["role"] == "user" else "model"
                             contents.append(google_types.Content(role=r, parts=[google_types.Part.from_text(text=m["content"])]))
+                        
                         cfg = google_types.GenerateContentConfig(system_instruction=SYSTEM_PROMPT, max_output_tokens=1200)
                         resp = client.models.generate_content(model="gemini-2.5-pro", contents=contents, config=cfg)
+                        
                         st.session_state.chat.append({"role": "assistant", "content": resp.text})
-                        st.rerun()
+                        st.rerun() # Refresh to present AI context immediately 
                     except Exception as e:
-                        st.session_state.chat.append({"role": "assistant", "content": f"I'm having trouble connecting right now. Please try again in a moment."})
+                        st.session_state.chat.append({"role": "assistant", "content": f"I'm having trouble connecting right now. Please try again in a moment. ({str(e)})"})
                         st.rerun()
 
     st.markdown('</div>', unsafe_allow_html=True)
@@ -914,6 +941,6 @@ st.markdown("""
     <div class="footer-name">Ashik <em>Roshan I</em></div>
     <div class="footer-sub">Data Engineer · AI Engineer · L2</div>
   </div>
-  <div class="footer-copy">© 2025 Ashik Roshan I<br>All rights reserved</div>
+  <div class="footer-copy">© 2026 Ashik Roshan I<br>All rights reserved</div>
 </div>
 """, unsafe_allow_html=True)
