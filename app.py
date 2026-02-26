@@ -457,7 +457,7 @@ st.markdown(f"""
     <a href="#awards">Awards</a>
     <a href="#certs">Certs</a>
     <a href="#education">Education</a>
-    <a href="{RESUME_URL}" target="_blank" class="nav-resume"> ⬇️ Resume</a>
+    <a href="{RESUME_URL}" target="_blank" class="nav-resume"> Resume</a>
   </div>
 </div>
 """, unsafe_allow_html=True)
@@ -484,7 +484,7 @@ st.markdown(f"""
         </p>
         <div class="btn-row">
           <a href="mailto:ashikroshan261@gmail.com" class="btn-a">Get in Touch</a>
-          <a href="{RESUME_URL}" target="_blank" class="btn-resume">⬇ Download Resume</a>
+          <a href="{RESUME_URL}" target="_blank" class="btn-resume">⬇️ Download Resume</a>
           <a href="https://github.com/AshikRoshan-github" target="_blank" class="btn-b">GitHub ↗</a>
           <a href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank" class="btn-b">LinkedIn ↗</a>
           <a href="https://medium.com/@ashikroshan261" target="_blank" class="btn-b">Medium ↗</a>
