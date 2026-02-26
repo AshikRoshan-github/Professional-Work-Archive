@@ -457,7 +457,7 @@ st.markdown(f"""
     <a href="#awards">Awards</a>
     <a href="#certs">Certs</a>
     <a href="#education">Education</a>
-    <a href="{RESUME_URL}" target="_blank" class="nav-resume">⬇ Resume</a>
+    <a href="{RESUME_URL}" target="_blank" class="nav-resume"> ⬇️ Resume</a>
   </div>
 </div>
 """, unsafe_allow_html=True)
