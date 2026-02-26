@@ -490,9 +490,7 @@ st.markdown(f"""
           <a href="https://medium.com/@ashikroshan261" target="_blank" class="btn-b">Medium ↗</a>
         </div>
       </div>
-      <div class="hero-meta fade fade-4">
-       
-      </div>
+
     </div>
   </div>
 </div>
