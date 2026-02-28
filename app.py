@@ -228,7 +228,7 @@ CERTS = [
     ("Snowflake Masterclass","Udemy"),
 ]
 
-RESUME_URL = "https://github.com/AshikRoshan-github/Professional-Work-Archive/raw/main/Resume_Center/Data%26AI_1360.docx"
+RESUME_URL = "https://github.com/AshikRoshan-github/Professional-Work-Archive/blob/main/Resume_Center/AshikRoshan_DE_2.pdf"
 PAGES = ["Home","Skills","Experience","Projects","Awards","Education"]
 
 # ══════════════════════════════════════════════════════════════════════════════
