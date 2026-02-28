@@ -539,7 +539,6 @@ with st.sidebar:
         </div>
       </div>
       <div class="sb-body">
-        <div class="sb-section-label">Ask About Me</div>
     """, unsafe_allow_html=True)
 
     QUESTIONS = [
