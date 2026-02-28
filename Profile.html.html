@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ashik Roshan I — Data & AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:        #060810;
+  --surface:   #0C1018;
+  --surface2:  #121820;
+  --border:    rgba(100,180,255,0.09);
+  --border2:   rgba(100,180,255,0.18);
+  --accent:    #4FB3FF;
+  --accent2:   #00E5A0;
+  --accent3:   #FF8C42;
+  --text:      #D8E8F5;
+  --textDim:   rgba(216,232,245,0.5);
+  --textFaint: rgba(216,232,245,0.28);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image:
+    linear-gradient(rgba(79,179,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,179,255,0.022) 1px, transparent 1px);
+  background-size: 72px 72px;
+  pointer-events:none; z-index:0;
+}
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  padding:0 5%; height:68px;
+  display:flex; align-items:center; justify-content:space-between;
+  background:rgba(6,8,16,0.84);
+  backdrop-filter:blur(20px) saturate(1.4);
+  border-bottom:1px solid var(--border);
+}
+.nav-brand { display:flex; align-items:center; gap:12px; text-decoration:none; }
+.nav-mark {
+  width:34px; height:34px;
+  background:linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius:6px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.1rem;
+  color:var(--bg); letter-spacing:-1px;
+}
+.nav-name { font-weight:600; font-size:0.95rem; letter-spacing:0.3px; }
+.nav-name span { font-weight:300; color:var(--textDim); }
+nav ul { list-style:none; display:flex; align-items:center; gap:34px; }
+nav ul a {
+  font-family:'JetBrains Mono',monospace; font-size:0.68rem;
+  color:var(--textDim); text-decoration:none; letter-spacing:1.5px; text-transform:uppercase;
+  transition:color 0.2s;
+}
+nav ul a:hover { color:var(--accent); }
+.nav-cta {
+  border:1px solid var(--accent) !important;
+  color:var(--accent) !important;
+  padding:7px 20px !important; border-radius:4px;
+  transition:background 0.2s !important, color 0.2s !important;
+}
+.nav-cta:hover { background:var(--accent) !important; color:var(--bg) !important; }
+
+/* WRAP */
+section { position:relative; z-index:1; }
+.wrap { max-width:1180px; margin:0 auto; padding:104px 5%; }
+
+.eyebrow {
+  font-family:'JetBrains Mono',monospace; font-size:0.63rem;
+  letter-spacing:3px; text-transform:uppercase; color:var(--accent2);
+  margin-bottom:14px; display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before { content:''; display:block; width:28px; height:1px; background:var(--accent2); }
+
+.sec-title {
+  font-family:'Cormorant Garamond',serif; font-weight:600;
+  font-size:clamp(2rem,4vw,3.4rem); letter-spacing:-0.5px;
+  line-height:1.1; margin-bottom:56px;
+}
+.sec-title em { font-style:italic; color:var(--accent); }
+
+/* HERO */
+#hero { min-height:100vh; display:flex; align-items:center; padding:68px 5% 0; }
+.hero-inner { max-width:1180px; margin:0 auto; width:100%; display:flex; gap:72px; align-items:center; }
+.hero-content { flex:1; }
+
+.avail-badge {
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:'JetBrains Mono',monospace; font-size:0.66rem;
+  letter-spacing:2px; text-transform:uppercase; color:var(--accent2);
+  border:1px solid rgba(0,229,160,0.25); background:rgba(0,229,160,0.05);
+  padding:7px 16px; border-radius:100px; margin-bottom:32px;
+  animation:fadeUp 0.7s ease both;
+}
+.pulse { width:6px; height:6px; border-radius:50%; background:var(--accent2); animation:pulseDot 2s infinite; }
+@keyframes pulseDot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.35;transform:scale(0.6);} }
+
+.hero-name {
+  font-family:'Cormorant Garamond',serif; font-weight:700;
+  font-size:clamp(3.4rem,7vw,6.8rem); line-height:0.95;
+  letter-spacing:-3px; margin-bottom:10px;
+  animation:fadeUp 0.7s 0.1s ease both;
+}
+.hero-name-accent { color:var(--accent); }
+
+.hero-desig {
+  font-family:'JetBrains Mono',monospace; font-size:0.82rem;
+  color:var(--textDim); letter-spacing:1.5px; margin-bottom:28px;
+  animation:fadeUp 0.7s 0.2s ease both;
+}
+
+.hero-bio {
+  font-size:1.05rem; font-weight:300; color:var(--textDim);
+  max-width:500px; margin-bottom:44px; line-height:1.9;
+  animation:fadeUp 0.7s 0.3s ease both;
+}
+
+.hero-actions { display:flex; gap:14px; flex-wrap:wrap; animation:fadeUp 0.7s 0.4s ease both; }
+
+.btn-fill {
+  display:inline-flex; align-items:center; gap:9px;
+  background:linear-gradient(135deg, var(--accent), #2196F3);
+  color:#fff; padding:13px 28px; border-radius:6px;
+  text-decoration:none; font-size:0.88rem; font-weight:600;
+  transition:transform 0.2s, box-shadow 0.2s;
+}
+.btn-fill:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(79,179,255,0.3); }
+
+.btn-ghost {
+  display:inline-flex; align-items:center; gap:9px;
+  border:1px solid var(--border2); color:var(--text);
+  padding:13px 28px; border-radius:6px;
+  text-decoration:none; font-size:0.88rem; font-weight:400;
+  transition:border-color 0.2s, color 0.2s;
+}
+.btn-ghost:hover { border-color:var(--accent); color:var(--accent); }
+
+.hero-panel { flex:0 0 300px; display:flex; flex-direction:column; gap:14px; animation:fadeUp 0.7s 0.5s ease both; }
+.kpi {
+  background:var(--surface); border:1px solid var(--border); border-radius:10px;
+  padding:22px 24px; position:relative; overflow:hidden;
+}
+.kpi::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--accent),transparent); }
+.kpi-num { font-family:'Cormorant Garamond',serif; font-weight:700; font-size:2.4rem; color:var(--accent); line-height:1; letter-spacing:-1px; }
+.kpi-lbl { font-family:'JetBrains Mono',monospace; font-size:0.63rem; color:var(--textFaint); letter-spacing:2px; text-transform:uppercase; margin-top:5px; }
+.soc-row { display:flex; gap:10px; }
+.soc {
+  flex:1; display:flex; align-items:center; justify-content:center; gap:7px;
+  background:var(--surface); border:1px solid var(--border); color:var(--textDim);
+  padding:11px 8px; border-radius:7px; text-decoration:none;
+  font-family:'JetBrains Mono',monospace; font-size:0.63rem; letter-spacing:1px;
+  transition:all 0.2s;
+}
+.soc:hover { border-color:var(--accent); color:var(--accent); }
+
+/* EXPERIENCE */
+#experience { background:linear-gradient(to bottom, transparent, rgba(79,179,255,0.012), transparent); }
+.timeline { position:relative; padding-left:2px; }
+.timeline::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:1px;
+  background:linear-gradient(to bottom, var(--accent), rgba(79,179,255,0.1) 85%, transparent);
+}
+.tl-item {
+  padding:0 0 52px 44px; position:relative;
+  opacity:0; transform:translateY(20px); transition:opacity 0.5s ease, transform 0.5s ease;
+}
+.tl-item.vis { opacity:1; transform:translateY(0); }
+.tl-item::before {
+  content:''; position:absolute; left:-5px; top:8px;
+  width:11px; height:11px; border-radius:50%;
+  background:var(--accent); box-shadow:0 0 16px rgba(79,179,255,0.5);
+}
+.tl-period { font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--accent); letter-spacing:1.5px; margin-bottom:7px; }
+.tl-role { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.35rem; margin-bottom:4px; letter-spacing:-0.3px; }
+.tl-co { font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--textFaint); letter-spacing:1px; margin-bottom:12px; }
+.tl-desc { font-size:0.88rem; color:var(--textDim); max-width:560px; line-height:1.85; }
+
+/* PROJECT SECTIONS */
+.proj-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(340px,1fr)); gap:22px; }
+
+.proj-card {
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  padding:30px; position:relative; overflow:hidden;
+  opacity:0; transform:translateY(20px);
+  transition:opacity 0.45s ease, transform 0.45s ease, box-shadow 0.3s, border-color 0.3s;
+}
+.proj-card.vis { opacity:1; transform:translateY(0); }
+.proj-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  opacity:0.4;
+}
+.proj-card:hover { transform:translateY(-5px); box-shadow:0 20px 50px rgba(0,0,0,0.5); }
+
+/* Data type */
+.de-card::before { background:linear-gradient(90deg, var(--accent), transparent 60%); }
+.de-card:hover { border-color:rgba(79,179,255,0.3); }
+.de-card .proj-num { color:var(--accent); }
+
+/* AI type */
+.ai-card::before { background:linear-gradient(90deg, var(--accent2), transparent 60%); }
+.ai-card:hover { border-color:rgba(0,229,160,0.3); }
+.ai-card .proj-num { color:var(--accent2); }
+
+.proj-num { font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:2px; opacity:0.65; margin-bottom:13px; }
+.proj-ico { font-size:1.6rem; margin-bottom:13px; display:block; }
+.proj-title { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.15rem; margin-bottom:8px; line-height:1.4; letter-spacing:-0.2px; }
+.proj-client { font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--textFaint); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:12px; }
+.proj-desc { font-size:0.83rem; color:var(--textDim); line-height:1.85; margin-bottom:18px; }
+
+.tags { display:flex; flex-wrap:wrap; gap:6px; }
+.tag { font-family:'JetBrains Mono',monospace; font-size:0.58rem; padding:3px 10px; border-radius:3px; letter-spacing:0.5px; }
+.t-b { background:rgba(79,179,255,0.08); border:1px solid rgba(79,179,255,0.2); color:var(--accent); }
+.t-g { background:rgba(0,229,160,0.08); border:1px solid rgba(0,229,160,0.2); color:var(--accent2); }
+.t-o { background:rgba(255,140,66,0.08); border:1px solid rgba(255,140,66,0.2); color:var(--accent3); }
+
+/* SKILLS */
+.sk-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(210px,1fr)); gap:18px; }
+.sk-group {
+  background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px;
+  opacity:0; transform:translateY(16px); transition:opacity 0.4s ease, transform 0.4s ease;
+}
+.sk-group.vis { opacity:1; transform:translateY(0); }
+.sk-head { font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--accent2); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+.sk-list { display:flex; flex-direction:column; gap:9px; }
+.sk-item { display:flex; align-items:center; gap:9px; font-size:0.83rem; color:var(--textDim); font-weight:300; }
+.sk-item::before { content:''; display:block; width:4px; height:4px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+
+/* CERTS */
+.cert-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(265px,1fr)); gap:14px; }
+.cert-card {
+  background:var(--surface); border:1px solid var(--border); border-radius:8px;
+  padding:18px 22px; display:flex; align-items:center; gap:16px;
+  opacity:0; transform:translateX(-14px); transition:opacity 0.4s ease, transform 0.4s ease;
+}
+.cert-card.vis { opacity:1; transform:translateX(0); }
+.cert-card:hover { border-color:var(--border2); }
+.cert-ico { font-size:1.5rem; flex-shrink:0; }
+.cert-name { font-size:0.86rem; font-weight:500; margin-bottom:3px; }
+.cert-issuer { font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--textFaint); letter-spacing:1px; }
+
+/* AWARDS */
+.aw-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(270px,1fr)); gap:18px; }
+.aw-card {
+  background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px;
+  opacity:0; transform:translateY(16px); transition:opacity 0.4s ease, transform 0.4s ease;
+}
+.aw-card.vis { opacity:1; transform:translateY(0); }
+.aw-card:hover { border-color:rgba(255,140,66,0.3); box-shadow:0 8px 28px rgba(255,140,66,0.06); }
+.aw-ico { font-size:1.5rem; margin-bottom:12px; }
+.aw-title { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1rem; margin-bottom:5px; letter-spacing:-0.2px; }
+.aw-period { font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--accent3); letter-spacing:1.5px; margin-bottom:10px; }
+.aw-desc { font-size:0.8rem; color:var(--textFaint); line-height:1.75; }
+
+/* PROFINOVA */
+#profinova { padding:80px 5% 100px; position:relative; z-index:1; }
+.pn-inner {
+  max-width:1100px; margin:0 auto; position:relative; overflow:hidden;
+  border-radius:20px; border:1px solid rgba(0,229,160,0.2);
+  background:radial-gradient(ellipse at 30% 50%, rgba(0,229,160,0.05), transparent 60%),
+             radial-gradient(ellipse at 80% 20%, rgba(79,179,255,0.05), transparent 50%),
+             var(--surface);
+  padding:72px 68px; display:flex; align-items:center; gap:80px;
+}
+.pn-inner::before {
+  content:''; position:absolute; top:-100px; right:-100px;
+  width:380px; height:380px; border-radius:50%;
+  background:radial-gradient(circle, rgba(0,229,160,0.07), transparent 60%);
+  pointer-events:none;
+}
+.pn-left { flex:1; }
+.pn-badge {
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:'JetBrains Mono',monospace; font-size:0.63rem;
+  letter-spacing:2px; text-transform:uppercase; color:var(--accent2);
+  border:1px solid rgba(0,229,160,0.3); background:rgba(0,229,160,0.05);
+  padding:6px 16px; border-radius:100px; margin-bottom:22px;
+}
+.pn-badge-dot { width:5px; height:5px; border-radius:50%; background:var(--accent2); animation:pulseDot 2s infinite; }
+.pn-name { font-family:'Cormorant Garamond',serif; font-weight:700; font-size:clamp(2rem,3.5vw,3rem); letter-spacing:-1px; line-height:1.1; margin-bottom:8px; }
+.pn-name span { color:var(--accent2); }
+.pn-tagline { font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--textFaint); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:22px; }
+.pn-desc { font-size:0.95rem; font-weight:300; color:var(--textDim); max-width:460px; line-height:1.9; }
+.pn-btn {
+  display:inline-flex; flex-direction:column; align-items:center; gap:6px;
+  background:linear-gradient(135deg, var(--accent2), #00B87A);
+  color:var(--bg); padding:22px 44px; border-radius:10px;
+  text-decoration:none; font-weight:700; font-size:1rem;
+  transition:transform 0.25s, box-shadow 0.25s; flex-shrink:0;
+}
+.pn-btn:hover { transform:translateY(-4px) scale(1.02); box-shadow:0 16px 40px rgba(0,229,160,0.3); }
+.pn-btn-sub { font-family:'JetBrains Mono',monospace; font-size:0.58rem; font-weight:400; letter-spacing:2px; opacity:0.7; text-transform:uppercase; }
+
+/* FOOTER */
+footer {
+  position:relative; z-index:1; padding:36px 5%;
+  border-top:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+}
+.f-copy { font-family:'JetBrains Mono',monospace; font-size:0.63rem; color:var(--textFaint); letter-spacing:1px; }
+.f-links { display:flex; gap:28px; }
+.f-links a { font-family:'JetBrains Mono',monospace; font-size:0.63rem; color:var(--textFaint); text-decoration:none; letter-spacing:1px; transition:color 0.2s; }
+.f-links a:hover { color:var(--accent); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px);} to{opacity:1;transform:translateY(0);} }
+
+@media(max-width:900px){
+  .hero-inner { flex-direction:column; padding-top:40px; }
+  .hero-panel { flex:none; width:100%; flex-direction:row; flex-wrap:wrap; }
+  .kpi { flex:1; min-width:120px; }
+  .pn-inner { flex-direction:column; padding:42px 28px; gap:32px; }
+  nav ul { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">
+    <div class="nav-mark">AR</div>
+    <span class="nav-name">Ashik Roshan<span> · Portfolio</span></span>
+  </a>
+  <ul>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#data-projects">Data Eng.</a></li>
+    <li><a href="#ai-projects">AI & Automation</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#profinova" class="nav-cta">ProfiNova AI</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="avail-badge"><div class="pulse"></div>Open to New Opportunities</div>
+      <h1 class="hero-name">Ashik<br><span class="hero-name-accent">Roshan</span> I</h1>
+      <p class="hero-desig">DATA ENGINEER – L2 &nbsp;/&nbsp; AI ENGINEER &nbsp;·&nbsp; OPTISOL BUSINESS SOLUTIONS</p>
+      <p class="hero-bio">I architect scalable data pipelines and AI-powered automation systems that transform how organisations manage, migrate, and extract value from their data — across cloud, on-premises, and hybrid environments.</p>
+      <div class="hero-actions">
+        <a href="#profinova" class="btn-fill"><span>✦</span> Chat with ProfiNova AI</a>
+        <a href="https://github.com/AshikRoshan-github" target="_blank" class="btn-ghost">GitHub ↗</a>
+        <a href="mailto:ashikroshan261@gmail.com" class="btn-ghost">Contact</a>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="kpi"><div class="kpi-num">2+</div><div class="kpi-lbl">Years of Experience</div></div>
+      <div class="kpi"><div class="kpi-num">14+</div><div class="kpi-lbl">Projects Delivered</div></div>
+      <div class="kpi"><div class="kpi-num">8</div><div class="kpi-lbl">Awards & Honours</div></div>
+      <div class="soc-row">
+        <a class="soc" href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank">in · LinkedIn</a>
+        <a class="soc" href="https://medium.com/@ashikroshan261" target="_blank">M · Medium</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="eyebrow">Career Progression</div>
+    <h2 class="sec-title">Professional <em>Experience</em></h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-period">April 2025 — Present</div>
+        <div class="tl-role">Data Engineer — Level 2</div>
+        <div class="tl-co">OPTISOL BUSINESS SOLUTIONS</div>
+        <p class="tl-desc">Leading enterprise data migration and cloud warehousing initiatives, architecting production-grade ELT pipelines, and spearheading AI tool evaluation and team adoption programmes to improve delivery velocity and engineering quality.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period">August 2024 — March 2025</div>
+        <div class="tl-role">Data Engineer — Level 1</div>
+        <div class="tl-co">OPTISOL BUSINESS SOLUTIONS</div>
+        <p class="tl-desc">Delivered cloud data migration projects across AWS and Azure, engineered scalable Snowflake data warehouses, and built automated workflow orchestration using dbt and AWS Step Functions for enterprise clients.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period">March 2024 — July 2024</div>
+        <div class="tl-role">Data Engineer Intern — Level 0</div>
+        <div class="tl-co">OPTISOL BUSINESS SOLUTIONS</div>
+        <p class="tl-desc">Developed Python-based ETL automation pipelines, implemented a Generative AI solution to automate data inventory workflows, and served as a subject-matter expert in resolving dbt blockers for the wider engineering team.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-period">June 2023 — March 2024</div>
+        <div class="tl-role">Trainee — Software Engineer</div>
+        <div class="tl-co">BLUE CLOUD</div>
+        <p class="tl-desc">Acquired foundational expertise in software engineering principles, data processing workflows, and professional development practices within a structured technical training environment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DATA ENGINEERING PROJECTS ══ -->
+<section id="data-projects">
+  <div class="wrap">
+    <div class="eyebrow">Data Engineering</div>
+    <h2 class="sec-title">Data Pipeline &<br><em>Migration Projects</em></h2>
+    <div class="proj-grid">
+
+      <div class="proj-card de-card">
+        <div class="proj-num">DE · 01</div>
+        <span class="proj-ico">🔄</span>
+        <div class="proj-title">Google Sheets → Azure SQL Database Migration</div>
+        <div class="proj-client">Client: Internal Business Team · Optisol</div>
+        <div class="proj-desc">Designed and implemented a lightweight, cost-effective ETL automation solution that extracts structured datasets from Google Sheets via API and loads them into Azure SQL Database. The pipeline supports both full and incremental load strategies using timestamp-based row comparison, with Cron-scheduled execution on Azure VM for unattended operation and pyodbc-optimised bulk inserts.</div>
+        <div class="tags">
+          <span class="tag t-b">Python</span><span class="tag t-b">Pandas</span><span class="tag t-b">gspread</span><span class="tag t-b">Azure SQL</span><span class="tag t-b">Azure VM</span><span class="tag t-o">Cron Jobs</span>
+        </div>
+      </div>
+
+      <div class="proj-card de-card">
+        <div class="proj-num">DE · 02</div>
+        <span class="proj-ico">❄️</span>
+        <div class="proj-title">On-Premises → Snowflake Data Warehouse Migration</div>
+        <div class="proj-client">Client: Republic Services · Waste Disposal</div>
+        <div class="proj-desc">Led the end-to-end migration of six on-premises source systems — Oracle and SQL Server — to a Snowflake cloud data warehouse. Implemented CDC-based incremental load strategies, built ELT transformations using dbt for ODS standardisation, and automated pipeline orchestration through AWS Step Functions with real-time CloudWatch monitoring and GitHub CI/CD for dbt deployments.</div>
+        <div class="tags">
+          <span class="tag t-b">Snowflake</span><span class="tag t-b">dbt</span><span class="tag t-b">Informatica</span><span class="tag t-o">AWS Step Functions</span><span class="tag t-o">CloudWatch</span><span class="tag t-b">Oracle</span>
+        </div>
+      </div>
+
+      <div class="proj-card de-card">
+        <div class="proj-num">DE · 03</div>
+        <span class="proj-ico">🗄️</span>
+        <div class="proj-title">Enterprise Database Migration: Oracle → SQL Server</div>
+        <div class="proj-client">Client: Republic Services · Waste Disposal</div>
+        <div class="proj-desc">Delivered a structured on-premises Oracle-to-SQL Server migration using an internally developed Python automation framework (Autogen). Managed schema conversion, multi-layer data transformation across RAW, Staging, Mirror, and Production environments, crosswalk table traceability, identity column management, and governed environment promotion through ServiceNow change management with full UAT support.</div>
+        <div class="tags">
+          <span class="tag t-b">Oracle</span><span class="tag t-b">SQL Server</span><span class="tag t-b">Python</span><span class="tag t-o">Autogen Framework</span><span class="tag t-b">T-SQL</span><span class="tag t-o">ServiceNow</span>
+        </div>
+      </div>
+
+      <div class="proj-card de-card">
+        <div class="proj-num">DE · 04</div>
+        <span class="proj-ico">🔗</span>
+        <div class="proj-title">API-Driven Migration: Podio → Azure SQL Database</div>
+        <div class="proj-client">Client: Jiffy · Cultural Exchange Agencies</div>
+        <div class="proj-desc">Designed an API-driven migration solution that extracts data from Podio via REST APIs, transforms JSON responses into structured Excel/CSV datasets using Pandas, and loads them into Azure SQL Database through Azure Data Factory pipelines across Staging, Mirror, Test, and Production environments. Migrated document files from Azure VM to Blob Storage using AzCopy with SAS authentication.</div>
+        <div class="tags">
+          <span class="tag t-b">Python</span><span class="tag t-b">REST API</span><span class="tag t-b">Azure Data Factory</span><span class="tag t-b">Azure Blob</span><span class="tag t-o">AzCopy</span><span class="tag t-b">pyodbc</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ AI & AUTOMATION PROJECTS ══ -->
+<section id="ai-projects" style="background:linear-gradient(to bottom, transparent, rgba(0,229,160,0.012), transparent);">
+  <div class="wrap">
+    <div class="eyebrow">AI & Automation Engineering</div>
+    <h2 class="sec-title">Artificial Intelligence &<br><em>Automation Projects</em></h2>
+    <div class="proj-grid">
+
+      <div class="proj-card ai-card">
+        <div class="proj-num">AI · 01</div>
+        <span class="proj-ico">📊</span>
+        <div class="proj-title">AI-Powered Automated Data Profiling Platform</div>
+        <div class="proj-client">Client: IBEAM Internal Product Team · Optisol</div>
+        <div class="proj-desc">Built a heterogeneous data profiling platform that dynamically connects to SQL Server and Snowflake sources, extracts schema metadata and statistical profiles, and leverages Azure OpenAI to generate intelligent data quality summaries, anomaly detection insights, and governance recommendations — visualised through an interactive Streamlit dashboard with JSON-structured reporting.</div>
+        <div class="tags">
+          <span class="tag t-g">Azure OpenAI</span><span class="tag t-g">Streamlit</span><span class="tag t-g">Snowflake</span><span class="tag t-o">Prompt Engineering</span><span class="tag t-g">pyodbc</span>
+        </div>
+      </div>
+
+      <div class="proj-card ai-card">
+        <div class="proj-num">AI · 02</div>
+        <span class="proj-ico">🤖</span>
+        <div class="proj-title">Self-Healing Pandas Code Generation Agent</div>
+        <div class="proj-client">Client: IBEAM Internal Product Team · Optisol</div>
+        <div class="proj-desc">Developed an AI-driven agent that translates natural language data transformation requirements into executable Pandas code using Azure OpenAI. The system includes a self-healing execution framework that detects runtime exceptions, sends error context back to the LLM, and automatically regenerates corrected code — with conversation memory to support iterative query refinement across multiple turns.</div>
+        <div class="tags">
+          <span class="tag t-g">Azure OpenAI</span><span class="tag t-g">Pandas</span><span class="tag t-o">Agentic AI</span><span class="tag t-o">Self-Healing Logic</span><span class="tag t-g">Prompt Engineering</span>
+        </div>
+      </div>
+
+      <div class="proj-card ai-card">
+        <div class="proj-num">AI · 03</div>
+        <span class="proj-ico">🧠</span>
+        <div class="proj-title">Ontology Kit — Intelligent Data Mapping Agent</div>
+        <div class="proj-client">Client: IBEAM Internal Product Team · Optisol</div>
+        <div class="proj-desc">Designed an AI-driven tool that automatically maps source system schemas to destination schemas using the Gemini API, reducing manual mapping effort by 40–50%. Implements protocol-based mapping with domain understanding and context window handling, auto-generates metadata for unmapped tables and columns, and supports optional sample data integration to further improve alignment accuracy.</div>
+        <div class="tags">
+          <span class="tag t-g">Gemini API</span><span class="tag t-g">Streamlit</span><span class="tag t-g">Pandas</span><span class="tag t-g">PyODBC</span><span class="tag t-o">Prompt Engineering</span>
+        </div>
+      </div>
+
+      <div class="proj-card ai-card">
+        <div class="proj-num">AI · 04</div>
+        <span class="proj-ico">🕸️</span>
+        <div class="proj-title">Knowledge Graph Builder (KGB) with RAG</div>
+        <div class="proj-client">Client: Internal Platform · Optisol</div>
+        <div class="proj-desc">Engineered a full-stack Streamlit application that transforms unstructured documents — PDF, DOCX, TXT, JSON, XML, and SQL databases — into interactive Neo4j knowledge graphs. Integrates LangChain's LLMGraphTransformer with Azure OpenAI for asynchronous entity and relationship extraction, with a RAG query layer delivering citation-grounded responses and PyVis-powered physics-simulated visualisations.</div>
+        <div class="tags">
+          <span class="tag t-g">LangChain</span><span class="tag t-g">Neo4j</span><span class="tag t-g">Azure OpenAI</span><span class="tag t-o">RAG</span><span class="tag t-g">asyncio</span><span class="tag t-g">PyVis</span>
+        </div>
+      </div>
+
+      <div class="proj-card ai-card">
+        <div class="proj-num">AI · 05</div>
+        <span class="proj-ico">📄</span>
+        <div class="proj-title">AI-Powered Document Processing & Extraction Tool</div>
+        <div class="proj-client">Client: Republic Services Hackathon · Optisol</div>
+        <div class="proj-desc">Developed an AI-driven document processing tool that converts scanned PDFs and images into structured JSON output. A Flask REST API on EC2 orchestrates document upload and processing workflows, using Amazon Textract for raw text and table extraction and Amazon Bedrock for semantic structuring and missing information inference, enabling seamless downstream system integration.</div>
+        <div class="tags">
+          <span class="tag t-o">AWS Textract</span><span class="tag t-o">Amazon Bedrock</span><span class="tag t-o">EC2 / S3</span><span class="tag t-g">Flask</span><span class="tag t-o">Prompt Engineering</span>
+        </div>
+      </div>
+
+      <div class="proj-card ai-card">
+        <div class="proj-num">AI · 06</div>
+        <span class="proj-ico">💹</span>
+        <div class="proj-title">Credit Risk Reporting & JSON Intelligence Platform</div>
+        <div class="proj-client">Client: Atradius · Trade Credit Insurance</div>
+        <div class="proj-desc">Built an end-to-end async JSON pipeline for 40+ credit risk data blocks including PaymentExperience, Bankruptcies, and CivilActions. Implemented a custom token-bucket rate limiter for the Gemini API with exponential backoff, section-based LLM prompting with parallel async dispatch via asyncio.gather, and a merge pipeline that injects cleaned mappings into the source IGW JSON structure with SIC code normalisation.</div>
+        <div class="tags">
+          <span class="tag t-g">Gemini API</span><span class="tag t-o">asyncio</span><span class="tag t-g">Plotly</span><span class="tag t-o">Token Bucket</span><span class="tag t-o">Rate Limiting</span>
+        </div>
+      </div>
+
+      <div class="proj-card ai-card">
+        <div class="proj-num">AI · 07</div>
+        <span class="proj-ico">🌐</span>
+        <div class="proj-title">AI-Driven Web Scraping with LangChain & Apify</div>
+        <div class="proj-client">Client: IBEAM Internal Product Team · Optisol</div>
+        <div class="proj-desc">Integrated Apify cloud Actors with LangChain to deliver a scalable AI-enabled web scraping solution. Automated crawling and structured data extraction via Apify APIs, transformed scraped content into LLM-ready document format, applied schema standardisation for downstream AI and analytics workflows, and built reusable Python pipelines for scraping, ingestion, and AI integration.</div>
+        <div class="tags">
+          <span class="tag t-g">LangChain</span><span class="tag t-g">Apify</span><span class="tag t-g">Python</span><span class="tag t-o">REST APIs</span><span class="tag t-g">Data Transformation</span>
+        </div>
+      </div>
+
+      <div class="proj-card ai-card">
+        <div class="proj-num">AI · 08</div>
+        <span class="proj-ico">⚙️</span>
+        <div class="proj-title">Automated Web Data Extraction & Reporting Platform</div>
+        <div class="proj-client">Client: IBEAM Internal Product Team · Optisol</div>
+        <div class="proj-desc">Developed an end-to-end automation solution using Selenium for secure browser-based data extraction from a web portal, PyAutoGUI for system-level file interactions, and Python SMTP for automated report generation and distribution — designed for scheduled, unattended execution to eliminate recurring manual reporting overhead and improve data accuracy.</div>
+        <div class="tags">
+          <span class="tag t-g">Selenium</span><span class="tag t-g">PyAutoGUI</span><span class="tag t-g">smtplib</span><span class="tag t-o">Chrome WebDriver</span><span class="tag t-o">Task Scheduling</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="eyebrow">Technical Expertise</div>
+    <h2 class="sec-title">Skills &<br><em>Technologies</em></h2>
+    <div class="sk-grid">
+      <div class="sk-group">
+        <div class="sk-head">Cloud Platforms</div>
+        <div class="sk-list">
+          <div class="sk-item">Azure (ADF, SQL DB, Blob, VM)</div>
+          <div class="sk-item">AWS (EC2, S3, Step Functions)</div>
+          <div class="sk-item">Snowflake</div>
+          <div class="sk-item">Databricks</div>
+        </div>
+      </div>
+      <div class="sk-group">
+        <div class="sk-head">Data Engineering</div>
+        <div class="sk-list">
+          <div class="sk-item">ETL / ELT Pipeline Design</div>
+          <div class="sk-item">dbt (Data Build Tool)</div>
+          <div class="sk-item">Informatica</div>
+          <div class="sk-item">CDC & Incremental Load</div>
+          <div class="sk-item">Data Warehouse Architecture</div>
+        </div>
+      </div>
+      <div class="sk-group">
+        <div class="sk-head">AI & Large Language Models</div>
+        <div class="sk-list">
+          <div class="sk-item">Azure OpenAI / Gemini API</div>
+          <div class="sk-item">LangChain Framework</div>
+          <div class="sk-item">Amazon Bedrock</div>
+          <div class="sk-item">Prompt Engineering</div>
+          <div class="sk-item">RAG Architectures</div>
+        </div>
+      </div>
+      <div class="sk-group">
+        <div class="sk-head">Databases</div>
+        <div class="sk-list">
+          <div class="sk-item">Oracle / SQL Server</div>
+          <div class="sk-item">Azure SQL Database</div>
+          <div class="sk-item">Neo4j (Graph Database)</div>
+          <div class="sk-item">Snowflake</div>
+        </div>
+      </div>
+      <div class="sk-group">
+        <div class="sk-head">Programming</div>
+        <div class="sk-list">
+          <div class="sk-item">Python (Pandas, Selenium)</div>
+          <div class="sk-item">SQL / T-SQL</div>
+          <div class="sk-item">REST API Integration</div>
+          <div class="sk-item">asyncio / Async Patterns</div>
+        </div>
+      </div>
+      <div class="sk-group">
+        <div class="sk-head">DevOps & Workflow</div>
+        <div class="sk-list">
+          <div class="sk-item">GitHub / Azure DevOps (CI/CD)</div>
+          <div class="sk-item">Streamlit</div>
+          <div class="sk-item">Agile / Rally / ServiceNow</div>
+          <div class="sk-item">AWS CloudWatch</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="wrap">
+    <div class="eyebrow">Credentials</div>
+    <h2 class="sec-title">Professional<br><em>Certifications</em></h2>
+    <div class="cert-grid">
+      <div class="cert-card"><div class="cert-ico">❄️</div><div><div class="cert-name">SnowPro Core Certification</div><div class="cert-issuer">SNOWFLAKE</div></div></div>
+      <div class="cert-card"><div class="cert-ico">☁️</div><div><div class="cert-name">Azure Data Fundamentals</div><div class="cert-issuer">MICROSOFT</div></div></div>
+      <div class="cert-card"><div class="cert-ico">🧱</div><div><div class="cert-name">Databricks Lakehouse Fundamentals</div><div class="cert-issuer">DATABRICKS</div></div></div>
+      <div class="cert-card"><div class="cert-ico">🔧</div><div><div class="cert-name">dbt Learn Fundamentals</div><div class="cert-issuer">DBT LABS</div></div></div>
+      <div class="cert-card"><div class="cert-ico">✨</div><div><div class="cert-name">Generative AI Fundamentals</div><div class="cert-issuer">DATABRICKS</div></div></div>
+      <div class="cert-card"><div class="cert-ico">🐍</div><div><div class="cert-name">100 Days of Code: Python Pro Bootcamp</div><div class="cert-issuer">UDEMY</div></div></div>
+      <div class="cert-card"><div class="cert-ico">💾</div><div><div class="cert-name">SQL (Basic) Certificate</div><div class="cert-issuer">HACKERRANK</div></div></div>
+      <div class="cert-card"><div class="cert-ico">⛄</div><div><div class="cert-name">Snowflake Masterclass</div><div class="cert-issuer">UDEMY</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards">
+  <div class="wrap">
+    <div class="eyebrow">Recognition</div>
+    <h2 class="sec-title">Awards &<br><em>Achievements</em></h2>
+    <div class="aw-grid">
+      <div class="aw-card">
+        <div class="aw-ico">🏆</div>
+        <div class="aw-title">Most Valuable Person (MVP) Award</div>
+        <div class="aw-period">2024 – 2025</div>
+        <div class="aw-desc">The highest organisational honour, awarded for consistent performance excellence, cross-functional leadership, and significant contributions toward the company's long-term strategic vision and project success.</div>
+      </div>
+      <div class="aw-card">
+        <div class="aw-ico">⭐</div>
+        <div class="aw-title">Spot Award — Project Excellence & Leadership</div>
+        <div class="aw-period">January 2026</div>
+        <div class="aw-desc">Awarded by the CTO for mature professional conduct in managing project success and actively fostering a culture of peer recognition across the engineering organisation.</div>
+      </div>
+      <div class="aw-card">
+        <div class="aw-ico">🚀</div>
+        <div class="aw-title">Spot Award — RS ARP Project Go-Live</div>
+        <div class="aw-period">November 2025</div>
+        <div class="aw-desc">Recognised for exceptional contribution to the Beatty Go-Live rollout and successfully managing complex Delta Load activities under stringent delivery timelines.</div>
+      </div>
+      <div class="aw-card">
+        <div class="aw-ico">🤖</div>
+        <div class="aw-title">Spot Award — AI Tool Innovation (NotebookLLM)</div>
+        <div class="aw-period">May 2025</div>
+        <div class="aw-desc">Proactively evaluated, demonstrated, and led team-wide adoption of NotebookLLM, directly enhancing project efficiency and establishing a culture of continuous AI tool exploration.</div>
+      </div>
+      <div class="aw-card">
+        <div class="aw-ico">🎓</div>
+        <div class="aw-title">Spot Award — Community Mentorship</div>
+        <div class="aw-period">March 2025</div>
+        <div class="aw-desc">Delivered comprehensive technical sessions for university students on interview preparation and emerging technologies, contributing meaningfully to the development of future engineering talent.</div>
+      </div>
+      <div class="aw-card">
+        <div class="aw-ico">🎯</div>
+        <div class="aw-title">OKR Top Contributor — Q4</div>
+        <div class="aw-period">October – December 2024</div>
+        <div class="aw-desc">Honoured for playing a pivotal role in the attainment of company-wide Objectives and Key Results, demonstrating strong alignment with organisational strategy and priorities.</div>
+      </div>
+      <div class="aw-card">
+        <div class="aw-ico">💡</div>
+        <div class="aw-title">Spot Award — Client Excellence (Ontology Mapping)</div>
+        <div class="aw-period">December 2024</div>
+        <div class="aw-desc">Received client commendation following a solution-oriented Ontology Mapping presentation delivered during an on-site engagement, showcasing deep technical expertise and clear communication.</div>
+      </div>
+      <div class="aw-card">
+        <div class="aw-ico">⚡</div>
+        <div class="aw-title">Spot Award — Generative AI & Automation</div>
+        <div class="aw-period">July 2024</div>
+        <div class="aw-desc">Recognised for independently implementing a Generative AI solution to automate data inventory workflows and for serving as a subject-matter expert in resolving critical dbt blockers across the team.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFINOVA AI -->
+<section id="profinova">
+  <div class="pn-inner">
+    <div class="pn-left">
+      <div class="pn-badge"><div class="pn-badge-dot"></div>AI-Powered Portfolio Assistant · Live</div>
+      <h2 class="pn-name">ProfiNova <span>AI</span></h2>
+      <p class="pn-tagline">Intelligent Showcase · Powered by Streamlit</p>
+      <p class="pn-desc">ProfiNova AI is my personal AI assistant — purpose-built to answer questions about my professional background, engineering projects, skills, and career journey. Ask it anything, from technical architecture decisions to project highlights. Engage conversationally and explore my portfolio in an intelligent, interactive way.</p>
+    </div>
+    <a href="https://arshowcase.streamlit.app/" target="_blank" class="pn-btn">
+      Launch ProfiNova AI
+      <span class="pn-btn-sub">Open Streamlit App ↗</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="f-copy">© 2025 · Ashik Roshan I · Data & AI Engineer</span>
+  <div class="f-links">
+    <a href="https://github.com/AshikRoshan-github" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank">LinkedIn</a>
+    <a href="https://medium.com/@ashikroshan261" target="_blank">Medium</a>
+    <a href="mailto:ashikroshan261@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('vis'), i * 70);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.tl-item,.proj-card,.sk-group,.cert-card,.aw-card').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
