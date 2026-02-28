@@ -3,282 +3,330 @@ import google.generativeai as genai
 
 # ── Page Configuration ────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Ashik Roshan I — Portfolio",
+    page_title="Ashik Roshan I — AI Assistant",
     page_icon="🔶",
-    layout="centered",
+    layout="wide",
     initial_sidebar_state="collapsed",
 )
 
-# ── CSS ───────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Fira+Code:wght@400;500&display=swap');
 
 :root {
-  --bg:          #0a0a0a;
-  --surface:     #111111;
-  --surface2:    #181818;
-  --surface3:    #202020;
-  --border:      #2a2a2a;
-  --border-hot:  rgba(255,107,0,0.45);
-  --orange:      #ff6b00;
-  --orange-dim:  rgba(255,107,0,0.10);
-  --orange-glow: rgba(255,107,0,0.06);
-  --text:        #f0ede8;
-  --text-2:      #8a8580;
-  --text-3:      #4a4744;
-  --white:       #ffffff;
+  --bg:         #080808;
+  --s1:         #111111;
+  --s2:         #161616;
+  --s3:         #1e1e1e;
+  --border:     #252525;
+  --orange:     #f97316;
+  --orange-dim: rgba(249,115,22,0.10);
+  --orange-bdr: rgba(249,115,22,0.35);
+  --text:       #eeebe6;
+  --text2:      #7a7570;
+  --text3:      #3f3d3a;
 }
 
-/* ── Reset & Base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body,
 [data-testid="stApp"],
 [data-testid="stAppViewContainer"],
-section.main { background: var(--bg) !important; color: var(--text) !important; }
-
-[data-testid="stHeader"]           { background: var(--bg) !important; border-bottom: 1px solid var(--border); }
-[data-testid="stSidebar"]          { display: none !important; }
-[data-testid="collapsedControl"]   { display: none !important; }
-[data-testid="stMainBlockContainer"]{ padding: 0 !important; }
-
-.block-container {
-  max-width: 780px !important;
-  padding: 0 28px 80px !important;
-  margin: 0 auto !important;
+section.main,
+[data-testid="stMainBlockContainer"] {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  font-family: 'Sora', sans-serif !important;
 }
 
-/* ── Typography System ── */
-h1,h2,h3,h4 { font-family: 'Sora', sans-serif !important; }
-p, span, div, label, li { font-family: 'Sora', sans-serif; }
+/* Hide Streamlit chrome */
+[data-testid="stHeader"]          { display: none !important; }
+[data-testid="stSidebar"]         { display: none !important; }
+[data-testid="collapsedControl"]  { display: none !important; }
+footer                            { display: none !important; }
+#MainMenu                         { display: none !important; }
+
+/* Full-width layout */
+[data-testid="stMainBlockContainer"] {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+.block-container {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+/* ── APP SHELL ── */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 40px 40px;
+}
 
 /* ── TOP BAR ── */
 .topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 0 22px;
+  padding: 28px 0 28px;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 52px;
+  margin-bottom: 60px;
 }
-.topbar-left {
+.topbar-brand {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.topbar-dot {
+.brand-dot {
   width: 8px; height: 8px;
   background: var(--orange);
   border-radius: 50%;
-  box-shadow: 0 0 8px var(--orange);
+  box-shadow: 0 0 10px rgba(249,115,22,0.7);
+  animation: pulse 2s ease-in-out infinite;
 }
-.topbar-label {
+@keyframes pulse {
+  0%,100% { opacity: 1; } 50% { opacity: 0.4; }
+}
+.brand-text {
   font-family: 'Fira Code', monospace;
   font-size: 0.68rem;
   letter-spacing: 0.16em;
-  color: var(--text-2);
   text-transform: uppercase;
+  color: var(--text2);
 }
-.topbar-links {
-  display: flex;
-  gap: 24px;
-}
-.topbar-link {
+.nav-links { display: flex; gap: 28px; }
+.nav-link {
   font-family: 'Fira Code', monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  color: var(--text-3);
-  text-decoration: none;
+  font-size: 0.67rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+  color: var(--text3);
+  text-decoration: none;
   transition: color 0.2s;
 }
-.topbar-link:hover { color: var(--orange); }
+.nav-link:hover { color: var(--orange); }
 
-/* ── IDENTITY BLOCK ── */
-.identity {
-  margin-bottom: 56px;
-}
-.identity-eyebrow {
+/* ── IDENTITY ── */
+.identity { margin-bottom: 60px; }
+.id-eyebrow {
   font-family: 'Fira Code', monospace;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--orange);
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
-.identity-name {
+.id-name {
   font-family: 'Instrument Serif', serif;
-  font-size: clamp(3rem, 8vw, 5rem);
+  font-size: clamp(3.2rem, 6vw, 5.2rem);
   font-weight: 400;
   line-height: 1.0;
-  color: var(--white);
-  margin-bottom: 16px;
   letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 20px;
 }
-.identity-name em {
-  font-style: italic;
-  color: var(--orange);
-}
-.identity-role {
+.id-name em { font-style: italic; color: var(--orange); }
+.id-bio {
   font-size: 0.95rem;
   font-weight: 300;
-  color: var(--text-2);
-  letter-spacing: 0.02em;
-  line-height: 1.6;
-  max-width: 480px;
+  color: var(--text2);
+  line-height: 1.75;
+  max-width: 560px;
 }
-.identity-role strong {
-  color: var(--text);
-  font-weight: 500;
-}
+.id-bio strong { color: var(--text); font-weight: 500; }
 
-/* ── DIVIDER ── */
+/* ── RULE ── */
 .rule {
   height: 1px;
   background: var(--border);
-  margin: 0 0 48px;
+  margin-bottom: 44px;
 }
 
-/* ── CHAT LABEL ROW ── */
-.chat-label-row {
+/* ── CHIPS SECTION ── */
+.chips-header {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 16px;
+}
+.chips-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 44px;
+}
+.chip {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 16px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.chip:hover {
+  background: var(--orange-dim);
+  border-color: var(--orange-bdr);
+}
+.chip-icon {
+  font-size: 1rem;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+.chip-text {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text2);
+  line-height: 1.45;
+  word-break: break-word;
+  hyphens: auto;
+}
+.chip:hover .chip-text { color: var(--text); }
+
+/* ── CONVERSATION LABEL ── */
+.conv-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
 }
-.chat-label {
+.conv-label {
   font-family: 'Fira Code', monospace;
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--text-3);
+  color: var(--text3);
 }
-.status-pill {
+.online-pill {
   display: flex;
   align-items: center;
   gap: 7px;
   font-family: 'Fira Code', monospace;
-  font-size: 0.65rem;
+  font-size: 0.63rem;
   letter-spacing: 0.1em;
-  color: var(--text-3);
   text-transform: uppercase;
+  color: var(--text3);
 }
-.status-dot {
+.online-dot {
   width: 6px; height: 6px;
   background: #22c55e;
   border-radius: 50%;
   box-shadow: 0 0 6px #22c55e;
 }
 
-/* ── QUESTION CHIPS ── */
-.chips-section { margin-bottom: 32px; }
-.chips-title {
-  font-family: 'Fira Code', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-bottom: 12px;
-}
-
 /* ── CHAT WINDOW ── */
 .chat-window {
-  background: var(--surface);
+  background: var(--s1);
   border: 1px solid var(--border);
   border-radius: 16px;
   overflow: hidden;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 .chat-chrome {
-  background: var(--surface2);
+  background: var(--s2);
   border-bottom: 1px solid var(--border);
-  padding: 12px 20px;
+  padding: 13px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.chrome-dots { display: flex; gap: 7px; }
-.cdot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-}
+.chrome-dots { display: flex; gap: 8px; }
+.cdot { width: 10px; height: 10px; border-radius: 50%; }
 .cdot-r { background: #ff5f57; }
 .cdot-y { background: #febc2e; }
 .cdot-g { background: #28c840; }
-.chrome-title {
+.chrome-label {
   font-family: 'Fira Code', monospace;
-  font-size: 0.65rem;
+  font-size: 0.63rem;
   letter-spacing: 0.12em;
-  color: var(--text-3);
   text-transform: uppercase;
+  color: var(--text3);
 }
 
 /* ── MESSAGES ── */
-.chat-body { padding: 28px 24px; }
+.chat-body { padding: 32px 28px; }
 
-.msg-row { display: flex; gap: 14px; margin-bottom: 28px; }
-.msg-row.user { flex-direction: row-reverse; }
+.msg-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.msg-row.user-row { flex-direction: row-reverse; }
+.msg-row:last-child { margin-bottom: 0; }
 
 .av {
-  width: 36px; height: 36px;
-  border-radius: 10px;
+  width: 38px; height: 38px;
+  border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.av-ai  { background: var(--s3); border: 1px solid var(--border); }
+.av-usr { background: var(--orange); }
+
+.msg-content { flex: 1; min-width: 0; }
+.msg-sender {
   font-family: 'Fira Code', monospace;
   font-size: 0.62rem;
-  font-weight: 500;
-  flex-shrink: 0;
-  letter-spacing: 0.05em;
-}
-.av-ai  { background: var(--orange); color: #000; }
-.av-usr { background: var(--surface3); color: var(--text-2); border: 1px solid var(--border); }
-
-.bubble-wrap { max-width: 82%; }
-.bubble-name {
-  font-size: 0.67rem;
-  letter-spacing: 0.06em;
-  color: var(--text-3);
-  margin-bottom: 6px;
-  font-family: 'Fira Code', monospace;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
 }
-.msg-row.user .bubble-name { text-align: right; }
+.user-row .msg-sender { text-align: right; }
 
 .bubble {
-  padding: 14px 18px;
-  border-radius: 12px;
-  font-size: 0.905rem;
-  line-height: 1.78;
-  letter-spacing: 0.008em;
+  display: inline-block;
+  padding: 16px 20px;
+  border-radius: 14px;
+  font-size: 0.9rem;
   font-weight: 300;
+  line-height: 1.82;
+  letter-spacing: 0.01em;
+  max-width: 100%;
+  word-break: break-word;
+  white-space: pre-wrap;
 }
 .bubble-ai {
-  background: var(--surface2);
+  background: var(--s2);
   border: 1px solid var(--border);
   color: var(--text);
-  border-top-left-radius: 3px;
+  border-top-left-radius: 4px;
 }
 .bubble-user {
   background: var(--orange);
   color: #000;
   font-weight: 500;
-  border-top-right-radius: 3px;
+  border-top-right-radius: 4px;
   font-size: 0.88rem;
 }
+.user-row .msg-content { display: flex; flex-direction: column; align-items: flex-end; }
 
 /* ── INPUT ── */
 [data-testid="stChatInput"] {
   background: transparent !important;
   padding: 0 !important;
+  border: none !important;
 }
 [data-testid="stChatInput"] > div {
-  background: var(--surface) !important;
+  background: var(--s1) !important;
   border: 1px solid var(--border) !important;
-  border-radius: 12px !important;
+  border-radius: 14px !important;
+  padding: 4px 6px !important;
   transition: border-color 0.2s !important;
 }
 [data-testid="stChatInput"] > div:focus-within {
-  border-color: var(--border-hot) !important;
+  border-color: var(--orange-bdr) !important;
+  box-shadow: 0 0 0 3px rgba(249,115,22,0.06) !important;
 }
 [data-testid="stChatInput"] textarea {
   background: transparent !important;
@@ -288,88 +336,51 @@ p, span, div, label, li { font-family: 'Sora', sans-serif; }
   font-weight: 300 !important;
   line-height: 1.6 !important;
   border: none !important;
+  box-shadow: none !important;
 }
-[data-testid="stChatInput"] textarea::placeholder {
-  color: var(--text-3) !important;
-}
+[data-testid="stChatInput"] textarea::placeholder { color: var(--text3) !important; }
 [data-testid="stChatInput"] button {
   background: var(--orange) !important;
-  border-radius: 8px !important;
+  border-radius: 10px !important;
   border: none !important;
   color: #000 !important;
+  transition: opacity 0.2s !important;
 }
-[data-testid="stChatInput"] button:hover {
-  opacity: 0.85 !important;
-}
+[data-testid="stChatInput"] button:hover { opacity: 0.8 !important; }
 
-/* ── STREAMLIT BUTTONS (chips + clear) ── */
+/* Streamlit buttons → chips */
 .stButton > button {
+  all: unset !important;
+  display: block !important;
+  width: 100% !important;
+  background: var(--s1) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px !important;
+  padding: 13px 16px !important;
   font-family: 'Sora', sans-serif !important;
   font-size: 0.8rem !important;
   font-weight: 400 !important;
-  background: var(--surface) !important;
-  color: var(--text-2) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 8px !important;
-  padding: 8px 14px !important;
+  color: var(--text2) !important;
+  line-height: 1.45 !important;
+  cursor: pointer !important;
   transition: all 0.18s ease !important;
-  letter-spacing: 0.01em !important;
-  white-space: nowrap !important;
+  text-align: left !important;
+  white-space: normal !important;
+  word-break: break-word !important;
 }
 .stButton > button:hover {
   background: var(--orange-dim) !important;
-  color: var(--orange) !important;
-  border-color: var(--border-hot) !important;
+  border-color: var(--orange-bdr) !important;
+  color: var(--text) !important;
 }
 
-/* Clear button override */
-.clear-btn > button {
-  background: transparent !important;
-  color: var(--text-3) !important;
-  border: 1px solid var(--border) !important;
-  font-family: 'Fira Code', monospace !important;
-  font-size: 0.68rem !important;
-  letter-spacing: 0.1em !important;
-  padding: 6px 14px !important;
-  border-radius: 6px !important;
-}
-.clear-btn > button:hover {
-  border-color: #ff5f57 !important;
-  color: #ff5f57 !important;
-  background: rgba(255,95,87,0.06) !important;
-}
-
-/* ── FOOTER ── */
-.footer {
-  margin-top: 60px;
-  padding-top: 24px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.footer-left {
-  font-family: 'Fira Code', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  color: var(--text-3);
-  text-transform: uppercase;
-}
-.footer-left span { color: var(--orange); }
-.footer-right {
-  font-family: 'Fira Code', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  color: var(--text-3);
-}
-
-/* Streamlit misc cleanup */
+/* Misc cleanup */
 [data-testid="stSpinner"] > div > div { border-top-color: var(--orange) !important; }
-div[data-testid="stMarkdownContainer"] > div { all: unset; display: block; }
+div[data-testid="stMarkdownContainer"] > div { all: unset !important; display: block !important; }
 </style>
 """, unsafe_allow_html=True)
 
-# ── Resume Knowledge Base ─────────────────────────────────────────────────────
+# ── Resume Data ───────────────────────────────────────────────────────────────
 RESUME_CONTEXT = """
 PROFESSIONAL PROFILE — ASHIK ROSHAN I
 ======================================
@@ -381,11 +392,9 @@ Medium        : https://medium.com/@ashikroshan261
 Portfolio     : https://arshowcase.streamlit.app
 
 TECHNICAL EXPERTISE
--------------------
 Languages              : Python, SQL, JavaScript, HTML, CSS
 Cloud — Azure          : Blob Storage, Data Lake, Azure SQL Database, Azure OpenAI,
-                         Databricks, Azure Data Factory (ADF), Azure VM,
-                         Azure Document Intelligence, Function App
+                         Databricks, ADF, Azure VM, Azure Document Intelligence, Function App
 Cloud — AWS            : S3, Lambda, Glue, Step Functions, EC2, CloudWatch, Textract, Bedrock
 Data Engineering       : PySpark, DBT, Informatica, Snowflake, Pandas, ADF
 Databases              : SSMS, pgAdmin, MySQL, Oracle, SQL Server, Snowflake
@@ -398,78 +407,50 @@ Libraries & Frameworks : asyncio, PyVis, PyPDF2, pyodbc, Snowflake Connector, xm
                          smtplib, oracledb, pywin, pytesseract, python-dotenv
 
 PROFESSIONAL EXPERIENCE
------------------------
 1. Data Engineer — L2    | Optisol Business Solutions | April 2025 – Present
 2. Data Engineer — L1    | Optisol Business Solutions | August 2024 – March 2025
 3. Data Engineer Intern  | Optisol Business Solutions | March 2024 – July 2024
 4. Trainee Soft. Engineer | Blue Cloud                | June 2023 – March 2024
 
 EDUCATION
----------
 Bachelor of Engineering — Computer Science
 KLN College of Engineering | 2019 – 2023 | Grade: A+
 
 CERTIFICATIONS
---------------
 Cloud & Data Engineering:
   • SnowPro Core Certification — Snowflake
   • Microsoft Certified: Azure Data Fundamentals
   • Databricks Lakehouse Fundamentals
-
-Data Tools & Engineering:
-  • dbt Learn Fundamentals — dbt Labs
-  • SQL (Basic) Certificate — HackerRank
-
-AI & Programming:
-  • Generative AI Fundamentals — Databricks Academy
-  • 100 Days of Code: Python Pro Bootcamp — Udemy
-  • Snowflake Masterclass — Udemy
+Data Tools: dbt Learn Fundamentals, SQL (Basic) — HackerRank
+AI & Programming: Generative AI Fundamentals (Databricks), 100 Days of Code (Udemy), Snowflake Masterclass (Udemy)
 
 AWARDS & RECOGNITION — Optisol Business Solutions (2024–Present)
------------------------------------------------------------------
 ★ Most Valuable Person (MVP) Award | 2024–2025
-  The organisation's highest honour, awarded for consistent performance excellence,
-  cross-functional leadership, and contribution to long-term project success.
-
-★ Spot Award — Project Excellence & Leadership | January 2026
-  Awarded by the CTO for mature, solution-driven management of a high-impact project delivery.
-
+★ Spot Award — Project Excellence & Leadership | January 2026 (Awarded by CTO)
 ★ Spot Award — RS ARP Project Go-Live | November 2025
-  Recognised for exceptional contribution to the Beatty Go-Live rollout and managing
-  complex Delta Load operations under tight timelines.
-
 ★ Spot Award — AI Tool Innovation (NotebookLLM) | May 2025
-  Drove organisation-wide adoption of NotebookLLM to measurably improve project efficiency.
-
 ★ Spot Award — Community Mentorship | March 2025
-  Delivered technical sessions for college students on interview preparation and emerging technologies.
-
 ★ OKR Top Contributor — Q4 | October–December 2024
-  Honoured for a pivotal role in achieving company-wide Objectives and Key Results.
-
 ★ Spot Award — Client Excellence (Ontology Mapping) | December 2024
 ★ Spot Award — Generative AI & Automation | July 2024
 
-DATA ENGINEERING PROJECTS
---------------------------
+DATA ENGINEERING PROJECTS (4 projects)
 Project 1: Python-Based Data Migration — Google Sheets to Azure SQL Database
-  Role: Data Engineer | Client: Internal | Optisol Business Solutions
   Tech: Python (Pandas, gspread, pyodbc), Azure SQL Database, Azure VM, Cron Jobs, GitHub
 
 Project 2: On-Premises to Snowflake Data Warehouse Migration
-  Role: Data Engineer | Client: Republic Services (Waste Disposal)
+  Client: Republic Services (Waste Disposal)
   Tech: Snowflake, Informatica, dbt, Oracle, SQL Server, AWS (EC2, Step Functions, CloudWatch)
 
 Project 3: Enterprise Database Migration — Oracle to SQL Server
-  Role: Data Engineer | Client: Republic Services (Waste Disposal)
-  Tech: Oracle, SQL Server, Python, Autogen ETL Framework, T-SQL, ServiceNow, GitHub
+  Client: Republic Services (Waste Disposal)
+  Tech: Oracle, SQL Server, Python, Autogen ETL Framework, T-SQL, ServiceNow
 
 Project 4: API-Driven Data Migration — Podio to Azure SQL Database
-  Role: Data Engineer | Client: Jiffy – Cultural Exchange Agencies
+  Client: Jiffy – Cultural Exchange Agencies
   Tech: Python, REST API, Pandas, Azure Data Factory, Azure SQL Database, Blob Storage, AzCopy
 
-AI & AUTOMATION ENGINEERING PROJECTS
---------------------------------------
+AI & AUTOMATION ENGINEERING PROJECTS (10 projects)
 Project 5: Automated Web Data Extraction & Reporting Platform
   Tech: Python (Selenium, PyAutoGUI, smtplib), Chrome WebDriver, Email Automation
 
@@ -481,7 +462,7 @@ Project 7: AI-Powered Automated Data Profiling Platform
 
 Project 8: AI-Powered Pandas Code Generation & Self-Healing Agent
   Tech: Python, Azure OpenAI, Pandas, Prompt Engineering
-  Self-healing: detects runtime errors, regenerates corrected code automatically.
+  Self-healing: detects runtime errors and regenerates corrected code automatically.
 
 Project 9: Ontology Kit — Data Mapping Agent
   Tech: Python, Gemini 2.5 Pro, Streamlit, Pandas, PyODBC
@@ -490,41 +471,40 @@ Project 9: Ontology Kit — Data Mapping Agent
 Project 10: AI-Powered Document Processing & Structured Data Extraction
   Client: Republic Services Hackathon
   Tech: Python, AWS Textract, Amazon Bedrock, EC2, S3, Flask
-  Converts scanned PDFs and images into structured, integration-ready JSON.
 
 Project 11: Internationalization HTML Validation Tool
   Tech: Python, HTML Parsing, i18n, JSON, CLI Automation
 
 Project 12: Automated Internationalization Workflow
-  Tech: Python, i18n Automation Scripts, JSON, Batch Processing, CI/CD integration
+  Tech: Python, i18n Automation Scripts, JSON, Batch Processing
 
 Project 13: Credit Risk Reporting & JSON Data Intelligence Platform
   Client: Atradius — Trade Credit Insurance
   Tech: Python, Google Gemini 2.5 Pro, asyncio, Plotly, JSON
-  Built async rate limiter (token bucket) for Gemini API; mapped 40+ credit risk blocks.
+  Built async rate limiter (token bucket); mapped 40+ credit risk blocks.
 
 Project 14: Knowledge Graph Builder (KGB) with RAG
   Client: Internal Platform | Optisol Business Solutions
   Tech: Python, Streamlit, LangChain, Azure OpenAI, Neo4j, PyVis, PyPDF2, asyncio
-  Transforms unstructured documents into interactive, queryable knowledge graphs with RAG.
+  Transforms unstructured documents into interactive knowledge graphs with RAG.
 """
 
-SYSTEM_PROMPT = f"""You are a highly professional AI Assistant representing Ashik Roshan I's career portfolio.
+SYSTEM_PROMPT = f"""You are a professional AI Assistant for Ashik Roshan I's career portfolio.
 
 Answer questions about Ashik's skills, experience, projects, education, certifications, and achievements
 in a polished, articulate, and confident manner.
 
-Use ONLY the resume information below. If something is not covered, say so graciously.
+Use ONLY the resume information provided. If something is not covered, say so gracefully.
 
 {RESUME_CONTEXT}
 
 Response Guidelines:
-- Write in fluent, professional English with precise word choices.
+- Write in fluent, professional English.
 - Refer to Ashik in the third person (e.g., "Ashik brings expertise in…").
-- Use well-structured paragraphs. Use bullet points only when listing multiple distinct items.
-- Be concise yet comprehensive — no filler words or unnecessary repetition.
-- Highlight business impact and specific technologies when discussing projects.
-- Maintain a warm, confident, and persuasive tone throughout.
+- Use clear paragraphs. Use bullet points only when listing multiple distinct items.
+- Be concise yet comprehensive. No filler words.
+- Highlight business impact and technologies when discussing projects.
+- Maintain a warm, confident, and persuasive tone.
 """
 
 # ── Load API Key ──────────────────────────────────────────────────────────────
@@ -532,7 +512,7 @@ try:
     api_key = st.secrets["credentials"]["GEMINI_API_KEY"]
     genai.configure(api_key=api_key)
 except Exception:
-    st.error("⚠️ API key not configured. Please add GEMINI_API_KEY to Streamlit secrets.")
+    st.error("API key not configured. Please add GEMINI_API_KEY to Streamlit secrets.")
     st.stop()
 
 # ── Session State ─────────────────────────────────────────────────────────────
@@ -542,90 +522,80 @@ if "pending" not in st.session_state:
     st.session_state.pending = None
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# LAYOUT
+# RENDER
 # ═══════════════════════════════════════════════════════════════════════════════
 
-# ── Top Bar ───────────────────────────────────────────────────────────────────
+st.markdown('<div class="app-shell">', unsafe_allow_html=True)
+
+# ── TOP BAR ───────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="topbar">
-  <div class="topbar-left">
-    <div class="topbar-dot"></div>
-    <span class="topbar-label">AI Portfolio — Ashik Roshan I</span>
+  <div class="topbar-brand">
+    <div class="brand-dot"></div>
+    <span class="brand-text">AI Portfolio Assistant</span>
   </div>
-  <div class="topbar-links">
-    <a class="topbar-link" href="https://github.com/AshikRoshan-github" target="_blank">GitHub</a>
-    <a class="topbar-link" href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank">LinkedIn</a>
-    <a class="topbar-link" href="https://arshowcase.streamlit.app" target="_blank">Portfolio</a>
+  <div class="nav-links">
+    <a class="nav-link" href="https://github.com/AshikRoshan-github" target="_blank">GitHub</a>
+    <a class="nav-link" href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank">LinkedIn</a>
+    <a class="nav-link" href="https://arshowcase.streamlit.app" target="_blank">Portfolio</a>
   </div>
 </div>
 """, unsafe_allow_html=True)
 
-# ── Identity Block ────────────────────────────────────────────────────────────
+# ── IDENTITY ──────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="identity">
-  <div class="identity-eyebrow">Data &amp; AI Engineer &nbsp;·&nbsp; Optisol Business Solutions &nbsp;·&nbsp; L2</div>
-  <div class="identity-name">Ashik <em>Roshan</em> I.</div>
-  <div class="identity-role">
+  <div class="id-eyebrow">Data &amp; AI Engineer &nbsp;·&nbsp; Optisol Business Solutions &nbsp;·&nbsp; L2</div>
+  <div class="id-name">Ashik <em>Roshan</em> I.</div>
+  <div class="id-bio">
     Building intelligent data systems at the intersection of
-    <strong>Cloud Engineering</strong>, <strong>Generative AI</strong>,
-    and <strong>Automation</strong> — turning complex data challenges into
+    <strong>Cloud Engineering</strong>, <strong>Generative AI</strong>, and
+    <strong>Automation</strong> — turning complex data challenges into
     measurable business outcomes.
   </div>
 </div>
 """, unsafe_allow_html=True)
 
-# ── Rule ─────────────────────────────────────────────────────────────────────
+# ── RULE ──────────────────────────────────────────────────────────────────────
 st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
 
-# ── Chips label + Clear button row ───────────────────────────────────────────
-col_label, col_spacer, col_clear = st.columns([5, 1, 2])
-with col_label:
-    st.markdown('<div class="chips-title" style="padding-top:6px">Ask about me</div>', unsafe_allow_html=True)
-with col_clear:
-    st.markdown('<div class="clear-btn">', unsafe_allow_html=True)
-    if st.button("✕  Clear Chat", key="clear"):
-        st.session_state.messages = []
-        st.session_state.pending = None
-        st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
+# ── SUGGESTION CHIPS ──────────────────────────────────────────────────────────
+st.markdown('<div class="chips-header">Ask about me</div>', unsafe_allow_html=True)
 
-# ── Suggestion Chips (2 rows of 4) ────────────────────────────────────────────
-QUESTIONS = [
-    "What are Ashik's core technical skills?",
-    "Walk me through his work experience",
-    "Tell me about his AI & GenAI projects",
-    "What data engineering projects has he done?",
-    "What awards and recognition has he received?",
-    "Which certifications does he hold?",
-    "What is his educational background?",
-    "What is his most impactful project?",
+CHIPS = [
+    ("🛠️", "What are Ashik's core technical skills and technology stack?"),
+    ("💼", "Walk me through Ashik's professional work experience"),
+    ("🤖", "Tell me about Ashik's AI and Generative AI projects"),
+    ("🏆", "What awards and recognition has Ashik received?"),
 ]
 
-row1 = st.columns(4)
-row2 = st.columns(4)
-all_cols = row1 + row2
-
-for i, (col, q) in enumerate(zip(all_cols, QUESTIONS)):
+cols = st.columns(4, gap="small")
+for i, (col, (icon, question)) in enumerate(zip(cols, CHIPS)):
     with col:
-        short = q.replace("What are Ashik's ", "").replace("What ", "").replace("Tell me about his ", "").replace("Walk me through his ", "").replace("Which ", "").replace("What is his ", "").replace("What is his most ", "").capitalize()
-        short = short[:28] + ("…" if len(short) > 28 else "")
-        if st.button(short, key=f"chip_{i}"):
-            st.session_state.pending = q
+        # Short label for button display
+        labels = [
+            "Core technical skills",
+            "Work experience",
+            "AI & GenAI projects",
+            "Awards & recognition",
+        ]
+        if st.button(f"{icon}  {labels[i]}", key=f"chip_{i}"):
+            st.session_state.pending = question
 
-st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
+st.markdown("<div style='height:40px'></div>", unsafe_allow_html=True)
 
-# ── Chat Header Row ───────────────────────────────────────────────────────────
+# ── CONVERSATION HEADER ───────────────────────────────────────────────────────
 st.markdown("""
-<div class="chat-label-row">
-  <span class="chat-label">Conversation</span>
-  <div class="status-pill">
-    <div class="status-dot"></div>
-    <span>AI Assistant — Online</span>
+<div class="conv-row">
+  <span class="conv-label">Conversation</span>
+  <div class="online-pill">
+    <div class="online-dot"></div>
+    <span>AI Assistant &nbsp;·&nbsp; Online</span>
   </div>
 </div>
 """, unsafe_allow_html=True)
 
-# ── Chat Window ───────────────────────────────────────────────────────────────
+# ── CHAT WINDOW ───────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="chat-window">
   <div class="chat-chrome">
@@ -634,64 +604,70 @@ st.markdown("""
       <div class="cdot cdot-y"></div>
       <div class="cdot cdot-g"></div>
     </div>
-    <span class="chrome-title">portfolio.assistant</span>
-    <span style="width:52px"></span>
+    <span class="chrome-label">portfolio.assistant — active session</span>
+    <span style="width:60px"></span>
   </div>
   <div class="chat-body">
 """, unsafe_allow_html=True)
 
-# Welcome message when empty
+# ── Welcome message ───────────────────────────────────────────────────────────
 if not st.session_state.messages:
     st.markdown("""
     <div class="msg-row">
-      <div class="av av-ai">AI</div>
-      <div class="bubble-wrap">
-        <div class="bubble-name">Assistant</div>
+      <div class="av av-ai">🤖</div>
+      <div class="msg-content">
+        <div class="msg-sender">Assistant</div>
         <div class="bubble bubble-ai">
-          Good day. I am Ashik Roshan's dedicated AI Assistant — your gateway to exploring his professional journey.<br><br>
-          Whether you are a recruiter, collaborator, or curious visitor, I am here to walk you through his
-          <strong style="color:#f0ede8">technical expertise</strong>,
-          <strong style="color:#f0ede8">project portfolio</strong>,
-          <strong style="color:#f0ede8">career milestones</strong>, and
-          <strong style="color:#f0ede8">achievements</strong>.<br><br>
-          Select a question above or type your own below to get started.
+          Good day. I am Ashik Roshan's AI Assistant — your dedicated resource for exploring his professional portfolio.<br><br>
+          I can provide detailed insights on his <strong style="color:#eeebe6">technical expertise</strong>,
+          <strong style="color:#eeebe6">project portfolio</strong>,
+          <strong style="color:#eeebe6">career milestones</strong>, and
+          <strong style="color:#eeebe6">achievements</strong>.<br><br>
+          Select a question above or type your own below to begin.
         </div>
       </div>
     </div>
     """, unsafe_allow_html=True)
 
-# Render conversation
+# ── Render conversation history ───────────────────────────────────────────────
 for msg in st.session_state.messages:
     if msg["role"] == "user":
+        safe = msg["content"].replace("<", "&lt;").replace(">", "&gt;")
         st.markdown(f"""
-        <div class="msg-row user">
-          <div class="av av-usr">YOU</div>
-          <div class="bubble-wrap">
-            <div class="bubble-name">You</div>
-            <div class="bubble bubble-user">{msg["content"]}</div>
+        <div class="msg-row user-row">
+          <div class="av av-usr">🧑</div>
+          <div class="msg-content">
+            <div class="msg-sender">You</div>
+            <div class="bubble bubble-user">{safe}</div>
           </div>
         </div>
         """, unsafe_allow_html=True)
     else:
-        content = msg["content"].replace("**", "").replace("\n\n", "<br><br>").replace("\n", "<br>")
+        import re
+        content = msg["content"]
+        # Convert **bold** to <strong>
+        content = re.sub(r'\*\*(.*?)\*\*', r'<strong style="color:#f0ede8;font-weight:600">\1</strong>', content)
+        # Convert bullet lines
+        content = re.sub(r'^\s*[\•\-\*]\s+', '• ', content, flags=re.MULTILINE)
+        content = content.replace("\n\n", "<br><br>").replace("\n", "<br>")
         st.markdown(f"""
         <div class="msg-row">
-          <div class="av av-ai">AI</div>
-          <div class="bubble-wrap">
-            <div class="bubble-name">Assistant</div>
+          <div class="av av-ai">🤖</div>
+          <div class="msg-content">
+            <div class="msg-sender">Assistant</div>
             <div class="bubble bubble-ai">{content}</div>
           </div>
         </div>
         """, unsafe_allow_html=True)
 
-st.markdown("</div></div>", unsafe_allow_html=True)  # close chat-body, chat-window
+st.markdown("</div></div>", unsafe_allow_html=True)
 
-st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
+st.markdown("<div style='height:12px'></div>", unsafe_allow_html=True)
 
-# ── Input ─────────────────────────────────────────────────────────────────────
-user_input = st.chat_input("Ask anything about Ashik's skills, projects, or experience…")
+# ── Chat Input ────────────────────────────────────────────────────────────────
+user_input = st.chat_input("Type your question about Ashik's skills, projects, or experience…")
 
-# Handle chip click
+# Chip click
 if st.session_state.pending:
     user_input = st.session_state.pending
     st.session_state.pending = None
@@ -699,7 +675,6 @@ if st.session_state.pending:
 # ── Generate Response ─────────────────────────────────────────────────────────
 if user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
-
     with st.spinner(""):
         try:
             model = genai.GenerativeModel(
@@ -710,21 +685,12 @@ if user_input:
             for m in st.session_state.messages[:-1]:
                 role = "user" if m["role"] == "user" else "model"
                 history.append({"role": role, "parts": [m["content"]]})
-
             chat = model.start_chat(history=history)
             response = chat.send_message(user_input)
             answer = response.text
-
         except Exception as e:
             answer = f"An error occurred. Please try again.\n\n`{e}`"
-
     st.session_state.messages.append({"role": "assistant", "content": answer})
     st.rerun()
 
-# ── Footer ────────────────────────────────────────────────────────────────────
-st.markdown("""
-<div class="footer">
-  <div class="footer-left"><span>Ashik Roshan I</span> &nbsp;·&nbsp; Data &amp; AI Engineer &nbsp;·&nbsp; Optisol Business Solutions</div>
-  <div class="footer-right">ashikroshan261@gmail.com</div>
-</div>
-""", unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)  # close app-shell
