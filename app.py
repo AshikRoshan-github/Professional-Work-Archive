@@ -5,8 +5,8 @@ import re
 st.set_page_config(
     page_title="Ashik Roshan I — AI Assistant",
     page_icon="🔶",
-    layout="wide",
-    initial_sidebar_state="expanded",
+    layout="centered",
+    initial_sidebar_state="collapsed",
 )
 
 st.markdown("""
@@ -40,10 +40,12 @@ section.main {
   font-family: 'Sora', sans-serif !important;
 }
 
-/* ── Hide Streamlit chrome (header only) ── */
-[data-testid="stHeader"] { display: none !important; }
-footer                    { display: none !important; }
-#MainMenu                 { display: none !important; }
+/* ── Hide Streamlit chrome ── */
+[data-testid="stHeader"]         { display: none !important; }
+[data-testid="stSidebar"]        { display: none !important; }
+[data-testid="collapsedControl"] { display: none !important; }
+footer                           { display: none !important; }
+#MainMenu                        { display: none !important; }
 
 /* ── Show + style the collapse toggle ── */
 [data-testid="collapsedControl"] {
