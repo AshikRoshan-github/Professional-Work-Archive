@@ -3,7 +3,7 @@ import google.generativeai as genai
 
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Ashik Roshan – AI Resume Chatbot",
+    page_title="Ashik Roshan – AI Assistant",
     page_icon="🤖",
     layout="centered",
 )
@@ -55,22 +55,20 @@ a { color: #ff9a5c !important; }
     border: none;
     border-radius: 8px;
     font-weight: 700;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 4px;
 }
 .stButton > button:hover {
     background-color: #ff9a5c;
     color: #0d1b2a;
 }
 
-/* Spinner & misc */
+/* Spinner */
 .stSpinner > div { border-top-color: #ff6b35 !important; }
 
-/* API key input */
-[data-testid="stTextInput"] input {
-    background-color: #1a2e45 !important;
-    color: #f0f4f8 !important;
-    border: 1px solid #1e3a5f !important;
-    border-radius: 8px !important;
-}
+/* Divider */
+hr { border-color: #1e3a5f; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -95,7 +93,7 @@ Cloud – AWS: S3, Lambda, Glue, Step Functions, EC2, CloudWatch, Textract, Bedr
 Data Engineering: PySpark, DBT, Informatica, Snowflake, Pandas, ADF
 Databases: SSMS, pgAdmin, MySQL, Oracle, SQL Server, Snowflake
 BI & Analytics: Power BI, ThoughtSpot, Plotly, Streamlit
-AI & GenAI: Azure OpenAI, Amazon Bedrock, Gemini 2.5 Pro, LangChain, Neo4j, RAG, Prompt Engineering,
+AI & GenAI: Azure OpenAI, Amazon Bedrock, Gemini, LangChain, Neo4j, RAG, Prompt Engineering,
   Azure Document Intelligence
 Automation & Web: Selenium, Web Scraping, Web Crawling, FastAPI, PyAutoGUI, Apify, Flask
 DevOps & Tools: GitHub, Azure DevOps, CI/CD, PuTTY, ServiceNow, Rally, SharePoint
@@ -195,7 +193,7 @@ AI & Programming:
   Transforms unstructured documents into interactive, queryable knowledge graphs with RAG.
 """
 
-SYSTEM_PROMPT = f"""You are an intelligent AI assistant for Ashik Roshan I's professional resume chatbot.
+SYSTEM_PROMPT = f"""You are an intelligent AI assistant for Ashik Roshan I's professional portfolio.
 Your job is to answer questions about Ashik's skills, experience, projects, education, certifications,
 and achievements in a friendly, professional, and concise manner.
 
@@ -210,42 +208,64 @@ Guidelines:
 - Keep responses focused and well-structured.
 """
 
+# ── Load API key from Streamlit secrets ───────────────────────────────────────
+try:
+    api_key = st.secrets["credentials"]["GEMINI_API_KEY"]
+    genai.configure(api_key=api_key)
+except Exception:
+    st.error("⚠️ API key not found. Please configure `GEMINI_API_KEY` in your Streamlit secrets.")
+    st.stop()
+
 # ── Sidebar ──────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## 🔑 API Configuration")
-    api_key = st.text_input("Google Gemini API Key", type="password",
-                             placeholder="AIza...")
+    st.markdown("""
+    <div style='text-align:center; padding: 10px 0 6px 0;'>
+        <div style='font-size:3rem;'>👨‍💻</div>
+        <h2 style='color:#ff6b35; margin:6px 0 2px 0;'>Ashik Roshan I</h2>
+        <p style='color:#a0b4c8; font-size:0.85rem; margin:0;'>Data & AI Engineer – L2</p>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.markdown("---")
-    st.markdown("### 💡 Try asking:")
+
+    st.markdown("""
+    <div style='text-align:center; line-height:2;'>
+        <a href='https://github.com/AshikRoshan-github' target='_blank'>🐙 GitHub</a>&nbsp;&nbsp;
+        <a href='https://www.linkedin.com/in/ashik-roshan-i-073897249' target='_blank'>💼 LinkedIn</a>&nbsp;&nbsp;
+        <a href='https://arshowcase.streamlit.app' target='_blank'>🌐 Website</a>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
+    st.markdown("### 💡 Quick Questions")
+
     suggestions = [
         "What are Ashik's top skills?",
         "Tell me about his AI projects",
         "What certifications does he hold?",
         "What awards has he won?",
-        "Describe his data engineering experience",
-        "What is the Knowledge Graph Builder project?",
+        "Describe his work experience",
+        "What is the Knowledge Graph project?",
+        "Tell me about his education",
     ]
     for s in suggestions:
         if st.button(s, key=s):
             st.session_state.pending_question = s
 
     st.markdown("---")
-    st.markdown("### 👤 About")
-    st.markdown("""
-**Ashik Roshan I**  
-Data & AI Engineer – L2  
-[GitHub](https://github.com/AshikRoshan-github) | [LinkedIn](https://www.linkedin.com/in/ashik-roshan-i-073897249) | [Website](https://arshowcase.streamlit.app)
-""")
     if st.button("🗑️ Clear Chat"):
         st.session_state.messages = []
         st.rerun()
 
 # ── Main header ───────────────────────────────────────────────────────────────
 st.markdown("""
-<div style='text-align:center; padding: 20px 0 10px 0;'>
-  <h1 style='font-size:2.2rem; margin-bottom:4px;'>🤖 Ashik Roshan's Resume AI</h1>
-  <p style='color:#a0b4c8; font-size:1rem;'>Powered by <span style='color:#ff6b35; font-weight:700;'>Gemini 2.5 Pro</span> · Ask me anything about Ashik!</p>
+<div style='text-align:center; padding: 24px 0 8px 0;'>
+  <h1 style='font-size:2.1rem; margin-bottom:6px;'>🤖 AI Assistant</h1>
+  <p style='color:#a0b4c8; font-size:1rem; margin:0;'>
+    Ask me anything about <span style='color:#ff6b35; font-weight:700;'>Ashik Roshan's</span> experience, skills & projects
+  </p>
 </div>
+<hr style='border-color:#1e3a5f; margin: 10px 0 20px 0;'>
 """, unsafe_allow_html=True)
 
 # ── Session state ─────────────────────────────────────────────────────────────
@@ -254,12 +274,28 @@ if "messages" not in st.session_state:
 if "pending_question" not in st.session_state:
     st.session_state.pending_question = None
 
+# ── Welcome message (first load) ──────────────────────────────────────────────
+if not st.session_state.messages:
+    with st.chat_message("assistant"):
+        st.markdown("""
+👋 Hi there! I'm Ashik's **AI Assistant**.
+
+I can help you learn about:
+- 🛠️ **Skills** — Python, Cloud (Azure/AWS), Data Engineering, AI/GenAI
+- 💼 **Work Experience** — roles at Optisol Business Solutions & Blue Cloud
+- 🚀 **Projects** — 14 data & AI engineering projects
+- 🏆 **Awards** — MVP, multiple Spot Awards
+- 📜 **Certifications** — Snowflake, Azure, Databricks & more
+
+What would you like to know?
+        """)
+
 # ── Render chat history ───────────────────────────────────────────────────────
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
-# ── Handle sidebar suggestion click ──────────────────────────────────────────
+# ── Handle sidebar suggestion or chat input ───────────────────────────────────
 user_input = st.chat_input("Ask about skills, projects, experience…")
 if st.session_state.pending_question:
     user_input = st.session_state.pending_question
@@ -267,27 +303,19 @@ if st.session_state.pending_question:
 
 # ── Generate response ─────────────────────────────────────────────────────────
 if user_input:
-    if not api_key:
-        st.warning("⚠️ Please enter your Google Gemini API Key in the sidebar to continue.")
-        st.stop()
-
-    # Append and display user message
     st.session_state.messages.append({"role": "user", "content": user_input})
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    # Call Gemini
     with st.chat_message("assistant"):
         with st.spinner("Thinking…"):
             try:
-                genai.configure(api_key=api_key)
                 model = genai.GenerativeModel(
-                    model_name="gemini-2.5-pro-preview-05-06",
+                    model_name="gemini-2.5-flash",
                     system_instruction=SYSTEM_PROMPT,
                 )
-                # Build conversation history for context
                 history = []
-                for m in st.session_state.messages[:-1]:  # exclude latest user msg
+                for m in st.session_state.messages[:-1]:
                     role = "user" if m["role"] == "user" else "model"
                     history.append({"role": role, "parts": [m["content"]]})
 
@@ -296,7 +324,7 @@ if user_input:
                 answer = response.text
 
             except Exception as e:
-                answer = f"❌ Error: {e}\n\nPlease check your API key and try again."
+                answer = f"❌ Something went wrong. Please try again.\n\n`{e}`"
 
         st.markdown(answer)
         st.session_state.messages.append({"role": "assistant", "content": answer})
