@@ -53,6 +53,7 @@ footer                    { display: none !important; }
   background: #111 !important;
   border: 1px solid #2a2a2a !important;
   border-radius: 0 8px 8px 0 !important;
+  min-width: 20px !important;
   width: 20px !important;
   height: 48px !important;
   align-items: center !important;
@@ -60,8 +61,10 @@ footer                    { display: none !important; }
   top: 50% !important;
   transform: translateY(-50%) !important;
   box-shadow: 2px 0 12px rgba(0,0,0,0.6) !important;
-  z-index: 999 !important;
+  z-index: 99999 !important;
+  position: fixed !important;
   transition: background 0.2s !important;
+  pointer-events: all !important;
 }
 [data-testid="collapsedControl"]:hover {
   background: var(--orange) !important;
@@ -572,6 +575,95 @@ try:
 except Exception:
     st.error("API key not configured. Add GEMINI_API_KEY to Streamlit secrets.")
     st.stop()
+
+
+# ── JS: Force sidebar toggle always visible (MutationObserver) ───────────────
+from streamlit.components.v1 import html as st_html
+st_html("""
+<script>
+(function() {
+  const STYLE_ID = 'ar-toggle-style';
+
+  function injectStyle() {
+    if (document.getElementById(STYLE_ID)) return;
+    const s = document.createElement('style');
+    s.id = STYLE_ID;
+    s.textContent = `
+      [data-testid="collapsedControl"] {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: all !important;
+        z-index: 99999 !important;
+        position: fixed !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        background: #111 !important;
+        border: 1px solid #2a2a2a !important;
+        border-radius: 0 8px 8px 0 !important;
+        width: 22px !important;
+        height: 52px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 2px 0 16px rgba(0,0,0,0.7) !important;
+        transition: background 0.2s, border-color 0.2s !important;
+        cursor: pointer !important;
+      }
+      [data-testid="collapsedControl"]:hover {
+        background: #f97316 !important;
+        border-color: #f97316 !important;
+      }
+      [data-testid="collapsedControl"] svg {
+        fill: #888 !important;
+        width: 12px !important;
+        height: 12px !important;
+        flex-shrink: 0 !important;
+      }
+      [data-testid="collapsedControl"]:hover svg {
+        fill: #000 !important;
+      }
+    `;
+    document.head.appendChild(s);
+  }
+
+  function forceVisible() {
+    const btn = document.querySelector('[data-testid="collapsedControl"]');
+    if (btn) {
+      btn.style.setProperty('display', 'flex', 'important');
+      btn.style.setProperty('visibility', 'visible', 'important');
+      btn.style.setProperty('opacity', '1', 'important');
+      btn.style.setProperty('pointer-events', 'all', 'important');
+      btn.style.setProperty('z-index', '99999', 'important');
+    }
+    injectStyle();
+  }
+
+  // Run immediately
+  forceVisible();
+
+  // Run after DOM ready
+  document.addEventListener('DOMContentLoaded', forceVisible);
+
+  // MutationObserver: watch entire body for any DOM changes (Streamlit re-renders)
+  const observer = new MutationObserver(function(mutations) {
+    forceVisible();
+  });
+
+  function startObserver() {
+    const target = document.body;
+    if (target) {
+      observer.observe(target, { childList: true, subtree: true });
+    } else {
+      setTimeout(startObserver, 100);
+    }
+  }
+  startObserver();
+
+  // Also poll every 500ms as safety net
+  setInterval(forceVisible, 500);
+})();
+</script>
+""", height=0)
 
 # ── Session State ─────────────────────────────────────────────────────────────
 if "messages" not in st.session_state:
