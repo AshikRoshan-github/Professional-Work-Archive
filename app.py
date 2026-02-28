@@ -5,7 +5,7 @@ import re
 # ── Page Configuration ────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Ashik Roshan I — AI Assistant",
-    page_icon="👦",
+    page_icon="🔶",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -49,8 +49,8 @@ footer                           { display: none !important; }
 
 /* ── SIDEBAR ── */
 [data-testid="stSidebar"] {
-  background: #0c0c0c !important;
-  border-right: 1px solid #1f1f1f !important;
+  background: #f0f4ff !important;
+  border-right: 1px solid #c8d5ee !important;
   min-width: 290px !important;
   max-width: 290px !important;
 }
@@ -116,86 +116,91 @@ footer                           { display: none !important; }
 
 /* Header band */
 .sb-header {
-  background: linear-gradient(160deg, #1a0a00 0%, #0c0c0c 100%);
-  border-bottom: 1px solid #2a1800;
-  padding: 28px 22px 24px;
+  background: linear-gradient(160deg, #1a2f6e 0%, #0f1e4a 100%);
+  border-bottom: 1px solid #243580;
+  padding: 24px 20px 20px;
 }
 .sb-header-top {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 11px;
+  margin-bottom: 14px;
 }
 .sb-avatar {
-  width: 44px; height: 44px;
-  background: linear-gradient(135deg, var(--orange) 0%, #c45d0a 100%);
-  border-radius: 12px;
+  width: 42px; height: 42px;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border-radius: 11px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   flex-shrink: 0;
-  box-shadow: 0 4px 16px rgba(249,115,22,0.3);
+  box-shadow: 0 4px 14px rgba(59,130,246,0.4);
 }
 .sb-id { flex: 1; }
 .sb-name {
   font-family: 'Sora', sans-serif;
   font-size: 0.92rem;
   font-weight: 700;
-  color: #fff;
+  color: #ffffff;
   letter-spacing: -0.01em;
   line-height: 1.2;
   margin-bottom: 3px;
 }
 .sb-role {
   font-family: 'Fira Code', monospace;
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--orange);
+  color: #93c5fd;
 }
 .sb-company {
   font-family: 'Fira Code', monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.08em;
-  color: #504030;
-  margin-top: 1px;
+  font-size: 0.56rem;
+  letter-spacing: 0.07em;
+  color: #4a6096;
+  margin-top: 2px;
 }
 .sb-bio {
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 300;
-  color: #6a5a48;
-  line-height: 1.65;
-  margin-bottom: 16px;
+  color: #7b9acf;
+  line-height: 1.6;
+  margin-bottom: 14px;
 }
 .sb-links {
   display: flex;
-  gap: 6px;
+  gap: 5px;
   flex-wrap: wrap;
 }
 .sb-link {
   font-family: 'Fira Code', monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.08em;
+  font-size: 0.57rem;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: #8a6040;
+  color: #93c5fd;
   text-decoration: none;
-  border: 1px solid #2a1800;
+  border: 1px solid rgba(147,197,253,0.25);
   border-radius: 5px;
   padding: 4px 9px;
   transition: all 0.18s;
-  background: rgba(249,115,22,0.05);
+  background: rgba(255,255,255,0.06);
 }
-.sb-link:hover { color: var(--orange); border-color: var(--orange-bdr); }
+.sb-link:hover {
+  color: #fff;
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.12);
+}
 
 /* Body */
-.sb-body { padding: 22px 16px; flex: 1; overflow-y: auto; }
+.sb-body { padding: 14px 14px 20px; flex: 1; overflow-y: auto; }
 
 .sb-section-label {
   font-family: 'Fira Code', monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.22em;
+  font-size: 0.57rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #333;
-  margin-bottom: 10px;
+  color: #94a3c0;
+  margin-bottom: 6px;
+  margin-top: 0;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -204,51 +209,37 @@ footer                           { display: none !important; }
   content: '';
   flex: 1;
   height: 1px;
-  background: #1e1e1e;
+  background: #d1d9ee;
 }
 
-/* Sidebar buttons */
+/* Sidebar question buttons */
 [data-testid="stSidebar"] .stButton > button {
   all: unset !important;
   display: flex !important;
-  align-items: flex-start !important;
-  gap: 10px !important;
+  align-items: center !important;
+  gap: 8px !important;
   width: 100% !important;
-  background: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 10px 12px !important;
+  background: #fff !important;
+  border: 1px solid #e2e8f5 !important;
+  border-radius: 8px !important;
+  padding: 8px 11px !important;
   font-family: 'Sora', sans-serif !important;
-  font-size: 0.8rem !important;
+  font-size: 0.78rem !important;
   font-weight: 400 !important;
-  color: #504840 !important;
-  line-height: 1.4 !important;
+  color: #3c5080 !important;
+  line-height: 1.35 !important;
   cursor: pointer !important;
   transition: all 0.15s ease !important;
   text-align: left !important;
   white-space: normal !important;
   word-break: break-word !important;
   box-sizing: border-box !important;
-  border-radius: 8px !important;
-  margin-bottom: 2px !important;
+  margin-bottom: 4px !important;
 }
 [data-testid="stSidebar"] .stButton > button:hover {
-  background: rgba(249,115,22,0.08) !important;
-  color: #d4935a !important;
-  padding-left: 16px !important;
-}
-
-/* Reset button special */
-.reset-btn [data-testid="stSidebar"] .stButton > button,
-[data-testid="stSidebar"] .stButton[data-testid="reset"] > button {
-  color: #3a3a3a !important;
-  font-family: 'Fira Code', monospace !important;
-  font-size: 0.68rem !important;
-  letter-spacing: 0.08em !important;
-  border: 1px solid #1e1e1e !important;
-  justify-content: center !important;
-  padding: 9px 12px !important;
-  margin-top: 4px !important;
+  background: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+  color: #ffffff !important;
 }
 
 /* ── CONV HEADER ── */
@@ -569,8 +560,7 @@ with st.sidebar:
             st.session_state.pending = question
 
     st.markdown("""
-        <div style="height:16px"></div>
-        <div class="sb-section-label">Actions</div>
+          <div class="sb-section-label" style="margin-top:12px">Actions</div>
       </div>
     </div>
     """, unsafe_allow_html=True)
