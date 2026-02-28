@@ -10,17 +10,17 @@
 
 <style>
 :root {
-  --bg:        #060810;
-  --surface:   #0C1018;
-  --surface2:  #121820;
-  --border:    rgba(100,180,255,0.09);
-  --border2:   rgba(100,180,255,0.18);
-  --accent:    #4FB3FF;
+  --bg:        #050A0F;
+  --surface:   #0A1208;
+  --surface2:  #0F1A0D;
+  --border:    rgba(0,200,150,0.10);
+  --border2:   rgba(0,200,150,0.22);
+  --accent:    #00C896;
   --accent2:   #00E5A0;
   --accent3:   #FF8C42;
-  --text:      #D8E8F5;
-  --textDim:   rgba(216,232,245,0.5);
-  --textFaint: rgba(216,232,245,0.28);
+  --text:      #E4F5EE;
+  --textDim:   rgba(228,245,238,0.5);
+  --textFaint: rgba(228,245,238,0.28);
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -39,8 +39,8 @@ body::before {
   content:'';
   position:fixed; inset:0;
   background-image:
-    linear-gradient(rgba(79,179,255,0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(79,179,255,0.022) 1px, transparent 1px);
+    linear-gradient(rgba(0,200,150,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,150,0.03) 1px, transparent 1px);
   background-size: 72px 72px;
   pointer-events:none; z-index:0;
 }
@@ -103,17 +103,6 @@ section { position:relative; z-index:1; }
 .hero-inner { max-width:1180px; margin:0 auto; width:100%; display:flex; gap:72px; align-items:center; }
 .hero-content { flex:1; }
 
-.avail-badge {
-  display:inline-flex; align-items:center; gap:9px;
-  font-family:'JetBrains Mono',monospace; font-size:0.66rem;
-  letter-spacing:2px; text-transform:uppercase; color:var(--accent2);
-  border:1px solid rgba(0,229,160,0.25); background:rgba(0,229,160,0.05);
-  padding:7px 16px; border-radius:100px; margin-bottom:32px;
-  animation:fadeUp 0.7s ease both;
-}
-.pulse { width:6px; height:6px; border-radius:50%; background:var(--accent2); animation:pulseDot 2s infinite; }
-@keyframes pulseDot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.35;transform:scale(0.6);} }
-
 .hero-name {
   font-family:'Cormorant Garamond',serif; font-weight:700;
   font-size:clamp(3.4rem,7vw,6.8rem); line-height:0.95;
@@ -138,12 +127,12 @@ section { position:relative; z-index:1; }
 
 .btn-fill {
   display:inline-flex; align-items:center; gap:9px;
-  background:linear-gradient(135deg, var(--accent), #2196F3);
-  color:#fff; padding:13px 28px; border-radius:6px;
+  background:linear-gradient(135deg, var(--accent), #00A878);
+  color:var(--bg); padding:13px 28px; border-radius:6px;
   text-decoration:none; font-size:0.88rem; font-weight:600;
   transition:transform 0.2s, box-shadow 0.2s;
 }
-.btn-fill:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(79,179,255,0.3); }
+.btn-fill:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,200,150,0.35); }
 
 .btn-ghost {
   display:inline-flex; align-items:center; gap:9px;
@@ -173,7 +162,7 @@ section { position:relative; z-index:1; }
 .soc:hover { border-color:var(--accent); color:var(--accent); }
 
 /* EXPERIENCE */
-#experience { background:linear-gradient(to bottom, transparent, rgba(79,179,255,0.012), transparent); }
+#experience { background:linear-gradient(to bottom, transparent, rgba(0,200,150,0.012), transparent); }
 .timeline { position:relative; padding-left:2px; }
 .timeline::before {
   content:''; position:absolute; left:0; top:0; bottom:0; width:1px;
@@ -187,7 +176,7 @@ section { position:relative; z-index:1; }
 .tl-item::before {
   content:''; position:absolute; left:-5px; top:8px;
   width:11px; height:11px; border-radius:50%;
-  background:var(--accent); box-shadow:0 0 16px rgba(79,179,255,0.5);
+  background:var(--accent); box-shadow:0 0 16px rgba(0,200,150,0.55);
 }
 .tl-period { font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--accent); letter-spacing:1.5px; margin-bottom:7px; }
 .tl-role { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.35rem; margin-bottom:4px; letter-spacing:-0.3px; }
@@ -212,7 +201,7 @@ section { position:relative; z-index:1; }
 
 /* Data type */
 .de-card::before { background:linear-gradient(90deg, var(--accent), transparent 60%); }
-.de-card:hover { border-color:rgba(79,179,255,0.3); }
+.de-card:hover { border-color:rgba(0,200,150,0.35); }
 .de-card .proj-num { color:var(--accent); }
 
 /* AI type */
@@ -228,7 +217,7 @@ section { position:relative; z-index:1; }
 
 .tags { display:flex; flex-wrap:wrap; gap:6px; }
 .tag { font-family:'JetBrains Mono',monospace; font-size:0.58rem; padding:3px 10px; border-radius:3px; letter-spacing:0.5px; }
-.t-b { background:rgba(79,179,255,0.08); border:1px solid rgba(79,179,255,0.2); color:var(--accent); }
+.t-b { background:rgba(0,200,150,0.08); border:1px solid rgba(0,200,150,0.22); color:var(--accent); }
 .t-g { background:rgba(0,229,160,0.08); border:1px solid rgba(0,229,160,0.2); color:var(--accent2); }
 .t-o { background:rgba(255,140,66,0.08); border:1px solid rgba(255,140,66,0.2); color:var(--accent3); }
 
@@ -275,15 +264,15 @@ section { position:relative; z-index:1; }
 .pn-inner {
   max-width:1100px; margin:0 auto; position:relative; overflow:hidden;
   border-radius:20px; border:1px solid rgba(0,229,160,0.2);
-  background:radial-gradient(ellipse at 30% 50%, rgba(0,229,160,0.05), transparent 60%),
-             radial-gradient(ellipse at 80% 20%, rgba(79,179,255,0.05), transparent 50%),
+  background:radial-gradient(ellipse at 30% 50%, rgba(0,200,150,0.07), transparent 60%),
+             radial-gradient(ellipse at 80% 20%, rgba(0,200,150,0.04), transparent 50%),
              var(--surface);
   padding:72px 68px; display:flex; align-items:center; gap:80px;
 }
 .pn-inner::before {
   content:''; position:absolute; top:-100px; right:-100px;
   width:380px; height:380px; border-radius:50%;
-  background:radial-gradient(circle, rgba(0,229,160,0.07), transparent 60%);
+  background:radial-gradient(circle, rgba(0,200,150,0.09), transparent 60%);
   pointer-events:none;
 }
 .pn-left { flex:1; }
@@ -301,12 +290,12 @@ section { position:relative; z-index:1; }
 .pn-desc { font-size:0.95rem; font-weight:300; color:var(--textDim); max-width:460px; line-height:1.9; }
 .pn-btn {
   display:inline-flex; flex-direction:column; align-items:center; gap:6px;
-  background:linear-gradient(135deg, var(--accent2), #00B87A);
+  background:linear-gradient(135deg, var(--accent), #00A070);
   color:var(--bg); padding:22px 44px; border-radius:10px;
   text-decoration:none; font-weight:700; font-size:1rem;
   transition:transform 0.25s, box-shadow 0.25s; flex-shrink:0;
 }
-.pn-btn:hover { transform:translateY(-4px) scale(1.02); box-shadow:0 16px 40px rgba(0,229,160,0.3); }
+.pn-btn:hover { transform:translateY(-4px) scale(1.02); box-shadow:0 16px 40px rgba(0,200,150,0.35); }
 .pn-btn-sub { font-family:'JetBrains Mono',monospace; font-size:0.58rem; font-weight:400; letter-spacing:2px; opacity:0.7; text-transform:uppercase; }
 
 /* FOOTER */
@@ -353,14 +342,13 @@ footer {
 <section id="hero">
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="avail-badge"><div class="pulse"></div>Open to New Opportunities</div>
       <h1 class="hero-name">Ashik<br><span class="hero-name-accent">Roshan</span> I</h1>
       <p class="hero-desig">DATA ENGINEER – L2 &nbsp;/&nbsp; AI ENGINEER &nbsp;·&nbsp; OPTISOL BUSINESS SOLUTIONS</p>
       <p class="hero-bio">I architect scalable data pipelines and AI-powered automation systems that transform how organisations manage, migrate, and extract value from their data — across cloud, on-premises, and hybrid environments.</p>
       <div class="hero-actions">
         <a href="#profinova" class="btn-fill"><span>✦</span> Chat with ProfiNova AI</a>
         <a href="https://github.com/AshikRoshan-github" target="_blank" class="btn-ghost">GitHub ↗</a>
-        <a href="mailto:ashikroshan261@gmail.com" class="btn-ghost">Contact</a>
+        <a href="/cdn-cgi/l/email-protection#2243514a4b49504d514a434c10141362454f434b4e0c414d4f" class="btn-ghost">Contact</a>
       </div>
     </div>
     <div class="hero-panel">
@@ -728,20 +716,13 @@ footer {
     <a href="https://github.com/AshikRoshan-github" target="_blank">GitHub</a>
     <a href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank">LinkedIn</a>
     <a href="https://medium.com/@ashikroshan261" target="_blank">Medium</a>
-    <a href="mailto:ashikroshan261@gmail.com">Email</a>
+    <a href="/cdn-cgi/l/email-protection#c8a9bba0a1a3baa7bba0a9a6fafef988afa5a9a1a4e6aba7a5">Email</a>
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
         setTimeout(() => e.target.classList.add('vis'), i * 70);
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.07 });
-  document.querySelectorAll('.tl-item,.proj-card,.sk-group,.cert-card,.aw-card').forEach(el => io.observe(el));
-</script>
-</body>
-</html>
+        io.
