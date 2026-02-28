@@ -5,7 +5,7 @@ import re
 # ── Page Configuration ────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Ashik Roshan I — AI Assistant",
-    page_icon="🔶",
+    page_icon="👦",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -49,13 +49,13 @@ footer                           { display: none !important; }
 
 /* ── SIDEBAR ── */
 [data-testid="stSidebar"] {
-  background: var(--s1) !important;
-  border-right: 1px solid var(--border) !important;
-  min-width: 280px !important;
-  max-width: 280px !important;
+  background: #0c0c0c !important;
+  border-right: 1px solid #1f1f1f !important;
+  min-width: 290px !important;
+  max-width: 290px !important;
 }
 [data-testid="stSidebar"] > div:first-child {
-  padding: 32px 20px 24px !important;
+  padding: 0 !important;
 }
 
 /* ── MAIN AREA ── */
@@ -68,69 +68,10 @@ footer                           { display: none !important; }
   margin: 0 auto !important;
 }
 
-/* ── TOP BAR ── */
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 26px 0 26px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 52px;
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.brand-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--orange);
-  box-shadow: 0 0 10px rgba(249,115,22,0.65);
-  animation: blink 2.2s ease-in-out infinite;
-}
-@keyframes blink { 0%,100%{opacity:1} 55%{opacity:0.3} }
-.brand-label {
-  font-family: 'Fira Code', monospace;
-  font-size: 0.66rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text3);
-}
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.nav-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'Fira Code', monospace;
-  font-size: 0.67rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text2);
-  text-decoration: none;
-  background: var(--s2);
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  padding: 7px 13px;
-  transition: all 0.18s ease;
-}
-.nav-btn:hover {
-  color: var(--orange);
-  border-color: var(--orange-bdr);
-  background: var(--orange-soft);
-}
-.nav-sep {
-  width: 1px; height: 16px;
-  background: var(--border);
-  margin: 0 2px;
-}
+
 
 /* ── IDENTITY ── */
-.identity { margin-bottom: 52px; }
+.identity { margin-bottom: 52px; padding-top: 48px; }
 .eyebrow {
   font-family: 'Fira Code', monospace;
   font-size: 0.66rem;
@@ -166,100 +107,148 @@ footer                           { display: none !important; }
 }
 
 /* ── SIDEBAR INNER ── */
-.sb-logo {
+.sb-wrap {
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header band */
+.sb-header {
+  background: linear-gradient(160deg, #1a0a00 0%, #0c0c0c 100%);
+  border-bottom: 1px solid #2a1800;
+  padding: 28px 22px 24px;
+}
+.sb-header-top {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 28px;
+  gap: 12px;
+  margin-bottom: 20px;
 }
-.sb-logo-icon {
-  width: 36px; height: 36px;
-  background: var(--orange);
-  border-radius: 9px;
+.sb-avatar {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--orange) 0%, #c45d0a 100%);
+  border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(249,115,22,0.3);
 }
-.sb-logo-text {
+.sb-id { flex: 1; }
+.sb-name {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 3px;
+}
+.sb-role {
   font-family: 'Fira Code', monospace;
-  font-size: 0.68rem;
+  font-size: 0.6rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text2);
-  line-height: 1.4;
-}
-.sb-logo-text strong { color: var(--orange); display: block; font-size: 0.75rem; }
-
-.sb-section-title {
-  font-family: 'Fira Code', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border);
-}
-
-.sb-profile {
-  background: var(--s2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 24px;
-}
-.sb-profile-name {
-  font-family: 'Sora', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 4px;
-}
-.sb-profile-role {
-  font-size: 0.73rem;
-  font-weight: 300;
-  color: var(--text2);
-  margin-bottom: 10px;
-  line-height: 1.5;
-}
-.sb-tag {
-  display: inline-block;
-  font-family: 'Fira Code', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.07em;
   color: var(--orange);
-  background: var(--orange-soft);
-  border: 1px solid var(--orange-bdr);
-  border-radius: 4px;
-  padding: 3px 8px;
-  margin: 2px 2px 0 0;
+}
+.sb-company {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: #504030;
+  margin-top: 1px;
+}
+.sb-bio {
+  font-size: 0.76rem;
+  font-weight: 300;
+  color: #6a5a48;
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+.sb-links {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.sb-link {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a6040;
+  text-decoration: none;
+  border: 1px solid #2a1800;
+  border-radius: 5px;
+  padding: 4px 9px;
+  transition: all 0.18s;
+  background: rgba(249,115,22,0.05);
+}
+.sb-link:hover { color: var(--orange); border-color: var(--orange-bdr); }
+
+/* Body */
+.sb-body { padding: 22px 16px; flex: 1; overflow-y: auto; }
+
+.sb-section-label {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #333;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sb-section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #1e1e1e;
 }
 
-/* Streamlit sidebar buttons */
+/* Sidebar buttons */
 [data-testid="stSidebar"] .stButton > button {
   all: unset !important;
-  display: block !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
   width: 100% !important;
-  background: var(--s2) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 9px !important;
-  padding: 11px 14px !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 10px 12px !important;
   font-family: 'Sora', sans-serif !important;
-  font-size: 0.79rem !important;
+  font-size: 0.8rem !important;
   font-weight: 400 !important;
-  color: var(--text2) !important;
-  line-height: 1.45 !important;
+  color: #504840 !important;
+  line-height: 1.4 !important;
   cursor: pointer !important;
-  transition: all 0.16s ease !important;
+  transition: all 0.15s ease !important;
   text-align: left !important;
-  margin-bottom: 7px !important;
   white-space: normal !important;
   word-break: break-word !important;
   box-sizing: border-box !important;
+  border-radius: 8px !important;
+  margin-bottom: 2px !important;
 }
 [data-testid="stSidebar"] .stButton > button:hover {
-  background: var(--orange-soft) !important;
-  border-color: var(--orange-bdr) !important;
-  color: var(--text) !important;
+  background: rgba(249,115,22,0.08) !important;
+  color: #d4935a !important;
+  padding-left: 16px !important;
+}
+
+/* Reset button special */
+.reset-btn [data-testid="stSidebar"] .stButton > button,
+[data-testid="stSidebar"] .stButton[data-testid="reset"] > button {
+  color: #3a3a3a !important;
+  font-family: 'Fira Code', monospace !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 0.08em !important;
+  border: 1px solid #1e1e1e !important;
+  justify-content: center !important;
+  padding: 9px 12px !important;
+  margin-top: 4px !important;
 }
 
 /* ── CONV HEADER ── */
@@ -536,55 +525,55 @@ if "pending" not in st.session_state:
 # ═══════════════════════════════════════════════════════════════════════════════
 with st.sidebar:
 
-    # Logo / brand
     st.markdown("""
-    <div class="sb-logo">
-      <div class="sb-logo-icon">🤖</div>
-      <div class="sb-logo-text">
-        <strong>AI Assistant</strong>
-        Portfolio · Ashik Roshan I
+    <div class="sb-wrap">
+      <div class="sb-header">
+        <div class="sb-header-top">
+          <div class="sb-avatar">🤖</div>
+          <div class="sb-id">
+            <div class="sb-name">Ashik Roshan I.</div>
+            <div class="sb-role">Data &amp; AI Engineer — L2</div>
+            <div class="sb-company">Optisol Business Solutions</div>
+          </div>
+        </div>
+        <div class="sb-bio">
+          Specialising in Cloud Data Engineering, Generative AI, and intelligent automation
+          across Azure and AWS ecosystems.
+        </div>
+        <div class="sb-links">
+          <a class="sb-link" href="https://github.com/AshikRoshan-github" target="_blank">GitHub ↗</a>
+          <a class="sb-link" href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank">LinkedIn ↗</a>
+          <a class="sb-link" href="https://medium.com/@ashikroshan261" target="_blank">Medium ↗</a>
+          <a class="sb-link" href="https://arshowcase.streamlit.app" target="_blank">Portfolio ↗</a>
+        </div>
       </div>
-    </div>
+      <div class="sb-body">
+        <div class="sb-section-label">Ask About Me</div>
     """, unsafe_allow_html=True)
-
-    # Profile card
-    st.markdown("""
-    <div class="sb-profile">
-      <div class="sb-profile-name">Ashik Roshan I.</div>
-      <div class="sb-profile-role">Data &amp; AI Engineer — Level 2<br>Optisol Business Solutions</div>
-      <div>
-        <span class="sb-tag">Python</span>
-        <span class="sb-tag">Azure</span>
-        <span class="sb-tag">AWS</span>
-        <span class="sb-tag">GenAI</span>
-        <span class="sb-tag">Snowflake</span>
-        <span class="sb-tag">LangChain</span>
-      </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Questions section
-    st.markdown('<div class="sb-section-title">Ask About Me</div>', unsafe_allow_html=True)
 
     QUESTIONS = [
-        ("🛠️", "Core technical skills", "What are Ashik's core technical skills and technology stack?"),
-        ("💼", "Work experience", "Walk me through Ashik's professional work experience and career progression."),
-        ("🤖", "AI & GenAI projects", "Tell me about Ashik's AI and Generative AI projects in detail."),
-        ("📊", "Data engineering projects", "What data engineering projects has Ashik delivered?"),
-        ("🏆", "Awards & recognition", "What awards and recognition has Ashik received in his career?"),
-        ("📜", "Certifications", "Which professional certifications does Ashik hold?"),
-        ("🎓", "Education", "What is Ashik's educational background?"),
-        ("⚡", "Most impactful project", "What is Ashik's most impactful project and what was its business outcome?"),
-        ("🧠", "AI expertise", "How does Ashik apply Generative AI and LLMs in his professional work?"),
-        ("☁️", "Cloud expertise", "What is Ashik's experience with Azure and AWS cloud platforms?"),
+        ("🛠️", "Core technical skills",       "What are Ashik's core technical skills and technology stack?"),
+        ("💼", "Work experience",              "Walk me through Ashik's professional work experience and career progression."),
+        ("🤖", "AI & GenAI projects",          "Tell me about Ashik's AI and Generative AI projects in detail."),
+        ("📊", "Data engineering projects",    "What data engineering projects has Ashik delivered?"),
+        ("🏆", "Awards & recognition",         "What awards and recognition has Ashik received in his career?"),
+        ("📜", "Certifications",               "Which professional certifications does Ashik hold?"),
+        ("🎓", "Education",                    "What is Ashik's educational background?"),
+        ("⚡", "Most impactful project",       "What is Ashik's most impactful project and what was its business outcome?"),
+        ("🧠", "Generative AI expertise",      "How does Ashik apply Generative AI and LLMs in his professional work?"),
+        ("☁️", "Cloud expertise",             "What is Ashik's experience with Azure and AWS cloud platforms?"),
     ]
 
     for icon, label, question in QUESTIONS:
         if st.button(f"{icon}  {label}", key=f"sb_{label}"):
             st.session_state.pending = question
 
-    st.markdown("<div style='height:16px'></div>", unsafe_allow_html=True)
-    st.markdown('<div class="sb-section-title">Actions</div>', unsafe_allow_html=True)
+    st.markdown("""
+        <div style="height:16px"></div>
+        <div class="sb-section-label">Actions</div>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     if st.button("↺  Reset Conversation", key="reset"):
         st.session_state.messages = []
@@ -594,33 +583,6 @@ with st.sidebar:
 # ═══════════════════════════════════════════════════════════════════════════════
 # MAIN CONTENT
 # ═══════════════════════════════════════════════════════════════════════════════
-
-# ── Top Bar ───────────────────────────────────────────────────────────────────
-st.markdown("""
-<div class="topbar">
-  <div class="brand">
-    <div class="brand-dot"></div>
-    <span class="brand-label">AI Portfolio Assistant</span>
-  </div>
-  <div class="nav">
-    <a class="nav-btn" href="https://github.com/AshikRoshan-github" target="_blank">
-      ⌥ GitHub
-    </a>
-    <div class="nav-sep"></div>
-    <a class="nav-btn" href="https://www.linkedin.com/in/ashik-roshan-i-073897249" target="_blank">
-      ↗ LinkedIn
-    </a>
-    <div class="nav-sep"></div>
-    <a class="nav-btn" href="https://medium.com/@ashikroshan261" target="_blank">
-      ✍ Medium
-    </a>
-    <div class="nav-sep"></div>
-    <a class="nav-btn" href="https://arshowcase.streamlit.app" target="_blank">
-      ◈ Portfolio
-    </a>
-  </div>
-</div>
-""", unsafe_allow_html=True)
 
 # ── Identity ──────────────────────────────────────────────────────────────────
 st.markdown("""
