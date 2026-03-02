@@ -8,7 +8,7 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="collapsed",
 )
-f
+
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Fira+Code:wght@400;500&display=swap');
@@ -445,14 +445,14 @@ footer                           { display: none !important; }
 }
 [data-testid="stChatInput"] textarea {
   background: transparent !important;
-  color: #1a1a1a !important;
+  color: var(--text) !important;
   font-family: 'Sora', sans-serif !important;
   font-size: 0.88rem !important;
   font-weight: 300 !important;
   line-height: 1.6 !important;
   border: none !important;
 }
-[data-testid="stChatInput"] textarea::placeholder { color: #888 !important; }
+[data-testid="stChatInput"] textarea::placeholder { color: var(--text3) !important; }
 [data-testid="stChatInput"] button {
   background: var(--orange) !important;
   border-radius: 9px !important;
