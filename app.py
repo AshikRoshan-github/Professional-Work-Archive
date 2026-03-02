@@ -91,7 +91,6 @@ footer                           { display: none !important; }
 [data-testid="stSidebar"] > div:first-child {
   padding: 0 !important;
 }
-/* Remove default streamlit padding inside sidebar */
 [data-testid="stSidebar"] .stButton {
   padding: 0 !important;
 }
@@ -140,11 +139,8 @@ footer                           { display: none !important; }
   margin-bottom: 40px;
 }
 
-/* ──────────────────────────────────────────
-   SIDEBAR COMPONENTS
-────────────────────────────────────────── */
+/* ── SIDEBAR COMPONENTS ── */
 
-/* Profile header */
 .sb-header {
   background: #0e0e0e;
   border-bottom: 1px solid #1e1e1e;
@@ -201,7 +197,6 @@ footer                           { display: none !important; }
   margin-top: 2px;
 }
 
-/* Stats row */
 .sb-stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -230,7 +225,6 @@ footer                           { display: none !important; }
   color: #3a3a3a;
 }
 
-/* Links */
 .sb-links {
   display: flex;
   gap: 5px;
@@ -255,19 +249,16 @@ footer                           { display: none !important; }
   background: var(--orange-glow);
 }
 
-/* Sidebar body */
 .sb-body {
   padding: 20px 18px 24px;
 }
 
-/* Divider inside sidebar */
 .sb-divider {
   height: 1px;
   background: #1a1a1a;
   margin: 0 0 20px;
 }
 
-/* Info tags */
 .sb-tags {
   display: flex;
   flex-wrap: wrap;
@@ -285,7 +276,6 @@ footer                           { display: none !important; }
   background: #0d0d0d;
 }
 
-/* Reset button */
 [data-testid="stSidebar"] .stButton > button {
   all: unset !important;
   display: flex !important;
@@ -445,12 +435,13 @@ footer                           { display: none !important; }
 }
 [data-testid="stChatInput"] textarea {
   background: transparent !important;
-  color: var(--text) !important;
+  color: #f97316 !important;
   font-family: 'Sora', sans-serif !important;
   font-size: 0.88rem !important;
-  font-weight: 300 !important;
+  font-weight: 400 !important;
   line-height: 1.6 !important;
   border: none !important;
+  caret-color: #f97316 !important;
 }
 [data-testid="stChatInput"] textarea::placeholder { color: var(--text3) !important; }
 [data-testid="stChatInput"] button {
@@ -489,7 +480,7 @@ AI & Generative AI     : Azure OpenAI, Amazon Bedrock, Gemini 2.5 Pro, LangChain
 Automation & Web       : Selenium, Web Scraping, Web Crawling, FastAPI, PyAutoGUI, Apify, Flask
 DevOps & Tooling       : GitHub, Azure DevOps, CI/CD, PuTTY, ServiceNow, Rally, SharePoint
 Libraries & Frameworks : asyncio, PyVis, PyPDF2, pyodbc, Snowflake Connector, xmltodict,
-                         smtplib, oracledb, pywin, pytesseract, python-dotenv
+                         smtplib, oracledb, pywin, pytesseract, python-dotenv, python-dotenv
 
 PROFESSIONAL EXPERIENCE
 1. Data Engineer — L2    | Optisol Business Solutions | April 2025 – Present
@@ -640,13 +631,9 @@ st_html("""
     injectStyle();
   }
 
-  // Run immediately
   forceVisible();
-
-  // Run after DOM ready
   document.addEventListener('DOMContentLoaded', forceVisible);
 
-  // MutationObserver: watch entire body for any DOM changes (Streamlit re-renders)
   const observer = new MutationObserver(function(mutations) {
     forceVisible();
   });
@@ -661,7 +648,6 @@ st_html("""
   }
   startObserver();
 
-  // Also poll every 500ms as safety net
   setInterval(forceVisible, 500);
 })();
 </script>
@@ -676,7 +662,6 @@ if "messages" not in st.session_state:
 # ═══════════════════════════════════════════════════════════════════════════════
 with st.sidebar:
 
-    # Profile header
     st.markdown("""
     <div class="sb-header">
       <div class="sb-header-top">
@@ -716,7 +701,6 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-    # Body — tags + reset
     st.markdown("""
     <div class="sb-body">
       <div class="sb-divider"></div>
@@ -735,7 +719,6 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-    # Reset button — centred, styled
     if st.button("↺  Reset Conversation", key="reset"):
         st.session_state.messages = []
         st.rerun()
